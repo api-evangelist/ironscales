@@ -1,0 +1,799 @@
+# Derived from the provider-published Swagger 2.0 spec, split by tag.
+# source: https://appapi.ironscales.com/appapi/docs/?format=openapi
+# original: openapi/_original/ironscales-management-api-openapi.json
+# generated: '2026-08-04'
+# method: derived
+swagger: '2.0'
+info:
+  title: IRONSCALES Management API — Mailboxes
+  description: The Mailboxes operations of the IRONSCALES Management API, split by tag from the provider-published Swagger
+    2.0 document at https://appapi.ironscales.com/appapi/docs/?format=openapi. Operations, parameters, responses and definitions
+    are carried verbatim from the source specification.
+  version: v1
+host: appapi.ironscales.com
+basePath: /appapi
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+securityDefinitions:
+  JWT:
+    type: apikey
+    name: Authorization
+    in: header
+security:
+- JWT: []
+tags:
+- name: Mailboxes
+paths:
+  /mailboxes/{company_id}/compliance-report/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    get:
+      operationId: Get compliance report
+      description: 'Compliance report for a company per user
+
+        <br/><b>Scopes:</b>
+
+        <ul>
+
+        <li>partner.all</li>
+
+        <li>company.all</li>
+
+        <li>partner.company.view</li>
+
+        <li>company.view</li>
+
+        </ul>'
+      parameters:
+      - name: period
+        in: query
+        description: "\nPeriod to filter the campaigns by:\n<ul>\n    <li>1 - Last 7 days</li>\n    <li>2 - Last year</li>\n\
+          \    <li>3 - Last 3 month</li>\n    <li>4 - Last 6 month</li>\n    <li>5 - Custom range (up to 180d) - MM-DD-YYYY\
+          \ - MM-DD-YYYY</li>\n</ul>\n"
+        required: false
+        type: integer
+        enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        default: 3
+      - name: customPeriodFrom
+        in: query
+        description: Start date of the custom period in MM-DD-YYYY format
+        required: false
+        type: string
+        format: date
+      - name: customPeriodTo
+        in: query
+        description: End date of the custom period in MM-DD-YYYY format
+        required: false
+        type: string
+        format: date
+      - name: page
+        in: query
+        description: Page number
+        required: false
+        type: integer
+        default: 1
+      responses:
+        '200':
+          description: Successfully Response
+          schema:
+            $ref: '#/definitions/MailboxesUserComplianceReportResponse'
+      tags:
+      - Mailboxes
+  /mailboxes/{company_id}/list/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    get:
+      operationId: List of a company mailboxes
+      description: 'List of a company mailboxes
+
+        <br/><b>Scopes:</b>
+
+        <ul>
+
+        <li>partner.all</li>
+
+        <li>company.all</li>
+
+        <li>partner.company.view</li>
+
+        <li>company.view</li>
+
+        </ul>
+
+
+        All filters with string values are case-insensitive'
+      parameters:
+      - name: ids
+        in: query
+        description: List of mailbox ids
+        required: false
+        type: array
+        items:
+          type: integer
+      - name: exclude_ids
+        in: query
+        description: List of mailbox ids to exclude
+        required: false
+        type: array
+        items:
+          type: integer
+      - name: search
+        in: query
+        description: Search term to look for in first_name, last_name, title, department, email or phone_number fields
+        required: false
+        type: string
+        x-nullable: true
+      - name: is_enabled
+        in: query
+        required: false
+        type: boolean
+        x-nullable: true
+      - name: tags
+        in: query
+        description: Array of tag names
+        required: false
+        type: array
+        items:
+          type: string
+          minLength: 1
+      - name: first_name
+        in: query
+        required: false
+        type: string
+        x-nullable: true
+      - name: last_name
+        in: query
+        required: false
+        type: string
+        x-nullable: true
+      - name: department
+        in: query
+        required: false
+        type: string
+        x-nullable: true
+      - name: email
+        in: query
+        required: false
+        type: string
+        x-nullable: true
+      - name: title
+        in: query
+        required: false
+        type: string
+        x-nullable: true
+      - name: is_protected
+        in: query
+        required: false
+        type: boolean
+        x-nullable: true
+      - name: language
+        in: query
+        description: Language full name
+        required: false
+        type: string
+        x-nullable: true
+      - name: awareness
+        in: query
+        description: 0 - Beginner Level, 1 - Mid Level, 2 - Expert Level
+        required: false
+        type: array
+        items:
+          type: integer
+          maximum: 2
+          minimum: 0
+      - name: sort
+        in: query
+        required: false
+        type: string
+        enum:
+        - id
+        - title
+        - department
+        - first_name
+        - last_name
+        - email
+        - awareness
+        - is_enabled
+        - language
+        - is_protected
+        default: id
+      - name: order
+        in: query
+        required: false
+        type: string
+        enum:
+        - asc
+        - desc
+        default: asc
+      - name: page
+        in: query
+        description: Page Number
+        required: false
+        type: integer
+        default: 1
+      - name: items_per_page
+        in: query
+        description: Number of items per page (optional, overrides default)
+        required: false
+        type: integer
+        default: 100
+        minimum: 1
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/MailboxesPageDetails'
+        '400':
+          description: Error explanation in error_message
+          examples:
+            application/json:
+              error_message: explanation
+        '404':
+          description: Company was not found or page out of range
+        '403':
+          description: No permissions
+      tags:
+      - Mailboxes
+    put:
+      operationId: Bulk edit of a company mailboxes
+      description: 'List of a company mailboxes
+
+        <br/><b>Scopes:</b>
+
+        <ul>
+
+        <li>partner.all</li>
+
+        <li>company.all</li>
+
+        <li>partner.company.edit</li>
+
+        <li>company.edit</li>
+
+        </ul>
+
+
+        Tags manipulation - both adding and deletion - is performed asynchronously by background task.
+
+        The result of these operations may be not available immediately after getting a response.'
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/MailboxUpdateRequest'
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/MailboxesUpdateResponse'
+        '400':
+          description: Error explanation in error_message
+          examples:
+            application/json:
+              error_message: explanation
+        '404':
+          description: Company was not found or page out of range
+        '403':
+          description: No permissions
+      tags:
+      - Mailboxes
+  /mailboxes/{company_id}/user-campaigns-performance/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    get:
+      operationId: Get user campaign performance
+      description: '
+
+        List of a company users performances per campaign
+
+        <br/><b>Scopes:</b>
+
+        <ul>
+
+        <li>partner.all</li>
+
+        <li>company.all</li>
+
+        <li>partner.company.view</li>
+
+        <li>company.view</li>
+
+        </ul>
+
+        '
+      parameters:
+      - name: period
+        in: query
+        description: "\nPeriod to filter the campaigns by:\n<ul>\n    <li>1 - Last 7 days</li>\n    <li>2 - Last year</li>\n\
+          \    <li>3 - Last 3 month</li>\n    <li>4 - Last 6 month</li>\n    <li>5 - Custom range (up to 180d) - MM-DD-YYYY\
+          \ - MM-DD-YYYY</li>\n</ul>\n"
+        required: false
+        type: integer
+        enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        default: 3
+      - name: customPeriodFrom
+        in: query
+        description: Start date of the custom period in MM-DD-YYYY format
+        required: false
+        type: string
+        format: date
+      - name: customPeriodTo
+        in: query
+        description: End date of the custom period in MM-DD-YYYY format
+        required: false
+        type: string
+        format: date
+      - name: page
+        in: query
+        description: Page number
+        required: false
+        type: integer
+        default: 1
+      - name: country
+        in: query
+        description: Country name to filter the users by
+        required: false
+        type: string
+        x-nullable: true
+      - name: department
+        in: query
+        description: Department name to filter the users by
+        required: false
+        type: string
+        x-nullable: true
+      - name: campaignType
+        in: query
+        description: "\nType of the campaign:\n<ul>\n    <li>1 - Simulation</li>\n    <li>2 - Training</li>\n    <li>3 - Spear\
+          \ Phishing</li>\n</ul>\n"
+        required: false
+        type: array
+        items:
+          type: integer
+          enum:
+          - 1
+          - 2
+          - 3
+        x-nullable: true
+        collectionFormat: multi
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/MailboxesUserPerformanceResponse'
+        '400':
+          description: Error explanation in error_message
+          examples:
+            application/json:
+              error_message: explanation
+        '404':
+          description: Company was not found or page out of range
+        '403':
+          description: No permissions
+      tags:
+      - Mailboxes
+definitions:
+  MailboxFilter:
+    type: object
+    properties:
+      ids:
+        type: array
+        items:
+          type: integer
+      exclude_ids:
+        type: array
+        items:
+          type: integer
+      search:
+        title: Search
+        type: string
+        minLength: 1
+      is_enabled:
+        title: Is enabled
+        type: boolean
+        x-nullable: true
+      tags:
+        type: array
+        items:
+          type: string
+          minLength: 1
+  MailboxUpdateParams:
+    type: object
+    properties:
+      is_enabled:
+        title: Is enabled
+        type: boolean
+      add_tags:
+        type: array
+        items:
+          type: string
+          minLength: 1
+      remove_tags:
+        type: array
+        items:
+          type: string
+          minLength: 1
+  MailboxUpdateRequest:
+    required:
+    - params
+    type: object
+    properties:
+      filters:
+        $ref: '#/definitions/MailboxFilter'
+      params:
+        $ref: '#/definitions/MailboxUpdateParams'
+  MailboxesDetails:
+    required:
+    - id
+    - firstName
+    - lastName
+    - title
+    - department
+    - email
+    - phoneNumber
+    - tags
+    - language
+    - riskLevel
+    - awarenessLevel
+    - protected
+    - unprotectedReason
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+      firstName:
+        title: Firstname
+        type: string
+        minLength: 1
+        x-nullable: true
+      lastName:
+        title: Lastname
+        type: string
+        minLength: 1
+        x-nullable: true
+      title:
+        title: Title
+        type: string
+        minLength: 1
+        x-nullable: true
+      department:
+        title: Department
+        type: string
+        minLength: 1
+        x-nullable: true
+      email:
+        title: Email
+        type: string
+        minLength: 1
+      phoneNumber:
+        title: Phonenumber
+        type: string
+        minLength: 1
+        x-nullable: true
+      tags:
+        type: array
+        items:
+          type: string
+          minLength: 1
+        x-nullable: true
+      language:
+        title: Language
+        type: string
+        minLength: 1
+        x-nullable: true
+      enabled:
+        title: Enabled
+        type: boolean
+      riskLevel:
+        title: Risklevel
+        type: string
+        minLength: 1
+        x-nullable: true
+      awarenessLevel:
+        title: Awarenesslevel
+        type: string
+        minLength: 1
+        x-nullable: true
+      protected:
+        title: Protected
+        type: boolean
+        x-nullable: true
+      unprotectedReason:
+        title: Unprotectedreason
+        type: string
+        minLength: 1
+        x-nullable: true
+  MailboxesPageDetails:
+    required:
+    - page
+    - total_pages
+    - total_count
+    - mailboxes
+    type: object
+    properties:
+      page:
+        title: Page
+        type: integer
+      total_pages:
+        title: Total pages
+        type: integer
+      total_count:
+        title: Total count
+        type: integer
+      mailboxes:
+        type: array
+        items:
+          $ref: '#/definitions/MailboxesDetails'
+  MailboxesUpdateResponse:
+    required:
+    - mailbox_ids
+    - error_message
+    type: object
+    properties:
+      mailbox_ids:
+        description: IDs of mailboxes that matched the filters
+        type: array
+        items:
+          type: integer
+      error_message:
+        title: Error message
+        description: Error description if any of mailboxes wasn't updated
+        type: string
+        minLength: 1
+  MailboxesUserComplianceReport:
+    required:
+    - firstName
+    - email
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      firstName:
+        title: First name
+        type: string
+        maxLength: 40
+        minLength: 1
+      lastName:
+        title: Last name
+        type: string
+        maxLength: 40
+        x-nullable: true
+      country:
+        title: Country
+        type: string
+        maxLength: 100
+        x-nullable: true
+      department:
+        title: Department
+        type: string
+        maxLength: 100
+        x-nullable: true
+      title:
+        title: Title
+        type: string
+        maxLength: 250
+        x-nullable: true
+      email:
+        title: Email
+        type: string
+        format: email
+        maxLength: 254
+        minLength: 1
+      language:
+        title: Language
+        type: string
+        readOnly: true
+      simulationCampaignsCompletionsCount:
+        title: Simulation campaigns completions count
+        type: integer
+        readOnly: true
+      lastSimulationCampaignDate:
+        title: Last simulation campaign date
+        description: date-time format %b %d, %Y %H:%M
+        type: string
+        format: date-time
+        readOnly: true
+        x-nullable: true
+      trainingCampaignsCompletionsCount:
+        title: Training campaigns completions count
+        type: integer
+        readOnly: true
+      lastTrainingCampaignDate:
+        title: Last training campaign date
+        description: date-time format %b %d, %Y %H:%M
+        type: string
+        format: date-time
+        readOnly: true
+        x-nullable: true
+      riskLevel:
+        title: Risk level
+        type: string
+        enum:
+        - Low
+        - Medium
+        - High
+        readOnly: true
+      awarenessLevel:
+        title: Awareness level
+        type: string
+        enum:
+        - Beginner Level
+        - Mid Level
+        - Expert Level
+        readOnly: true
+  MailboxesUserComplianceReportResponse:
+    required:
+    - page
+    - total_pages
+    - data
+    type: object
+    properties:
+      page:
+        title: Page
+        type: integer
+      total_pages:
+        title: Total pages
+        type: integer
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/MailboxesUserComplianceReport'
+  MailboxesUserPerformance:
+    required:
+    - userId
+    - firstName
+    - lastName
+    - country
+    - department
+    - title
+    - email
+    - campaignId
+    - campaignName
+    - campaignCollectingEndDate
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      userId:
+        title: Userid
+        type: integer
+      firstName:
+        title: First name
+        type: string
+        minLength: 1
+      lastName:
+        title: Last name
+        type: string
+        minLength: 1
+      country:
+        title: Country
+        type: string
+        minLength: 1
+      department:
+        title: Department
+        type: string
+        minLength: 1
+      title:
+        title: Title
+        type: string
+        minLength: 1
+      email:
+        title: Email
+        type: string
+        minLength: 1
+      campaignId:
+        title: Campaign id
+        type: integer
+      campaignName:
+        title: Campaign name
+        type: string
+        minLength: 1
+      campaignType:
+        title: Campaign type
+        type: string
+        enum:
+        - Training
+        - Simulation
+        - Spear Phishing
+        - Agentic
+        readOnly: true
+      campaignSimulationResult:
+        title: Campaign simulation result
+        type: string
+        enum:
+        - Reported
+        - Clicked
+        - Entered Details
+        - Opened
+        - Unopened
+        - Not delivered
+        - N/A
+        readOnly: true
+        x-nullable: true
+      campaignTrainingStatus:
+        title: Campaign training status
+        type: string
+        enum:
+        - Postponed
+        - Manually trained
+        - 'Yes'
+        - 'No'
+        - Started, not completed
+        - Not started
+        - N/A
+        - Scheduled to send
+        readOnly: true
+        x-nullable: true
+      campaignTrainingName:
+        title: Campaign training name
+        type: string
+        readOnly: true
+        minLength: 1
+        x-nullable: true
+      campaignCollectingEndDate:
+        title: Collecting end date (UTC)
+        description: date-time format %b %d, %Y %H:%M
+        type: string
+        format: date-time
+      campaignScore:
+        title: Campaign score
+        type: integer
+        readOnly: true
+        maximum: 100
+        minimum: 0
+        x-nullable: true
+      campaignLocale:
+        title: Campaign locale
+        type: string
+        readOnly: true
+      campaignTemplateName:
+        title: Campaign template name
+        type: string
+        readOnly: true
+        minLength: 1
+        x-nullable: true
+  MailboxesUserPerformanceResponse:
+    required:
+    - page
+    - total_pages
+    - data
+    type: object
+    properties:
+      page:
+        title: Page
+        type: integer
+      total_pages:
+        title: Total pages
+        type: integer
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/MailboxesUserPerformance'

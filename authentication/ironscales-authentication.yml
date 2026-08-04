@@ -1,0 +1,88 @@
+generated: '2026-08-04'
+method: searched
+source: https://appapi.ironscales.com/appapi/docs/?format=openapi
+docs: https://ironscales.com/platform/api
+summary:
+  types:
+  - apiKey
+  - oauth2
+  api_key_in:
+  - header
+  oauth2_flows:
+  - authorizationCode
+  surfaces:
+  - IRONSCALES Management API (REST) — JWT bearer token in the Authorization header
+  - IRONSCALES MCP Server — OAuth 2.0 authorization code + PKCE
+schemes:
+- name: JWT
+  type: apiKey
+  in: header
+  parameter: Authorization
+  applies_to: IRONSCALES Management API
+  declared_as: apikey
+  note: >-
+    The provider spec declares this scheme with `"type": "apikey"` (lowercase k), which is not a valid
+    Swagger 2.0 securityDefinitions type — the specification requires `apiKey`. Tooling that validates
+    strictly will reject the securityDefinitions block. Captured here and in
+    overlays/ironscales-management-api-overlay.yaml rather than mutating the harvested original.
+  sources:
+  - openapi/_original/ironscales-management-api-openapi.json
+  - openapi/ironscales-authorization-openapi.yml
+  - openapi/ironscales-campaigns-openapi.yml
+  - openapi/ironscales-deepfake-openapi.yml
+  - openapi/ironscales-emails-openapi.yml
+  - openapi/ironscales-incident-openapi.yml
+  - openapi/ironscales-mailboxes-openapi.yml
+  - openapi/ironscales-mitigation-openapi.yml
+  - openapi/ironscales-sat-openapi.yml
+  - openapi/ironscales-settings-openapi.yml
+- name: OAuth2
+  type: oauth2
+  applies_to: IRONSCALES MCP Server (https://mcp.ironscales.com/mcp/)
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://members.ironscales.com/o/authorize/
+    tokenUrl: https://members.ironscales.com/o/token/
+    pkce: S256
+    refresh_token: true
+  issuer: https://members.ironscales.com
+  registration_endpoint: https://members.ironscales.com/o/register/
+  revocation_endpoint: https://members.ironscales.com/o/revoke_token/
+  introspection_endpoint: https://members.ironscales.com/o/introspect/
+  token_endpoint_auth_methods:
+  - client_secret_post
+  dynamic_client_registration: true
+  scopes_published: false
+  scopes_note: >-
+    The RFC 8414 authorization-server metadata document does not advertise `scopes_supported`, and no
+    scope reference is published in the public docs, so no scopes/ artifact is emitted rather than
+    guess a scope vocabulary.
+  sources:
+  - well-known/ironscales-oauth-authorization-server.json
+  - well-known/ironscales-oauth-protected-resource.json
+credential_flow:
+  rest:
+    step_1: >-
+      An IRONSCALES dashboard user with an ADMIN or OWNER role generates an APP API Token under
+      Settings > Account Settings > General & Security, alongside the tenant Company ID.
+    step_2: >-
+      POST /appapi/get-token/ (operationId "get JWT token") exchanges the APP API token for a JWT.
+    step_3: >-
+      The JWT is presented on every subsequent call in the Authorization request header. Nearly every
+      operation is additionally scoped by a company_id path parameter, so the token and the tenant id
+      are both required.
+    token_lifetime: not published
+  mcp:
+    step_1: >-
+      The MCP client discovers https://mcp.ironscales.com/.well-known/oauth-protected-resource from the
+      401 WWW-Authenticate challenge, which names https://members.ironscales.com/ as the authorization server.
+    step_2: >-
+      The client may self-register at the RFC 7591 registration endpoint, then runs an authorization
+      code + PKCE (S256) flow against members.ironscales.com.
+    step_3: >-
+      The resulting bearer token is sent in the Authorization header to https://mcp.ironscales.com/mcp/.
+x-evidence:
+  fetched: '2026-08-04'
+  openapi_url: https://appapi.ironscales.com/appapi/docs/?format=openapi
+  openapi_http_status: 200
+  oauth_metadata_http_status: 200

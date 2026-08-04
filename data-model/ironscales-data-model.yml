@@ -1,0 +1,538 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/_original/ironscales-management-api-openapi.json
+summary:
+  schemas: 129
+  paths: 46
+  operations: 61
+  schema_ref_relationships: 84
+  id_reference_relationships: 10
+tenancy:
+  root_key: company_id
+  in: path
+  note: company_id is the tenant partition key and appears in 77 parameter positions. Every entity below is reachable
+    only within a company. There is no operation to list the companies an APP API token can see, so the Company
+    ID must be obtained out-of-band from the IRONSCALES dashboard (Settings > Account Settings > General & Security).
+entities:
+- entity: campaigns
+  operations: 3
+  paths:
+  - /campaigns/{company_id}/details
+  - /campaigns/{company_id}/participants-actions/
+  - /campaigns/{company_id}/participants-details
+  operationIds:
+  - Get campaign participants details
+  - Get campaigns details
+  - Perform participants action
+- entity: deepfake
+  operations: 1
+  paths:
+  - /deepfake/{company_id}/events/
+  operationIds:
+  - Get list of Deepfake SIEM events
+- entity: emails
+  operations: 1
+  paths:
+  - /emails/{company_id}/
+  operationIds:
+  - List of escalated emails
+- entity: get-token
+  operations: 1
+  paths:
+  - /get-token/
+  operationIds:
+  - get JWT token
+- entity: incident
+  operations: 10
+  paths:
+  - /incident/{company_id}/account-takeover/{incident_id}/details/
+  - /incident/{company_id}/account-takeover/{incident_id}/remediation/
+  - /incident/{company_id}/classify/{incident_id}
+  - /incident/{company_id}/details/{incident_id}
+  - /incident/{company_id}/list/
+  - /incident/{company_id}/recluster/{incident_id}
+  - /incident/{company_id}/scanback-list/
+  - /incident/{company_id}/stats/remediation-statuses/
+  - /incident/{company_id}/uncluster/{incident_id}
+  - /incident/{company_id}/{status}/
+  operationIds:
+  - Classify specific incident
+  - Create Account Takeover remediation
+  - Get Account Takeover incident details
+  - Get IDs list of unclassified incidents
+  - Get details of specific incident
+  - Get list of Incidents
+  - Get list of Scanback Incidents
+  - Recluster incident
+  - Remediation statuses stats
+  - Uncluster incident
+- entity: mailboxes
+  operations: 4
+  paths:
+  - /mailboxes/{company_id}/compliance-report/
+  - /mailboxes/{company_id}/list/
+  - /mailboxes/{company_id}/user-campaigns-performance/
+  operationIds:
+  - Bulk edit of a company mailboxes
+  - Get compliance report
+  - Get user campaign performance
+  - List of a company mailboxes
+- entity: mitigation
+  operations: 9
+  paths:
+  - /mitigation/{company_id}/details/
+  - /mitigation/{company_id}/impersonation/details/
+  - /mitigation/{company_id}/incidents/details/
+  - /mitigation/{company_id}/stats/
+  - /mitigation/{company_id}/stats/emails/
+  - /mitigation/{company_id}/stats/most-targeted-departments/
+  - /mitigation/{company_id}/stats/most-targeted-employees/
+  - /mitigation/{company_id}/stats/v2/
+  operationIds:
+  - Get a company mitigation details
+  - Get a company mitigation statistics
+  - Get a company mitigation statistics V2
+  - Get details of mitigations per mailbox
+  - Get emails stats
+  - Get the latest company impersonation incidents
+  - Get the latest company impersonation paginated incidents
+  - Most targeted departments
+  - Most targeted employees
+- entity: sat
+  operations: 18
+  paths:
+  - /sat/{company_id}/campaigns/
+  - /sat/{company_id}/campaigns/lookup/
+  - /sat/{company_id}/campaigns/{campaign_id}/
+  - /sat/{company_id}/campaigns/{campaign_id}/approve/
+  - /sat/{company_id}/campaigns/{campaign_id}/stop/
+  - /sat/{company_id}/cta/
+  - /sat/{company_id}/landing-pages/
+  - /sat/{company_id}/participants/
+  - /sat/{company_id}/participants/search/
+  - /sat/{company_id}/setup/
+  - /sat/{company_id}/templates/
+  - /sat/{company_id}/templates/categories/
+  - /sat/{company_id}/trainings/
+  - /sat/{company_id}/trainings/providers/
+  - /sat/{company_id}/trainings/{training_id}/preview/
+  operationIds:
+  - Approve Campaign
+  - Calculate Participants
+  - Create Draft Campaign
+  - Delete Campaign
+  - Get Campaign Details
+  - Get Campaign Setup
+  - Get Campaigns List
+  - Get Campaigns Lookup
+  - Get Participants List
+  - Get Template Categories
+  - Get Templates List
+  - Get Training Preview URL
+  - Get Training Providers
+  - Get Trainings List
+  - Get call for action pages
+  - Get landing pages
+  - Search Participants
+  - Stop Campaign
+- entity: settings
+  operations: 14
+  paths:
+  - /settings/{company_id}/account-takeover/
+  - /settings/{company_id}/allow-list/
+  - /settings/{company_id}/challenged-alerts/
+  - /settings/{company_id}/incident-alerts/
+  operationIds:
+  - Append challenged notification settings
+  - Append to company notification settings
+  - Create allow list settings
+  - Create challenged notification settings
+  - Create company notification settings
+  - Delete allow list entries
+  - Delete challenged notification settings
+  - Delete company notification settings
+  - Get account takeover sensitivity settings
+  - Get allow list settings
+  - Get challenged notification settings
+  - Get company notification settings
+  - Update account takeover sensitivity settings
+  - Update allow list entry
+relationships:
+- from: AccountTakeoverDetailsResponse
+  type: has_one
+  to: FilterOptions
+  via: filter_options
+- from: AccountTakeoverDetailsResponse
+  type: has_one
+  to: AccountTakeoverIncidentDetails
+  via: incident_details
+- from: AccountTakeoverIncidentDetails
+  type: has_one
+  to: AccountDetails
+  via: account_details
+- from: AccountTakeoverIncidentDetails
+  type: has_many
+  to: Alert
+  via: alerts
+- from: AccountTakeoverIncidentDetails
+  type: has_one
+  to: Assignee
+  via: assignee
+- from: Alert
+  type: has_many
+  to: AlertDetail
+  via: details
+- from: CallForAction
+  type: has_many
+  to: CallForActionData
+  via: data
+- from: CampaignCreateRequest
+  type: has_one
+  to: ManagerNotificationSettingsCreate
+  via: manager_notification_settings
+- from: CampaignCreateRequest
+  type: has_many
+  to: CampaignNotification
+  via: notifications
+- from: CampaignCreateRequest
+  type: has_one
+  to: ParticipantsCalculateInclude
+  via: participants_choices
+- from: CampaignCreateRequest
+  type: has_one
+  to: ParticipantsCalculateBase
+  via: participants_exclude_choices
+- from: CampaignCreateRequest
+  type: has_one
+  to: TrainingCampaignData
+  via: training_campaign_data
+- from: CampaignCreateRequest
+  type: has_many
+  to: TrainingReminderContent
+  via: training_reminders
+- from: CampaignDetailsPage
+  type: has_many
+  to: CampaignDetails
+  via: campaigns
+- from: CampaignDetailsResponse
+  type: has_one
+  to: LandingPage
+  via: landing_page
+- from: CampaignDetailsResponse
+  type: has_one
+  to: CampaignManagerNotificationSettings
+  via: manager_notification_settings
+- from: CampaignDetailsResponse
+  type: has_many
+  to: CampaignNotification
+  via: notifications
+- from: CampaignDetailsResponse
+  type: has_many
+  to: Scenario
+  via: scenarios
+- from: CampaignDetailsResponse
+  type: has_many
+  to: Segment
+  via: segments
+- from: CampaignDetailsResponse
+  type: has_one
+  to: TrainingCampaignData
+  via: training_campaign_data
+- from: CampaignDetailsResponse
+  type: has_many
+  to: TrainingReminderContent
+  via: training_reminders
+- from: CampaignDetailsResponse
+  type: has_many
+  to: CampaignTrainingContent
+  via: trainings
+- from: CampaignListResponse
+  type: has_many
+  to: CampaignListResponseItem
+  via: data
+- from: CampaignListResponseItem
+  type: has_one
+  to: CampaignStatistic
+  via: statistic
+- from: CampaignLookupResponse
+  type: has_many
+  to: CampaignLookupResponseItem
+  via: data
+- from: CampaignManagerNotificationSettings
+  type: has_one
+  to: ManagerNotificationBanner
+  via: banner
+- from: CampaignManagerNotificationSettings
+  type: has_one
+  to: ManagerReportEmail
+  via: report_email
+- from: CampaignParticipantsDetailsPage
+  type: has_many
+  to: CampaignParticipantsDetails
+  via: participants
+- from: CampaignSetup
+  type: has_many
+  to: Language
+  via: languages
+- from: CampaignTrainingContent
+  type: has_many
+  to: CampaignTrainingContentItem
+  via: items
+- from: CampaignTrainingContent
+  type: has_many
+  to: BaseTrainingSubtitle
+  via: subtitles
+- from: DeepfakeEventsPage
+  type: has_many
+  to: DeepfakeEvent
+  via: events
+- from: EmailsResponse
+  type: has_many
+  to: EmailsDetailFromElastic
+  via: emails
+- from: EmailsStats
+  type: has_many
+  to: EmailPhishingThreatTypeStats
+  via: phishing_threat_types
+- from: ImpersonationDetailsPage
+  type: has_many
+  to: ImpersonationDetails
+  via: incidents
+- from: IncidentDetails
+  type: has_many
+  to: AffectedMailbox
+  via: affected_mailboxes
+- from: IncidentDetails
+  type: has_many
+  to: Attachment
+  via: attachments
+- from: IncidentDetails
+  type: has_many
+  to: IncidentComment
+  via: comments
+- from: IncidentDetails
+  type: has_one
+  to: FederationDetails
+  via: federation
+- from: IncidentDetails
+  type: has_many
+  to: Link
+  via: links
+- from: IncidentDetails
+  type: has_one
+  to: MailServer
+  via: mail_server
+- from: IncidentDetails
+  type: has_many
+  to: ReportedEmail
+  via: reports
+- from: IncidentListPage
+  type: has_many
+  to: IncidentList
+  via: incidents
+- from: IncidentPageDetails
+  type: has_many
+  to: MitigationIncidentDetails
+  via: incidents
+- from: LandingPages
+  type: has_many
+  to: LandingPagesData
+  via: data
+- from: LandingPagesData
+  type: has_many
+  to: LandingPageContent
+  via: contents
+- from: MailboxUpdateRequest
+  type: has_one
+  to: MailboxFilter
+  via: filters
+- from: MailboxUpdateRequest
+  type: has_one
+  to: MailboxUpdateParams
+  via: params
+- from: MailboxesPageDetails
+  type: has_many
+  to: MailboxesDetails
+  via: mailboxes
+- from: MailboxesUserComplianceReportResponse
+  type: has_many
+  to: MailboxesUserComplianceReport
+  via: data
+- from: MailboxesUserPerformanceResponse
+  type: has_many
+  to: MailboxesUserPerformance
+  via: data
+- from: ManagerNotificationSettingsCreate
+  type: has_one
+  to: ManagerNotificationBanner
+  via: banner
+- from: ManagerNotificationSettingsCreate
+  type: has_one
+  to: ManagerReportEmail
+  via: report_email
+- from: MitigationPageDetails
+  type: has_many
+  to: MitigationDetails
+  via: mitigations
+- from: MitigationStatsV2View
+  type: has_one
+  to: InspectedEmails
+  via: inspected_emails
+- from: MitigationStatsV2View
+  type: has_one
+  to: MaliciousContentIncidents
+  via: malicious_content_incidents
+- from: MitigationStatsV2View
+  type: has_one
+  to: ResolvedAutomatically
+  via: resolved_automatically
+- from: MitigationStatsV2View
+  type: has_one
+  to: ResolvedByAnalyst
+  via: resolved_by_analyst
+- from: MostTargetedDepartments
+  type: has_many
+  to: MostTargetedDepartment
+  via: items
+- from: MostTargetedEmployee
+  type: has_one
+  to: MailboxesDetails
+  via: mailbox
+- from: MostTargetedEmployees
+  type: has_many
+  to: MostTargetedEmployee
+  via: items
+- from: ParticipantsActionsRequest
+  type: has_one
+  to: ParticipantsActionsFilters
+  via: filters
+- from: ParticipantsCalculateRequest
+  type: has_one
+  to: ParticipantsCalculateBase
+  via: exclude
+- from: ParticipantsCalculateRequest
+  type: has_one
+  to: ParticipantsCalculateInclude
+  via: include
+- from: ParticipantsCalculateResponse
+  type: has_many
+  to: ParticipantCandidate
+  via: items
+- from: ParticipantsCalculateResponse
+  type: has_one
+  to: ParticipantsCalculateResponseMeta
+  via: meta
+- from: ParticipantsCalculateResponseMeta
+  type: has_one
+  to: AwarenessLevelsDistribution
+  via: awareness_levels
+- from: ParticipantsSearchResponse
+  type: has_many
+  to: ParticipantItem
+  via: items
+- from: RemediationStatusesStats
+  type: has_one
+  to: RemediationStatusStats
+  via: phishing
+- from: RemediationStatusesStats
+  type: has_one
+  to: RemediationStatusStats
+  via: safe
+- from: RemediationStatusesStats
+  type: has_one
+  to: RemediationStatusStats
+  via: spam
+- from: RemediationStatusesStats
+  type: has_one
+  to: RemediationStatusStats
+  via: unclassified
+- from: ReportedEmail
+  type: has_many
+  to: Header
+  via: headers
+- from: ReportedEmail
+  type: has_one
+  to: MailServer
+  via: mail_server
+- from: ScanBackPage
+  type: has_many
+  to: ScanBackList
+  via: incidents
+- from: Scenario
+  type: has_one
+  to: Category
+  via: category
+- from: Template
+  type: has_many
+  to: TemplateContent
+  via: items
+- from: TemplateCategoriesResponse
+  type: has_many
+  to: TemplateCategory
+  via: data
+- from: TemplatesListResponse
+  type: has_many
+  to: Template
+  via: data
+- from: Training
+  type: has_many
+  to: TrainingItem
+  via: items
+- from: Training
+  type: has_many
+  to: BaseTrainingSubtitle
+  via: subtitles
+- from: TrainingProvidersResponse
+  type: has_many
+  to: TrainingProvider
+  via: data
+- from: TrainingsListResponse
+  type: has_many
+  to: Training
+  via: data
+- from: WhiteListResponse
+  type: has_many
+  to: WhiteListEntry
+  via: allow_list
+id_references:
+- from: CallForActionData
+  type: belongs_to
+  to: company
+  via: company_id
+- from: CampaignCreateRequest
+  type: belongs_to
+  to: landing_page
+  via: landing_page_id
+- from: CampaignDetailsResponse
+  type: belongs_to
+  to: company
+  via: company_id
+- from: CampaignParticipantsDetailsPage
+  type: belongs_to
+  to: campaign
+  via: campaign_id
+- from: EmailsDetailFromElastic
+  type: belongs_to
+  to: incident
+  via: incident_id
+- from: EmailsDetailFromElastic
+  type: belongs_to
+  to: mailbox
+  via: mailbox_id
+- from: IncidentDetails
+  type: belongs_to
+  to: company
+  via: company_id
+- from: IncidentDetails
+  type: belongs_to
+  to: incident
+  via: incident_id
+- from: LandingPagesData
+  type: belongs_to
+  to: company
+  via: company_id
+- from: Template
+  type: belongs_to
+  to: company
+  via: company_id
+id_prefixes: not published — identifiers are opaque integers/strings with no documented prefix scheme

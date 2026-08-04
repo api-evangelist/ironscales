@@ -1,0 +1,34 @@
+# IRONSCALES
+
+> IRONSCALES is an AI-powered, API-based email security platform that protects 17,000+ organizations from phishing, business email compromise (BEC), account takeover, and other advanced email threats. The platform combines adaptive AI detection, computer vision, automated remediation across all affected mailboxes, human risk management, and a crowdsourced threat intelligence network — deployed in minutes via API with no MX record changes.
+
+IRONSCALES was named a Visionary in the Gartner Magic Quadrant for Email Security Platforms (2024, 2025) and a Leader & Outperformer in the GigaOm Anti-Phishing Radar (2025).
+
+## Platform
+
+- [Platform overview](https://ironscales.com/platform): Adaptive AI email security — detection, automated remediation, and human risk management in one platform
+- [Product tours](https://ironscales.com/product-tours): Interactive self-guided demos of the platform's core workflows
+- [Why IRONSCALES](https://ironscales.com/why-ironscales): How the platform differs from secure email gateways and native Microsoft/Google protection
+
+## Solutions
+
+- [Solutions](https://ironscales.com/solutions): Solutions by threat type (phishing, BEC, ATO, VIP impersonation, QR-code phishing) and by environment (Microsoft 365, Google Workspace)
+- [MSP & MSSP program](https://ironscales.com/partners/msp-mssp-program): Multi-tenant email security for managed service providers
+- [Partners](https://ironscales.com/partners): Channel, technology, and OEM partnerships
+
+## Threat Intelligence
+
+- [Threat Intelligence hub](https://ironscales.com/threat-intelligence): Daily "Attack of the Day" teardowns of real phishing attacks caught in production — techniques, IOCs, MITRE ATT&CK mappings, and detection analysis
+- [Blog](https://ironscales.com/blog): Email security research, product news, and industry analysis
+- [Cybersecurity glossary](https://ironscales.com/glossary): Plain-language definitions of 140+ email security and phishing terms
+
+## Resources
+
+- [Guides](https://ironscales.com/guides): In-depth guides on phishing awareness training, Microsoft 365 email security, and SEG migration
+- [Case studies](https://ironscales.com/case-studies): Customer outcomes and deployment stories
+- [Resources library](https://ironscales.com/resources): Reports, webinars, datasheets, and analyst research
+
+## Company
+
+- [About IRONSCALES](https://ironscales.com/about): Company history, leadership, and mission
+- [Get a demo](https://ironscales.com/get-a-demo): Book a live demo

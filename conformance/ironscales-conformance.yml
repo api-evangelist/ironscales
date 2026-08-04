@@ -1,0 +1,90 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/_original/ironscales-management-api-openapi.json + https://trust.ironscales.com/
+standards:
+- id: swagger-2.0
+  conforms: true
+  evidence: Provider publishes a Swagger 2.0 document (drf-yasg) at https://appapi.ironscales.com/appapi/docs/?format=openapi
+- id: openapi-3
+  conforms: false
+  evidence: The published contract is Swagger 2.0; no OpenAPI 3.x document is offered.
+- id: oauth2
+  conforms: true
+  evidence: >-
+    RFC 6749 authorization code grant with refresh tokens, advertised in the authorization-server metadata
+    at https://members.ironscales.com/.well-known/oauth-authorization-server and used to protect the MCP server.
+- id: rfc7636-pkce
+  conforms: true
+  evidence: code_challenge_methods_supported = ["S256"]
+- id: rfc7591-dynamic-client-registration
+  conforms: true
+  evidence: registration_endpoint = https://members.ironscales.com/o/register/
+- id: rfc7662-token-introspection
+  conforms: true
+  evidence: introspection_endpoint = https://members.ironscales.com/o/introspect/
+- id: rfc7009-token-revocation
+  conforms: true
+  evidence: revocation_endpoint = https://members.ironscales.com/o/revoke_token/
+- id: rfc8414-authorization-server-metadata
+  conforms: true
+  evidence: 200 JSON at https://members.ironscales.com/.well-known/oauth-authorization-server
+- id: rfc9728-oauth-protected-resource-metadata
+  conforms: true
+  evidence: 200 JSON at https://mcp.ironscales.com/.well-known/oauth-protected-resource
+- id: rfc6750-bearer-token
+  conforms: true
+  evidence: MCP server returns a WWW-Authenticate Bearer challenge with error="invalid_token"
+- id: model-context-protocol
+  conforms: true
+  evidence: Remote MCP server over streamable HTTP at https://mcp.ironscales.com/mcp/ (tool manifest OAuth-gated)
+- id: oidc
+  conforms: false
+  evidence: No /.well-known/openid-configuration on any IRONSCALES host.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: No application/problem+json; no schema is attached to any 4xx/5xx response.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on ironscales.com, appapi, members and mcp hosts.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset/Deprecation header contract or deprecation policy is published.
+- id: rfc9110-idempotency
+  conforms: false
+  evidence: No Idempotency-Key header anywhere in the contract; POST writes carry no dedup guarantee.
+- id: a2a-agent-card
+  conforms: false
+  evidence: /.well-known/agent-card.json and /.well-known/agent.json return 404 on every host.
+- id: asyncapi
+  conforms: false
+  evidence: No event/streaming contract is published; the event surface is API polling plus syslog forwarding.
+- id: llmstxt
+  conforms: true
+  evidence: 200 text/plain at https://ironscales.com/llms.txt (marketing surface; no API or spec section)
+- id: iso-27001-2022
+  conforms: true
+  evidence: Certification listed on the IRONSCALES trust center (https://trust.ironscales.com/)
+- id: iso-42001-2023
+  conforms: true
+  evidence: AI management system certification listed on the IRONSCALES trust center
+- id: soc2-type2
+  conforms: true
+  evidence: SOC 2 Type 2 report listed on the IRONSCALES trust center
+- id: gdpr
+  conforms: true
+  evidence: DPA template and EU-US Data Privacy Framework notice published at https://ironscales.com/legal
+compliance_program:
+  trust_center: https://trust.ironscales.com/
+  platform: SafeBase by Drata
+  certifications:
+  - ISO/IEC 27001:2022
+  - ISO/IEC 42001:2023
+  - SOC 2 Type 2
+  documents:
+  - Data Processing Agreement
+  - EU-US Data Privacy Framework Notice
+  - Penetration testing summary
+  - Vulnerability and patch management policy
+  - Secure software development lifecycle policy
+x-evidence:
+  fetched: '2026-08-04'

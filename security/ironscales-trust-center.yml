@@ -1,0 +1,41 @@
+generated: '2026-08-04'
+method: searched
+probe: true
+source: https://trust.ironscales.com/
+url: https://trust.ironscales.com/
+platform: SafeBase by Drata
+certifications:
+- ISO/IEC 27001:2022
+- ISO/IEC 42001:2023
+- SOC 2 Type 2
+document_categories:
+- compliance certifications
+- data security (access monitoring, data asset classification, backups, encryption at rest, physical
+  security, secret management, data erasure)
+- application security (secure SDLC, vulnerability and patch management, penetration testing)
+- legal (Data Processing Agreement, Privacy Policy)
+- data privacy (breach notification, Data Privacy Officer)
+- corporate security
+access: >-
+  Certification names and document titles are listed publicly; the reports themselves (SOC 2, pen test)
+  are gated behind a SafeBase request/NDA flow, which is the normal trust-center pattern.
+security_contact: SOC@ironscales.com
+responsible_disclosure: security/ironscales-vulnerability-disclosure.yml
+related_legal:
+  legal_index: https://ironscales.com/legal
+  governance: https://ironscales.com/governance/
+  privacy_policy: https://ironscales.com/privacy-policy/
+  dpa: https://ironscales.com/hubfs/PDFs/Ironscales%20DPA%20Template%20(January%202025).pdf
+  eula: https://ironscales.com/hubfs/PDFs/Ironscales%20EULA%20Template%20(January%202025).pdf
+  data_privacy_framework: https://ironscales.com/hubfs/PDFs/IronScales%20-%20Data%20Privacy%20Framework%20Notice.pdf
+evidence:
+- source: https://trust.ironscales.com/
+  keywords:
+  - soc 2 type 2
+  - iso/iec 27001:2022
+  - iso/iec 42001:2023
+  - trust center
+  - responsible disclosure
+x-evidence:
+  fetched: '2026-08-04'
+  http_status: 200

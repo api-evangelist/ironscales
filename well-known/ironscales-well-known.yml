@@ -1,0 +1,94 @@
+generated: '2026-08-04'
+method: searched
+source: live probes of /.well-known/* on every IRONSCALES host in apis.yml
+notes: >-
+  Probed ironscales.com, appapi.ironscales.com, members.ironscales.com and mcp.ironscales.com.
+  ironscales.com is a HubSpot-hosted marketing site whose catch-all returns HTTP 404 with an HTML
+  body for every /.well-known/* path, so nothing there is a real discovery document. The OAuth
+  discovery surface behind the MCP server is real and anonymous: appapi.ironscales.com redirects
+  /.well-known/oauth-authorization-server to members.ironscales.com, and mcp.ironscales.com serves
+  RFC 9728 protected-resource metadata. No security.txt, no OpenID Connect discovery, no api-catalog,
+  no ai-plugin.json, and no A2A agent card were found on any host.
+hosts:
+- host: https://ironscales.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 200
+    content_type: text/plain
+    file: ../llms/ironscales-llms.txt
+- host: https://appapi.ironscales.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    redirects_to: https://members.ironscales.com/.well-known/oauth-authorization-server
+    content_type: application/json
+    file: ironscales-oauth-authorization-server.json
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://mcp.ironscales.com
+  documents:
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    content_type: application/json
+    file: ironscales-oauth-protected-resource.json
+    spec: RFC 9728
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    file: ironscales-oauth-authorization-server.json
+    spec: RFC 8414
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+- host: https://members.ironscales.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    file: ironscales-oauth-authorization-server.json
+    spec: RFC 8414
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+x-evidence:
+  fetched: '2026-08-04'
+  security_txt: not-published
+  agent_card: not-published

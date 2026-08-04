@@ -1,0 +1,47 @@
+generated: '2026-08-04'
+method: searched
+source: https://appapi.ironscales.com/appapi/docs/ + https://status.ironscales.com/ + https://ironscales.com/blog/tag/release-notes
+api: IRONSCALES Management API
+versioning:
+  scheme: none
+  current: v1
+  detail: >-
+    The specification reports info.version "v1" and serves from the fixed base path /appapi. There is no
+    version segment in any route, no version request header, and no documented mechanism to pin a version,
+    so consumers are always on the current deployment.
+  docs: https://appapi.ironscales.com/appapi/docs/
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  note: >-
+    No deprecation or sunset policy is published, and no operation in the contract is marked
+    `deprecated: true`. Two operations do carry a de facto generation marker in the surface itself —
+    "Get a company mitigation statistics" and "Get a company mitigation statistics V2" coexist at
+    /mitigation/{company_id}/stats/ and /mitigation/{company_id}/stats/v2/ — with no statement about
+    whether or when the V1 form retires. That is the whole of the observable deprecation posture.
+deprecated_operations: []
+sla:
+  url: null
+  uptime_target: not published
+  note: >-
+    No public SLA or uptime commitment is published on ironscales.com. Availability commitments, if any,
+    sit inside the EULA / MSP SaaS agreement rather than on a public page.
+status_page: https://status.ironscales.com/
+status_page_platform: Atlassian Statuspage
+release_notes:
+  url: https://ironscales.com/blog/tag/release-notes
+  cadence: numbered release train (v55.00.00, v60.00.00) plus seasonal releases
+  detail: changelog/ironscales-changelog.yml
+support:
+  portal: https://support.ironscales.com/hc/en-us
+  ticket: https://support.ironscales.com/hc/en-us/requests/new
+  hours: phone support Mon-Fri 06:00-21:00 UTC
+  note: The support knowledge base requires a customer sign-in; it is not anonymously readable.
+x-evidence:
+  fetched: '2026-08-04'
+  status_page_http_status: 200
+  release_notes_http_status: 200
+  deprecation_policy: not-published

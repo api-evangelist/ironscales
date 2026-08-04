@@ -1,0 +1,114 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/_original/ironscales-management-api-openapi.json
+docs: https://appapi.ironscales.com/appapi/docs/
+api: IRONSCALES Management API
+authentication:
+  style: JWT bearer in the Authorization header
+  obtained_via: POST /appapi/get-token/ using the dashboard-generated APP API Token
+  tenancy: >-
+    Every operation except get-token is tenant-scoped by a company_id path parameter — 77 occurrences
+    across the contract. company_id is the single most important input in the API; an agent must resolve
+    it before any other call.
+  detail: authentication/ironscales-authentication.yml
+media_types:
+  consumes:
+  - application/json
+  produces:
+  - application/json
+idempotency:
+  supported: false
+  header: none
+  evidence: >-
+    No Idempotency-Key (or equivalent) header parameter appears anywhere in the specification, and the
+    docs publish no retry-safety contract. The write surface includes non-idempotent POSTs — Create
+    Account Takeover remediation, Classify specific incident, Recluster/Uncluster incident, Create Draft
+    Campaign, Approve/Stop Campaign, and the four Settings create/append operations — with no
+    deduplication guarantee, so a retried write after a timeout may take effect twice. PUT operations
+    (Perform participants action, Bulk edit of a company mailboxes, Update account takeover sensitivity
+    settings, Update allow list entry, Append challenged notification settings) are idempotent only by
+    HTTP-method convention, not by any published guarantee.
+  agent_guidance: >-
+    Treat every POST in this API as at-most-once. Do not auto-retry a POST on timeout or 5xx; re-read
+    state (Get details of specific incident, Get Campaign Details, Get allow list settings) and reconcile
+    before issuing another write.
+pagination:
+  styles:
+  - style: page-number
+    params:
+    - page
+    - page_size
+    used_by: incident list, mitigation details, escalated emails, campaign participants
+  - style: page-number (alternate parameter name)
+    params:
+    - page
+    - items_per_page
+    used_by: SAT campaigns, participants, templates, trainings
+  - style: cursor-ish (id watermark)
+    params:
+    - since_id
+    - limit
+    used_by: Get list of Incidents
+  consistency: >-
+    Inconsistent — two different page-size parameter names (page_size and items_per_page) are used across
+    the same API, and one operation offers an id-watermark form instead. Response envelope field names for
+    totals/next are not standardized across resources.
+  response_fields: not standardized across resources
+filtering_and_sorting:
+  time_windows:
+  - period
+  - start_time
+  - end_time
+  - created_start_time
+  - created_end_time
+  - last_update_start_time
+  - last_update_end_time
+  - customPeriodFrom
+  - customPeriodTo
+  sorting:
+  - sort
+  - order
+  search:
+  - search
+  - search_email_subject
+  - search_sender_name
+  - search_sender_email
+  - search_recipient_name
+  - search_recipient_email
+  parameter_casing: >-
+    Mixed — the contract is predominantly snake_case (company_id, page_size, start_time) but carries
+    camelCase outliers (incidentID, customPeriodFrom, customPeriodTo, reportType).
+field_expansion:
+  supported: false
+sparse_fieldsets:
+  supported: false
+metadata:
+  user_defined_metadata: false
+request_tracing:
+  request_id_header: not published
+  note: No correlation/request-id header is documented for support escalation.
+versioning:
+  api_version: v1
+  scheme: none in the URL path — the base path is /appapi and info.version is "v1"
+  product_release_train: >-
+    IRONSCALES versions the product itself on a numbered release train (v55.00.00, v60.00.00, ...) plus
+    seasonal releases (Winter '25, Fall 2023), published as blog release notes. Those are product
+    releases, not API versions; the API contract carries no version negotiation.
+  breaking_change_policy: not published
+  detail: lifecycle/ironscales-lifecycle.yml
+error_envelope:
+  format: none
+  schema_defined: false
+  contractual_signal: HTTP status code only
+  detail: errors/ironscales-problem-types.yml
+rate_limiting:
+  limit: 120 requests per minute per company
+  exhaustion_status: 429
+  headers: none published
+  detail: rate-limits/ironscales-rate-limits.yml
+cross_links:
+  authentication: authentication/ironscales-authentication.yml
+  errors: errors/ironscales-problem-types.yml
+  lifecycle: lifecycle/ironscales-lifecycle.yml
+  rate_limits: rate-limits/ironscales-rate-limits.yml
+  data_model: data-model/ironscales-data-model.yml

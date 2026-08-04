@@ -1,0 +1,114 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/_original/ironscales-management-api-openapi.json
+docs: https://appapi.ironscales.com/appapi/docs/
+format: none
+format_note: 'IRONSCALES does not use RFC 9457 problem+json. The specification declares application/json as the
+  only produced media type and attaches NO response schema to any 4xx/5xx response — every error response in the
+  contract is a bare description string. There is therefore no machine-readable error envelope, no error `type`
+  URI, and no stable error code vocabulary an agent can branch on: only the HTTP status code is contractual. The
+  three statuses in the `general` block below are the only ones the provider documents in prose, in the specification''s
+  own info.description table.'
+general:
+- status: 400
+  reason: Not authenticated
+- status: 403
+  reason: Insufficient rights to call this procedure
+- status: 429
+  reason: Too many requests (Throttling) — the limit is 120 API calls per minute per company
+problems:
+- status: 400
+  title: Bad request / not authenticated
+  documented_reason: Not authenticated
+  occurrences: 48
+  remediation: Re-run the get-token operation with a valid APP API token; a 400 here means the request carried no
+    usable JWT, not that the payload was malformed.
+  response_body_schema: not defined in the specification
+  example_operations:
+  - Get campaigns details
+  - Perform participants action
+  - Get campaign participants details
+  - Get list of Deepfake SIEM events
+  - List of escalated emails
+  - get JWT token
+- status: 401
+  title: Unauthorized
+  documented_reason: null
+  occurrences: 15
+  remediation: Obtain or refresh the JWT via POST /get-token/ and resend in the Authorization header.
+  response_body_schema: not defined in the specification
+  example_operations:
+  - Get Campaigns List
+  - Create Draft Campaign
+  - Get Campaigns Lookup
+  - Get Campaign Details
+  - Delete Campaign
+  - Approve Campaign
+- status: 403
+  title: Forbidden
+  documented_reason: Insufficient rights to call this procedure
+  occurrences: 60
+  remediation: The authenticated principal lacks rights for this procedure or this company_id. Use a dashboard account
+    with the ADMIN or OWNER role and confirm the company_id belongs to that account.
+  response_body_schema: not defined in the specification
+  example_operations:
+  - Get campaigns details
+  - Perform participants action
+  - Get campaign participants details
+  - Get list of Deepfake SIEM events
+  - List of escalated emails
+  - get JWT token
+- status: 404
+  title: Not found
+  documented_reason: null
+  occurrences: 58
+  remediation: Verify the company_id, incident_id or campaign_id path parameters — tenant-scoped resources 404 rather
+    than 403 when they belong to another tenant.
+  response_body_schema: not defined in the specification
+  example_operations:
+  - Get campaigns details
+  - Get campaign participants details
+  - Get list of Deepfake SIEM events
+  - List of escalated emails
+  - Get Account Takeover incident details
+  - Create Account Takeover remediation
+- status: 413
+  title: Payload too large
+  documented_reason: null
+  occurrences: 1
+  remediation: Reduce the request payload size.
+  response_body_schema: not defined in the specification
+  example_operations:
+  - Perform participants action
+- status: 429
+  title: Too many requests
+  documented_reason: Too many requests (Throttling) — the limit is 120 API calls per minute per company
+  occurrences: 37
+  remediation: Back off and retry; the documented ceiling is 120 calls per minute per company. No Retry-After or
+    RateLimit-* header is published, so use client-side pacing.
+  response_body_schema: not defined in the specification
+  example_operations:
+  - Create Account Takeover remediation
+  - Remediation statuses stats
+  - Get emails stats
+  - Most targeted departments
+  - Most targeted employees
+  - Get Campaigns List
+- status: 500
+  title: Internal server error
+  documented_reason: null
+  occurrences: 15
+  remediation: Retry with backoff; if persistent, raise a ticket via support.ironscales.com.
+  response_body_schema: not defined in the specification
+  example_operations:
+  - Get Campaigns List
+  - Create Draft Campaign
+  - Get Campaigns Lookup
+  - Get Campaign Details
+  - Delete Campaign
+  - Approve Campaign
+gaps:
+- No schema is defined for any 4xx/5xx response, so error payload shape is undocumented.
+- No application/problem+json (RFC 9457) support.
+- No provider-specific error code registry is published.
+- 400 is overloaded to mean "not authenticated" rather than the conventional 401, which 15 operations also declare.

@@ -1,0 +1,29 @@
+generated: '2026-08-04'
+method: searched
+source: https://appapi.ironscales.com/appapi/docs/?format=openapi
+docs: https://appapi.ironscales.com/appapi/docs/
+api: IRONSCALES Management API
+rate_limits:
+- name: Management API throttle
+  scope: per company (tenant)
+  limit_count: 120
+  interval: minute
+  limit: 120 requests per minute per company
+  applies_to: all IRONSCALES Management API operations
+  response_status: 429
+  response_description: Too many requests (Throttling)
+  source: info.description of the provider-published Swagger 2.0 document
+signaling:
+  retry_after_header: not documented
+  rate_limit_headers: not documented
+  note: >-
+    IRONSCALES documents the numeric limit and the 429 status in the specification's own description
+    table, but publishes no RateLimit-* or Retry-After response header contract, so a client cannot
+    read remaining budget from a response — it can only detect exhaustion after the fact via 429.
+    37 of the 61 published operations declare a 429 response explicitly.
+plan_variation: not published
+x-evidence:
+  fetched: '2026-08-04'
+  url: https://appapi.ironscales.com/appapi/docs/?format=openapi
+  http_status: 200
+  quote: 'Too many requests (Throttling) the limit is 120 API calls per minute per company'

@@ -1,0 +1,56 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the IRONSCALES Management API
+  version: 1.0.0
+extends: openapi/_original/ironscales-management-api-openapi.json
+x-generated: '2026-08-04'
+x-method: generated
+x-source: >-
+  API Evangelist enrichment pipeline. Captures our annotations over the provider-published Swagger 2.0
+  document without mutating the harvested original. Nothing here changes provider semantics; every value
+  is an observation recorded during enrichment.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: ironscales
+    x-apievangelist-harvested-from: https://appapi.ironscales.com/appapi/docs/?format=openapi
+    x-apievangelist-harvested-on: '2026-08-04'
+    x-apievangelist-spec-version: swagger-2.0
+    x-apievangelist-rate-limit: 120 requests per minute per company
+    x-apievangelist-artifacts:
+      authentication: authentication/ironscales-authentication.yml
+      conventions: conventions/ironscales-conventions.yml
+      errors: errors/ironscales-problem-types.yml
+      rate_limits: rate-limits/ironscales-rate-limits.yml
+      lifecycle: lifecycle/ironscales-lifecycle.yml
+      data_model: data-model/ironscales-data-model.yml
+      skills: skills/_index.yml
+- target: $.securityDefinitions.JWT
+  description: >-
+    The provider declares this scheme as type "apikey" (lowercase k). Swagger 2.0 requires the exact
+    string "apiKey", so strict validators reject the securityDefinitions block. Recorded rather than
+    silently corrected, because the original is the provider's published artifact.
+  update:
+    x-apievangelist-note: >-
+      Declared type is "apikey"; the Swagger 2.0 specification requires "apiKey". The credential is a JWT
+      obtained from POST /get-token/ using the dashboard APP API Token, sent in the Authorization header.
+    x-apievangelist-credential-source: POST /get-token/
+- target: $.paths['/get-token/'].post
+  update:
+    x-apievangelist-role: >-
+      Entry point for every other operation in this API — exchanges the dashboard-issued APP API Token for
+      the JWT that all other operations require.
+- target: $.paths['/mitigation/{company_id}/stats/'].get
+  update:
+    x-apievangelist-superseded-by: /mitigation/{company_id}/stats/v2/
+    x-apievangelist-note: >-
+      A V2 form of this operation exists at /mitigation/{company_id}/stats/v2/. IRONSCALES publishes no
+      deprecation policy, so no retirement date for the V1 form is known.
+- target: $.paths
+  update:
+    x-apievangelist-tenancy: >-
+      Every path except /get-token/ is scoped by a company_id path parameter. Resolve the Company ID from
+      the IRONSCALES dashboard before any call; the API exposes no company-discovery operation.
+    x-apievangelist-idempotency: >-
+      No Idempotency-Key contract exists. Treat all POST operations as at-most-once and reconcile by
+      re-reading state rather than retrying.

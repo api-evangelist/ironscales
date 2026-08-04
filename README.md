@@ -42,5 +42,58 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-IronScales is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/ironscales_stock/
+IRONSCALES is an AI-powered, API-based email security platform protecting organizations against phishing,
+business email compromise (BEC), account takeover (ATO), VIP impersonation, QR-code phishing, malicious
+URLs and attachments, and deepfake-assisted social engineering. Instead of sitting inline as a secure email
+gateway, IRONSCALES connects to Microsoft 365 and Google Workspace through their APIs and works at the
+mailbox level, with no MX record changes.
+
+- Website: https://ironscales.com/
+- API overview: https://ironscales.com/platform/api
+- API reference: https://appapi.ironscales.com/appapi/docs/
+- Status page: https://status.ironscales.com/
+- Trust center: https://trust.ironscales.com/
+
+## APIs profiled here
+
+| API | Base URL | Contract |
+|---|---|---|
+| IRONSCALES Management API | `https://appapi.ironscales.com/appapi` | Swagger 2.0, 46 paths / 61 operations / 129 definitions |
+| IRONSCALES MCP Server | `https://mcp.ironscales.com/mcp/` | Remote MCP over streamable HTTP, OAuth 2.0 protected |
+
+The Management API contract is published by the provider at
+`https://appapi.ironscales.com/appapi/docs/?format=openapi` (a drf-yasg schema view; note it only responds
+to `Accept: */*` or `application/openapi+json`). The verbatim document is kept in
+`openapi/_original/`, and `openapi/*.yml` are one-per-tag splits of it.
+
+## Artifacts
+
+| Directory | What it holds |
+|---|---|
+| `openapi/` | The provider's Swagger 2.0 contract, verbatim plus one file per tag |
+| `mcp/` | The live, OAuth-protected MCP server manifest and the REST/MCP tool crosswalk |
+| `well-known/` | RFC 8414 authorization-server and RFC 9728 protected-resource metadata, plus the full probe log |
+| `authentication/` | The JWT (REST) and OAuth 2.0 + PKCE (MCP) credential models |
+| `conventions/` | Pagination, tenancy, versioning, error envelope, and the absence of an idempotency contract |
+| `errors/` | Every 4xx/5xx the contract declares, and the fact that none of them carries a schema |
+| `rate-limits/` | The documented 120 requests / minute / company throttle |
+| `lifecycle/` | Versioning, status page, support, and the missing deprecation policy |
+| `changelog/` | The product release train and seasonal releases |
+| `conformance/` | Standards conformance, plus the published certifications |
+| `security/` | Domain security probe, trust center, and responsible disclosure |
+| `data-model/` | Entity graph derived from the contract's 129 definitions |
+| `skills/` | Six packaged Agent Skills, every operationId verified against the spec |
+| `llms/` | The provider's own `llms.txt`, saved verbatim |
+| `overlays/` | Our annotations over the contract, without mutating the original |
+
+## Notable gaps
+
+These are recorded honestly in the artifacts, not papered over:
+
+- No `security.txt` on any host, although a responsible-disclosure route and contact do exist on the trust center.
+- No A2A agent card at either well-known path.
+- No idempotency contract, on an API whose writes act on real employee mailboxes.
+- No schema on any error response — only the HTTP status is contractual.
+- No deprecation or sunset policy, while a V1 and V2 of the mitigation statistics operation both run.
+- No first-party SDK in any public package registry.
+- No AsyncAPI or webhook contract; the deepfake SIEM event feed is pull-only.

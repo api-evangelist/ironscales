@@ -1,0 +1,97 @@
+generated: '2026-08-04'
+method: generated
+source: openapi/_original/ironscales-management-api-openapi.json
+note: >-
+  Packaged Agent Skills for the IRONSCALES Management API. Every operationId referenced in these skills was
+  verified verbatim against the provider-published Swagger 2.0 document — none is invented. The rules in
+  each skill are grounded in conventions/ironscales-conventions.yml, errors/ironscales-problem-types.yml and
+  rate-limits/ironscales-rate-limits.yml. Because this API has no idempotency contract and several
+  operations act on real employee mailboxes, each skill states explicitly which calls must not be retried
+  and which require human authorization.
+skills:
+- file: ironscales-authenticate-and-pull-incidents.md
+  name: Authenticate and pull the IRONSCALES incident queue
+  api: openapi/ironscales-incident-openapi.yml
+  operations:
+  - get JWT token
+  - Get list of Incidents
+  - Get IDs list of unclassified incidents
+  - Get list of Scanback Incidents
+  - Get details of specific incident
+  - List of escalated emails
+- file: ironscales-triage-and-classify-incident.md
+  name: Triage and classify an IRONSCALES phishing incident
+  api: openapi/ironscales-incident-openapi.yml
+  operations:
+  - get JWT token
+  - Get details of specific incident
+  - Classify specific incident
+  - Recluster incident
+  - Uncluster incident
+  - Remediation statuses stats
+  - Get details of mitigations per mailbox
+- file: ironscales-respond-to-account-takeover.md
+  name: Respond to an IRONSCALES account takeover incident
+  api: openapi/ironscales-incident-openapi.yml
+  operations:
+  - get JWT token
+  - Get Account Takeover incident details
+  - Create Account Takeover remediation
+  - Get account takeover sensitivity settings
+  - Update account takeover sensitivity settings
+  - Get the latest company impersonation incidents
+- file: ironscales-run-phishing-simulation-campaign.md
+  name: Run an IRONSCALES phishing simulation and training campaign
+  api: openapi/ironscales-sat-openapi.yml
+  operations:
+  - get JWT token
+  - Get Campaign Setup
+  - Get Templates List
+  - Get Template Categories
+  - Get landing pages
+  - Get call for action pages
+  - Get Trainings List
+  - Get Training Providers
+  - Get Training Preview URL
+  - Calculate Participants
+  - Search Participants
+  - Create Draft Campaign
+  - Approve Campaign
+  - Get Campaign Details
+  - Get Campaigns List
+  - Get Campaigns Lookup
+  - Stop Campaign
+  - Delete Campaign
+  - Get user campaign performance
+  - Get campaign participants details
+- file: ironscales-report-email-security-posture.md
+  name: Report IRONSCALES email security posture
+  api: openapi/ironscales-mitigation-openapi.yml
+  operations:
+  - get JWT token
+  - Get a company mitigation statistics V2
+  - Get a company mitigation statistics
+  - Get emails stats
+  - Most targeted employees
+  - Most targeted departments
+  - Get a company mitigation details
+  - Get compliance report
+  - List of a company mailboxes
+  - Get list of Deepfake SIEM events
+- file: ironscales-manage-tenant-security-settings.md
+  name: Manage IRONSCALES tenant security settings
+  api: openapi/ironscales-settings-openapi.yml
+  operations:
+  - get JWT token
+  - Get allow list settings
+  - Create allow list settings
+  - Update allow list entry
+  - Delete allow list entries
+  - Get company notification settings
+  - Create company notification settings
+  - Append to company notification settings
+  - Delete company notification settings
+  - Get challenged notification settings
+  - Create challenged notification settings
+  - Append challenged notification settings
+  - Delete challenged notification settings

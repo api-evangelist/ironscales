@@ -1,0 +1,2004 @@
+# Derived from the provider-published Swagger 2.0 spec, split by tag.
+# source: https://appapi.ironscales.com/appapi/docs/?format=openapi
+# original: openapi/_original/ironscales-management-api-openapi.json
+# generated: '2026-08-04'
+# method: derived
+swagger: '2.0'
+info:
+  title: IRONSCALES Management API — Incident
+  description: The Incident operations of the IRONSCALES Management API, split by tag from the provider-published Swagger
+    2.0 document at https://appapi.ironscales.com/appapi/docs/?format=openapi. Operations, parameters, responses and definitions
+    are carried verbatim from the source specification.
+  version: v1
+host: appapi.ironscales.com
+basePath: /appapi
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+securityDefinitions:
+  JWT:
+    type: apikey
+    name: Authorization
+    in: header
+security:
+- JWT: []
+tags:
+- name: Incident
+paths:
+  /incident/{company_id}/account-takeover/{incident_id}/details/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    - name: incident_id
+      in: path
+      required: true
+      type: string
+    get:
+      operationId: Get Account Takeover incident details
+      description: "\nRetrieve detailed information about a specific Account Takeover incident.\n<br/><br/>\n<b>Query Parameters:</b>\n\
+        <ul>\n    <li><b>page:</b> Page number for pagination (default: 1)</li>\n    <li><b>items_per_page:</b> Number of\
+        \ items per page (min: 1, max: 500, default: 50)</li>\n    <li><b>title:</b> Filter by alert titles (can specify multiple)</li>\n\
+        \    <li><b>location:</b> Filter by locations (can specify multiple)</li>\n    <li><b>ip:</b> Filter by IP addresses\
+        \ with validation (can specify multiple)</li>\n</ul>\n<br/><b>Response Data:</b>\n<ul>\n    <li><b>incident_details:</b>\
+        \ Complete incident information with account details and alerts</li>\n    <li><b>filter_options:</b> Available filter\
+        \ values for dropdown menus</li>\n    <li><b>pagination:</b> Page count and current page information</li>\n</ul>\n\
+        <br/><b>Scopes:</b>\n<ul>\n    <li>company.all</li>\n    <li>company.view</li>\n</ul>\n"
+      parameters:
+      - name: page
+        in: query
+        description: Page number for pagination results. Starts at 1.
+        required: false
+        type: integer
+        default: 1
+        minimum: 1
+      - name: items_per_page
+        in: query
+        description: 'Number of items per page. Min: 1, Max: 500, Default: 50.'
+        required: false
+        type: integer
+        default: 50
+        maximum: 500
+        minimum: 1
+      - name: title
+        in: query
+        description: List of alert titles to filter by.
+        required: false
+        type: array
+        items:
+          type: string
+          maxLength: 200
+          minLength: 1
+      - name: location
+        in: query
+        description: List of locations to filter by.
+        required: false
+        type: array
+        items:
+          type: string
+          maxLength: 200
+          minLength: 1
+      - name: ip
+        in: query
+        description: List of IPv4 or IPv6 addresses to filter by.
+        required: false
+        type: array
+        items:
+          type: string
+          minLength: 1
+      responses:
+        '200':
+          description: Successfully retrieved Account Takeover incident details.
+          schema:
+            $ref: '#/definitions/AccountTakeoverDetailsResponse'
+          examples:
+            application/json:
+              incident_details:
+                id: 123
+                account_details:
+                  name: John Doe
+                  email: john.doe@company.com
+                  title: Manager
+                  department: IT Security
+                  country: United States
+                  phone_number: +1-555-0123
+                alerts:
+                - id: 456
+                  title: Suspicious Login
+                  description: Login from unusual location detected
+                  type: 1
+                  details:
+                  - ip: 127.0.0.0
+                    location: New York, NY
+                    logon_time: '2024-01-15T10:30:00Z'
+                  created: '2024-01-15T10:25:00Z'
+                state: 1
+                original_state: 1
+                resolved_by: Jane Smith
+                resolved_on: '2024-01-15T14:30:00Z'
+                created: '2024-01-15T10:25:00Z'
+                assignee:
+                  id: 789
+                  email: security@company.com
+                  first_name: Security
+                  last_name: Team
+              filter_options:
+                titles:
+                - Suspicious Login
+                - Rule Created
+                locations:
+                - New York
+                - California
+                ips:
+                - 127.0.0.0
+                - 127.0.0.1
+              pages_count: 3
+              page: 1
+              items_per_page: 50
+        '400':
+          description: Invalid query parameters - validation errors
+          examples:
+            application/json:
+              page:
+              - Ensure this value is greater than or equal to 1.
+              ip:
+              - Enter a valid IPv4 or IPv6 address.
+        '403':
+          description: Permission Denied
+          examples:
+            application/json:
+            - detail: Missing JWT
+            - detail: You do not have permission to perform this action.
+            - message: You do not have permission for company <company_id>
+        '404':
+          description: Company was not found
+          examples:
+            application/json:
+            - message: Company not found
+      tags:
+      - Incident
+  /incident/{company_id}/account-takeover/{incident_id}/remediation/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    - name: incident_id
+      in: path
+      required: true
+      type: string
+    post:
+      operationId: Create Account Takeover remediation
+      description: "\nCreate remediation for the specified Account Takeover incident.\n<br/><br/>\n<b>State Options:</b>\n\
+        <ul>\n    <li><b>2 (Safe):</b> Mark the incident as safe/false positive</li>\n    <li><b>3 (Compromised):</b> Mark\
+        \ the incident as compromised and apply remediation actions</li>\n</ul>\n<br/><b>Remediation Actions:</b>\n<ul>\n\
+        \    <li><b>3 (SIGN_OUT):</b> Revoke user's Microsoft 365 sessions - only allowed for state 3 (Compromised)</li>\n\
+        \    <li><b>4 (DISABLE_ACCOUNT):</b> Disable user's Microsoft 365 account - only allowed for state 3 (Compromised)</li>\n\
+        </ul>\n<br/><b>Validation Rules:</b>\n<ul>\n    <li>Remediation actions can only be applied when marking incident\
+        \ as compromised (state=3)</li>\n    <li>When marking incident as safe (state=2), no action should be provided</li>\n\
+        </ul>\n<br/><b>Scopes:</b>\n<ul>\n    <li>company.all</li>\n    <li>company.edit</li>\n</ul>\n"
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/AccountTakeoverRemediation'
+      responses:
+        '200':
+          description: Successfully updated incident state and applied remediation actions.
+          schema:
+            $ref: '#/definitions/AccountTakeoverRemediationResponse'
+          examples:
+            application/json:
+              state: 3
+        '400':
+          description: Invalid request body - validation errors
+          schema:
+            $ref: '#/definitions/AccountTakeoverRemediationError'
+          examples:
+            application/json:
+              data:
+                state:
+                - This field is required.
+                action:
+                - Remediation actions are only allowed when marking incident as compromised (state=3).
+        '404':
+          description: Company was not found
+          examples:
+            application/json:
+            - message: Company not found
+        '403':
+          description: Permission Denied
+          examples:
+            application/json:
+            - detail: Missing JWT
+            - detail: You do not have permission to perform this action.
+            - message: You do not have permission for company <company_id>
+        '429':
+          description: Too many requests
+          examples:
+            application/json:
+            - detail: Request was throttled. Expected available in 60 seconds.
+      tags:
+      - Incident
+  /incident/{company_id}/classify/{incident_id}:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    - name: incident_id
+      in: path
+      required: true
+      type: string
+    post:
+      operationId: Classify specific incident
+      description: Classify specific incident<br/><b>Scopes:</b><ul><li>partner.company.classify</li><li>company.classify</li></ul>
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/IncidentClassification'
+      - name: company_id
+        in: path
+        description: company id
+        required: true
+        type: integer
+      - name: incident_id
+        in: path
+        description: incident id
+        required: true
+        type: integer
+      responses:
+        '200':
+          description: Successful Response
+          examples:
+            application/json:
+              success: true
+        '400':
+          description: Error explanation in error_message
+          examples:
+            application/json:
+              error_message: explanation
+        '404':
+          description: Incident/company were not found
+        '403':
+          description: No permissions
+      tags:
+      - Incident
+  /incident/{company_id}/details/{incident_id}:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    - name: incident_id
+      in: path
+      required: true
+      type: string
+    get:
+      operationId: Get details of specific incident
+      description: "Get details of specific incident<br/>\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>partner.company.view</li>\n\
+        \    <li>company.view</li>\n</ul>"
+      parameters:
+      - name: company_id
+        in: path
+        description: company id
+        required: true
+        type: integer
+      - name: incident_id
+        in: path
+        description: incident id
+        required: true
+        type: integer
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/IncidentDetails'
+        '404':
+          description: Incident/company were not found
+        '403':
+          description: No permissions
+      tags:
+      - Incident
+  /incident/{company_id}/list/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    get:
+      operationId: Get list of Incidents
+      description: "List of Incidents\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>company.all</li>\n   \
+        \ <li>partner.company.view</li>\n    <li>company.view</li>\n</ul>"
+      parameters:
+      - name: page
+        in: query
+        required: false
+        type: integer
+        default: 1
+      - name: items_per_page
+        in: query
+        description: Number of items per page (optional, overrides default)
+        required: false
+        type: integer
+        default: 100
+        minimum: 1
+      - name: sort
+        in: query
+        description: 'Options: created | latestEmailDate | incidentID | emailSubject | senderName | senderEmail | recipientName
+          | recipientEmail | classification | firstChallengedDate | noSorting'
+        required: false
+        type: string
+        enum:
+        - created
+        - latestEmailDate
+        - incidentID
+        - emailSubject
+        - senderName
+        - senderEmail
+        - recipientName
+        - recipientEmail
+        - classification
+        - firstChallengedDate
+        - noSorting
+        default: noSorting
+      - name: order
+        in: query
+        description: 'Options: desc | asc'
+        required: false
+        type: string
+        enum:
+        - desc
+        - asc
+        default: desc
+      - name: created_start_time
+        in: query
+        description: Start of created date range, ISO Date with percent encoding. For example 2025-03-18T13:45:30.635993%2B00:00
+        required: false
+        type: string
+        format: date-time
+      - name: created_end_time
+        in: query
+        description: End of created date range, ISO Date with percent encoding. For example 2025-03-18T13:45:30.635993%2B00:00
+        required: false
+        type: string
+        format: date-time
+      - name: incidentID
+        in: query
+        description: The incident ID
+        required: false
+        type: integer
+      - name: search_email_subject
+        in: query
+        description: Search Email Subject
+        required: false
+        type: string
+        default: ''
+      - name: search_sender_name
+        in: query
+        description: Search Sender Name
+        required: false
+        type: string
+        default: ''
+      - name: search_sender_email
+        in: query
+        description: Search Sender Email
+        required: false
+        type: string
+        default: ''
+      - name: search_recipient_name
+        in: query
+        description: Search Recipient Name
+        required: false
+        type: string
+        default: ''
+      - name: search_recipient_email
+        in: query
+        description: Search Recipient Email
+        required: false
+        type: string
+        default: ''
+      - name: classification
+        in: query
+        description: 'Options: all | phishing | spam | compromised | safe | open | silent(can select multiple by repeating
+          fields (field1=value1&field1=value2&field1=value3...))'
+        required: false
+        type: array
+        items:
+          type: string
+          enum:
+          - all
+          - phishing
+          - spam
+          - compromised
+          - safe
+          - open
+          - silent
+        default:
+        - all
+        collectionFormat: multi
+      - name: challenged_type
+        in: query
+        description: 'Filter by challenge type. Options: release_request, end_user_report'
+        required: false
+        type: string
+        enum:
+        - release_request
+        - end_user_report
+      - name: challenged_start_date
+        in: query
+        description: Start of challenged date range, ISO Date with percent encoding. For example 2025-03-18T13:45:30.635993%2B00:00
+        required: false
+        type: string
+        format: date-time
+      - name: challenged_end_date
+        in: query
+        description: End of challenged date range, ISO Date with percent encoding. For example 2025-03-18T13:45:30.635993%2B00:00
+        required: false
+        type: string
+        format: date-time
+      - name: state
+        in: query
+        description: 'Options: all | classified | unclassified | challenged(can select multiple by repeating fields (field1=value1&field1=value2&field1=value3...))'
+        required: false
+        type: array
+        items:
+          type: string
+          enum:
+          - all
+          - classified
+          - unclassified
+          - challenged
+        default:
+        - all
+        collectionFormat: multi
+      - name: reportType
+        in: query
+        description: 'Options: all | email | ato | teams | msft_quarantine'
+        required: false
+        type: string
+        enum:
+        - all
+        - email
+        - ato
+        - teams
+        - msft_quarantine
+        default: all
+      - name: last_update_start_time
+        in: query
+        description: Start of last update date range, ISO Date with percent encoding. For example 2025-03-18T13:45:30.635993%2B00:00
+        required: false
+        type: string
+        format: date-time
+      - name: last_update_end_time
+        in: query
+        description: End of last update date range, ISO Date with percent encoding. For example 2025-03-18T13:45:30.635993%2B00:00
+        required: false
+        type: string
+        format: date-time
+      - name: period
+        in: query
+        description: 'The period to show. Deprecated in favor of created_start_time/created_end_time. Options: <br />0: Last
+          24 hours<br />1: Last 7 days<br />2: Last 90 days<br />3: Last 180 days<br />4: Last 360 days<br />5: Current year
+          to date<br />6: All time'
+        required: false
+        type: integer
+        enum:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+      - name: company_id
+        in: path
+        description: company id
+        required: true
+        type: integer
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/IncidentListPage'
+        '400':
+          description: Error explanation in error_message
+          examples:
+            application/json:
+              error_message: explanation
+        '404':
+          description: Incident or page were not found
+        '403':
+          description: No permissions
+      tags:
+      - Incident
+  /incident/{company_id}/recluster/{incident_id}:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    - name: incident_id
+      in: path
+      required: true
+      type: string
+    post:
+      operationId: Recluster incident
+      description: "Recluster (revert) mitigations back to the original incident they were unclustered from.<br/>\nThis reverses\
+        \ a previous uncluster operation by moving mitigations back to their original incident.<br/>\n<br/><b>Scopes:</b>\n\
+        <ul>\n    <li>partner.company.classify</li>\n    <li>company.classify</li>\n</ul>"
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ReclusterIncident'
+      - name: company_id
+        in: path
+        description: company id
+        required: true
+        type: integer
+      - name: incident_id
+        in: path
+        description: incident id (the unclustered incident to recluster from)
+        required: true
+        type: integer
+      responses:
+        '200':
+          description: Successful Response
+          examples:
+            application/json:
+              report_id: 12345
+              mitigation_id: 67890
+              count: 5
+              newState: Attack
+        '400':
+          description: Error explanation in error_message
+          examples:
+            application/json:
+              error_message: explanation
+        '404':
+          description: Incident/company were not found or incident was not unclustered
+        '403':
+          description: No permissions
+      tags:
+      - Incident
+  /incident/{company_id}/scanback-list/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    get:
+      operationId: Get list of Scanback Incidents
+      description: "List of Incidents\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>company.all</li>\n   \
+        \ <li>partner.company.view</li>\n    <li>company.view</li>\n</ul>"
+      parameters:
+      - name: page
+        in: query
+        required: false
+        type: integer
+        default: 1
+      - name: items_per_page
+        in: query
+        description: Number of items per page (optional, overrides default)
+        required: false
+        type: integer
+        default: 100
+        minimum: 1
+      - name: sort
+        in: query
+        description: 'Options: created | incidentID | emailSubject | senderName | senderEmail | recipientName | recipientEmail
+          | classification | noSorting'
+        required: false
+        type: string
+        enum:
+        - created
+        - incidentID
+        - emailSubject
+        - senderName
+        - senderEmail
+        - recipientName
+        - recipientEmail
+        - classification
+        - noSorting
+        default: noSorting
+      - name: order
+        in: query
+        description: 'Options: desc | asc'
+        required: false
+        type: string
+        enum:
+        - desc
+        - asc
+        default: desc
+      - name: created_start_time
+        in: query
+        description: Start of created date range, ISO Date with percent encoding. For example 2025-03-18T13:45:30.635993%2B00:00
+        required: false
+        type: string
+        format: date-time
+      - name: created_end_time
+        in: query
+        description: End of created date range, ISO Date with percent encoding. For example 2025-03-18T13:45:30.635993%2B00:00
+        required: false
+        type: string
+        format: date-time
+      - name: incidentID
+        in: query
+        description: The incident ID
+        required: false
+        type: integer
+      - name: search_email_subject
+        in: query
+        description: Search Email Subject
+        required: false
+        type: string
+        default: ''
+      - name: search_sender_name
+        in: query
+        description: Search Sender Name
+        required: false
+        type: string
+        default: ''
+      - name: search_sender_email
+        in: query
+        description: Search Sender Email
+        required: false
+        type: string
+        default: ''
+      - name: search_recipient_name
+        in: query
+        description: Search Recipient Name
+        required: false
+        type: string
+        default: ''
+      - name: search_recipient_email
+        in: query
+        description: Search Recipient Email
+        required: false
+        type: string
+        default: ''
+      - name: classification
+        in: query
+        description: 'Options: all | phishing | spam | compromised | safe | open | silent(can select multiple by repeating
+          fields (field1=value1&field1=value2&field1=value3...))'
+        required: false
+        type: array
+        items:
+          type: string
+          enum:
+          - all
+          - phishing
+          - spam
+          - compromised
+          - safe
+          - open
+          - silent
+        default:
+        - all
+        collectionFormat: multi
+      - name: challenged_type
+        in: query
+        description: 'Filter by challenge type. Options: release_request, end_user_report'
+        required: false
+        type: string
+        enum:
+        - release_request
+        - end_user_report
+      - name: challenged_start_date
+        in: query
+        description: Start of challenged date range, ISO Date with percent encoding. For example 2025-03-18T13:45:30.635993%2B00:00
+        required: false
+        type: string
+        format: date-time
+      - name: challenged_end_date
+        in: query
+        description: End of challenged date range, ISO Date with percent encoding. For example 2025-03-18T13:45:30.635993%2B00:00
+        required: false
+        type: string
+        format: date-time
+      - name: state
+        in: query
+        description: 'Options: all | classified | unclassified(can select multiple by repeating fields (field1=value1&field1=value2&field1=value3...))'
+        required: false
+        type: array
+        items:
+          type: string
+          enum:
+          - all
+          - classified
+          - unclassified
+        default:
+        - all
+        collectionFormat: multi
+      - name: company_id
+        in: path
+        description: company id
+        required: true
+        type: integer
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/ScanBackPage'
+        '400':
+          description: Error explanation in error_message
+          examples:
+            application/json:
+              error_message: explanation
+        '404':
+          description: Incident or page were not found
+        '403':
+          description: No permissions
+      tags:
+      - Incident
+  /incident/{company_id}/stats/remediation-statuses/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    get:
+      operationId: Remediation statuses stats
+      description: '<b>Rate Limit</b>: 20 requests per second<br /><b>Scopes:</b><ul><li>company.view</li></ul>'
+      parameters:
+      - name: start_time
+        in: query
+        description: iso-8601 format
+        required: true
+        type: string
+        format: date-time
+      - name: end_time
+        in: query
+        description: iso-8601 format
+        required: true
+        type: string
+        format: date-time
+      - name: include_scanback
+        in: query
+        required: false
+        type: boolean
+        default: false
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/RemediationStatusesStats'
+        '400':
+          description: Validation Errors
+          examples:
+            application/json:
+            - end_time:
+              - This field is required.
+              start_time:
+              - This field is required.
+            - end_time:
+              - 'Datetime has wrong format. Use one of these formats instead: YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z].'
+              start_time:
+              - 'Datetime has wrong format. Use one of these formats instead: YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z].'
+            - end_time:
+              - The `end_time` must be later than the `start_time`.
+            - end_time:
+              - The time range between `start_time` and `end_time` cannot exceed 365 days.
+            - include_scanback:
+              - Must be a valid boolean.
+        '404':
+          description: Company was not found
+          examples:
+            application/json:
+            - message: Company not found
+        '403':
+          description: Permission Denied
+          examples:
+            application/json:
+            - detail: Missing JWT
+            - detail: You do not have permission to perform this action.
+            - message: You do not have permission for company <company_id>
+        '429':
+          description: Too many requests
+          examples:
+            application/json:
+            - detail: Request was throttled. Expected available in 60 seconds.
+      tags:
+      - Incident
+  /incident/{company_id}/uncluster/{incident_id}:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    - name: incident_id
+      in: path
+      required: true
+      type: string
+    post:
+      operationId: Uncluster incident
+      description: "Uncluster mitigations from an incident to create a new incident with a different classification.<br/>\n\
+        <br/><b>Scopes:</b>\n<ul>\n    <li>partner.company.classify</li>\n    <li>company.classify</li>\n</ul>"
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/UnclusterIncident'
+      - name: company_id
+        in: path
+        description: company id
+        required: true
+        type: integer
+      - name: incident_id
+        in: path
+        description: incident id
+        required: true
+        type: integer
+      responses:
+        '200':
+          description: Successful Response
+          examples:
+            application/json:
+              report_id: 12345
+              mitigation_id: 67890
+              count: 5
+              newState: Attack
+        '400':
+          description: Error explanation in error_message
+          examples:
+            application/json:
+              error_message: explanation
+        '404':
+          description: Incident/company were not found
+        '403':
+          description: No permissions
+      tags:
+      - Incident
+  /incident/{company_id}/{status}/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    - name: status
+      in: path
+      required: true
+      type: string
+    get:
+      operationId: Get IDs list of unclassified incidents
+      description: "Get ids of open incidents<br/>\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>partner.company.view</li>\n\
+        \    <li>company.view</li>\n</ul>\n<br/><b>Status:</b>\n<ul><li>open</li></ul>"
+      parameters:
+      - name: company_id
+        in: path
+        description: company id
+        required: true
+        type: integer
+      responses:
+        '200':
+          description: Successful Response
+          examples:
+            application/json:
+              incident_ids:
+              - 1
+              - 2
+              - 3
+        '404':
+          description: No company were found that matching the query
+        '403':
+          description: No permissions
+      tags:
+      - Incident
+definitions:
+  AccountDetails:
+    description: Account information
+    required:
+    - name
+    - title
+    - department
+    - email
+    - country
+    - phone_number
+    type: object
+    properties:
+      name:
+        title: Name
+        description: Full name of the account holder
+        type: string
+        minLength: 1
+      title:
+        title: Title
+        description: Job title
+        type: string
+        minLength: 1
+        x-nullable: true
+      department:
+        title: Department
+        description: Department
+        type: string
+        minLength: 1
+        x-nullable: true
+      email:
+        title: Email
+        description: Email address
+        type: string
+        format: email
+        minLength: 1
+      country:
+        title: Country
+        description: Country
+        type: string
+        minLength: 1
+        x-nullable: true
+      phone_number:
+        title: Phone number
+        description: Phone number
+        type: string
+        minLength: 1
+        x-nullable: true
+  AccountTakeoverDetailsResponse:
+    required:
+    - incident_details
+    - filter_options
+    - pages_count
+    - page
+    - items_per_page
+    type: object
+    properties:
+      incident_details:
+        $ref: '#/definitions/AccountTakeoverIncidentDetails'
+      filter_options:
+        $ref: '#/definitions/FilterOptions'
+      pages_count:
+        title: Pages count
+        description: Total number of pages
+        type: integer
+      page:
+        title: Page
+        description: Current page number
+        type: integer
+      items_per_page:
+        title: Items per page
+        description: Number of items per page
+        type: integer
+  AccountTakeoverIncidentDetails:
+    description: Account takeover incident details
+    required:
+    - id
+    - account_details
+    - alerts
+    - state
+    - original_state
+    - resolved_by
+    - resolved_on
+    - created
+    - assignee
+    type: object
+    properties:
+      id:
+        title: Id
+        description: Incident identifier
+        type: integer
+      account_details:
+        $ref: '#/definitions/AccountDetails'
+      alerts:
+        description: List of security alerts
+        type: array
+        items:
+          $ref: '#/definitions/Alert'
+      state:
+        title: State
+        description: Incident state
+        type: integer
+      original_state:
+        title: Original state
+        description: Original incident state
+        type: integer
+      resolved_by:
+        title: Resolved by
+        description: Name of resolver
+        type: string
+        minLength: 1
+        x-nullable: true
+      resolved_on:
+        title: Resolved on
+        description: Resolution timestamp
+        type: string
+        format: date-time
+        x-nullable: true
+      created:
+        title: Created
+        description: Incident creation timestamp
+        type: string
+        format: date-time
+      assignee:
+        $ref: '#/definitions/Assignee'
+  AccountTakeoverRemediation:
+    required:
+    - state
+    type: object
+    properties:
+      state:
+        title: State
+        description: 'ATO remediation state: 2 (Safe), 3 (Compromised)'
+        type: integer
+        enum:
+        - 2
+        - 3
+      action:
+        title: Action
+        description: 'ATO remediation action: 2 (DISABLE_ACCOUNT), 3 (SIGN_OUT)'
+        type: integer
+        enum:
+        - 3
+        - 2
+        x-nullable: true
+  AccountTakeoverRemediationError:
+    required:
+    - data
+    type: object
+    properties:
+      data:
+        title: Data
+        description: Validation errors for request fields
+        type: object
+        additionalProperties:
+          description: Field validation errors
+          type: array
+          items:
+            type: string
+            minLength: 1
+  AccountTakeoverRemediationResponse:
+    required:
+    - state
+    type: object
+    properties:
+      state:
+        title: State
+        description: 'Updated incident state: 2 (Safe), 3 (Compromised)'
+        type: integer
+        enum:
+        - 2
+        - 3
+  AffectedMailbox:
+    description: List of affected mailboxes (mitigations) for this incident
+    required:
+    - id
+    - recipient
+    - recipient_id
+    - employee_active
+    - first_reported
+    - not_found
+    - can_recluster
+    type: object
+    properties:
+      id:
+        title: Id
+        description: Mitigation ID
+        type: integer
+      recipient:
+        title: Recipient
+        description: Email address of the affected mailbox
+        type: string
+        minLength: 1
+      recipient_id:
+        title: Recipient id
+        description: Employee ID
+        type: integer
+      employee_active:
+        title: Employee active
+        description: employee is active
+        type: boolean
+      first_reported:
+        title: First reported
+        description: Is first reporter
+        type: boolean
+      not_found:
+        title: Not found
+        description: Email not found in mailbox
+        type: boolean
+      can_recluster:
+        title: Can recluster
+        description: Email can be reclustered back to the original incident. False for the root email (first_reported) of
+          a reclassified incident.
+        type: boolean
+  Alert:
+    description: List of security alerts
+    required:
+    - id
+    - title
+    - description
+    - type
+    - details
+    - created
+    type: object
+    properties:
+      id:
+        title: Id
+        description: Unique alert identifier
+        type: integer
+      title:
+        title: Title
+        description: Alert title
+        type: string
+        minLength: 1
+      description:
+        title: Description
+        description: Alert description
+        type: string
+        minLength: 1
+      type:
+        title: Type
+        description: Alert type identifier
+        type: integer
+      details:
+        description: List of alert details
+        type: array
+        items:
+          $ref: '#/definitions/AlertDetail'
+      created:
+        title: Created
+        description: Alert creation timestamp
+        type: string
+        format: date-time
+  AlertDetail:
+    description: List of alert details
+    required:
+    - ip
+    - location
+    - logon_time
+    type: object
+    properties:
+      ip:
+        title: Ip
+        description: IP address associated with the alert
+        type: string
+        minLength: 1
+      location:
+        title: Location
+        description: Geographic location
+        type: string
+        minLength: 1
+      logon_time:
+        title: Logon time
+        description: Time of the logon event
+        type: string
+        format: date-time
+  Assignee:
+    description: Assigned user information
+    required:
+    - id
+    - email
+    - first_name
+    - last_name
+    type: object
+    properties:
+      id:
+        title: Id
+        description: User ID
+        type: integer
+        x-nullable: true
+      email:
+        title: Email
+        description: User email
+        type: string
+        format: email
+        minLength: 1
+        x-nullable: true
+      first_name:
+        title: First name
+        description: First name
+        type: string
+        minLength: 1
+        x-nullable: true
+      last_name:
+        title: Last name
+        description: Last name
+        type: string
+        minLength: 1
+        x-nullable: true
+  Attachment:
+    required:
+    - file_name
+    - file_size
+    - md5
+    - scan_result
+    type: object
+    properties:
+      file_name:
+        title: File name
+        type: string
+        minLength: 1
+      file_size:
+        title: File size
+        type: integer
+      md5:
+        title: Md5
+        type: string
+        minLength: 1
+      scan_result:
+        title: Scan result
+        type: string
+        minLength: 1
+        x-nullable: true
+  FederationDetails:
+    required:
+    - companies_affected
+    - companies_marked_phishing
+    - companies_marked_spam
+    - companies_marked_fp
+    - companies_unclassified
+    - phishing_ratio
+    type: object
+    properties:
+      companies_affected:
+        title: Companies affected
+        type: integer
+      companies_marked_phishing:
+        title: Companies marked phishing
+        type: integer
+      companies_marked_spam:
+        title: Companies marked spam
+        type: integer
+      companies_marked_fp:
+        title: Companies marked fp
+        type: integer
+      companies_unclassified:
+        title: Companies unclassified
+        type: integer
+      phishing_ratio:
+        title: Phishing ratio
+        type: number
+        format: decimal
+  FilterOptions:
+    description: Available filter options
+    required:
+    - titles
+    - locations
+    - ips
+    type: object
+    properties:
+      titles:
+        description: Available alert titles for filtering
+        type: array
+        items:
+          type: string
+          minLength: 1
+      locations:
+        description: Available locations for filtering
+        type: array
+        items:
+          type: string
+          minLength: 1
+      ips:
+        description: Available IP addresses for filtering
+        type: array
+        items:
+          type: string
+          minLength: 1
+  Header:
+    required:
+    - name
+    - value
+    type: object
+    properties:
+      name:
+        title: Name
+        type: string
+        minLength: 1
+      value:
+        title: Value
+        type: string
+        minLength: 1
+  IncidentClassification:
+    required:
+    - classification
+    - prev_classification
+    - classifying_user_email
+    type: object
+    properties:
+      classification:
+        title: Classification
+        description: "The same classification can be achieved using multiple values:\n<table>\n  <thead>\n    <tr>\n     \
+          \ <th scope=\"col\">Value</th>\n      <th scope=\"col\">Classification</th>\n    </tr>\n  </thead>\n  <tbody>\n\
+          \  <tr><td><li>report</li><li>unclassified</li></td><td>Report</td></tr><tr><td><li>attack</li><li>phishing</li><li>malicious</li></td><td>Attack</td></tr><tr><td><li>safe</li><li>fp</li><li>false\
+          \ positive</li></td><td>False Positive</td></tr><tr><td><li>spam</li></td><td>Spam</td></tr><tr><td><li>close phishing</li></td><td>Close\
+          \ Phishing</td></tr>\n  </tbody>\n</table>\n"
+        type: string
+        minLength: 1
+      prev_classification:
+        title: Prev classification
+        type: string
+        enum:
+        - Attack
+        - False Positive
+        - Spam
+        - Close Phishing
+        - Report
+      classifying_user_email:
+        title: Classifying user email
+        type: string
+        format: email
+        minLength: 1
+  IncidentComment:
+    description: Comments on the incident, across the internal and community threads.
+    required:
+    - id
+    - author
+    - text
+    - created
+    - type
+    type: object
+    properties:
+      id:
+        title: Id
+        description: Comment ID
+        type: integer
+      author:
+        title: Author
+        description: Display name of the comment author
+        type: string
+      text:
+        title: Text
+        description: Comment body text
+        type: string
+      created:
+        title: Created
+        description: When the comment was created
+        type: string
+        format: date-time
+      type:
+        title: Type
+        description: 'Comment thread: ''internal'' (private analyst notes) or ''community'' (shared).'
+        type: string
+        enum:
+        - internal
+        - community
+  IncidentDetails:
+    required:
+    - company_id
+    - company_name
+    - incident_id
+    - classification
+    - first_reported_by
+    - first_reported_date
+    - affected_mailbox_count
+    - sender_reputation
+    - banner_displayed
+    - sender_email
+    - reply_to
+    - spf_result
+    - sender_is_internal
+    - themis_proba
+    - themis_verdict
+    - mail_server
+    - federation
+    - reports
+    - links
+    - attachments
+    - original_email_body
+    - email_body_text
+    - reported_by_end_user
+    - reporter_name
+    - challenged_type
+    - challenged_events
+    - first_challenged_date
+    - related_incidents
+    - resolved_by
+    - resolved_on
+    - reclassified_by
+    - reclassified_on
+    - affected_mailboxes
+    - is_reclassified
+    - original_cluster_incident_id
+    - can_revert
+    - revert_blocked_reason
+    - resolution_tags
+    - additional_tags
+    - threat_type
+    - comments
+    type: object
+    properties:
+      company_id:
+        title: Company id
+        type: integer
+      company_name:
+        title: Company name
+        type: string
+        minLength: 1
+      incident_id:
+        title: Incident id
+        type: integer
+      classification:
+        title: Classification
+        type: string
+        minLength: 1
+      first_reported_by:
+        title: First reported by
+        type: string
+        minLength: 1
+      first_reported_date:
+        title: First reported date
+        type: string
+        format: date-time
+      affected_mailbox_count:
+        title: Affected mailbox count
+        type: integer
+      sender_reputation:
+        title: Sender reputation
+        type: string
+        minLength: 1
+      banner_displayed:
+        title: Banner displayed
+        type: string
+        minLength: 1
+      sender_email:
+        title: Sender email
+        type: string
+        minLength: 1
+      reply_to:
+        title: Reply to
+        type: string
+        minLength: 1
+      spf_result:
+        title: Spf result
+        type: string
+        minLength: 1
+      sender_is_internal:
+        title: Sender is internal
+        type: boolean
+      themis_proba:
+        title: Themis proba
+        type: number
+        format: decimal
+      themis_verdict:
+        title: Themis verdict
+        type: string
+        minLength: 1
+      mail_server:
+        $ref: '#/definitions/MailServer'
+      federation:
+        $ref: '#/definitions/FederationDetails'
+      reports:
+        type: array
+        items:
+          $ref: '#/definitions/ReportedEmail'
+      links:
+        type: array
+        items:
+          $ref: '#/definitions/Link'
+      attachments:
+        type: array
+        items:
+          $ref: '#/definitions/Attachment'
+      original_email_body:
+        title: Original email body
+        type: string
+        minLength: 1
+      email_body_text:
+        title: Email body text
+        type: string
+        minLength: 1
+      reported_by_end_user:
+        title: Reported by end user
+        type: boolean
+      reporter_name:
+        title: Reporter name
+        type: string
+        minLength: 1
+      challenged_type:
+        title: Challenged type
+        type: string
+        minLength: 1
+        x-nullable: true
+      challenged_events:
+        description: List of challenged events, each containing challenged_date, challenged_by, challenged_reason, and challenged_comment
+        type: array
+        items:
+          type: object
+          additionalProperties:
+            type: string
+            x-nullable: true
+        x-nullable: true
+      first_challenged_date:
+        title: First challenged date
+        type: string
+        format: date-time
+        x-nullable: true
+      related_incidents:
+        description: Array of incident IDs that are related through unclustering (both unclustered_to and unclustered_from)
+        type: array
+        items:
+          type: integer
+      resolved_by:
+        title: Resolved by
+        description: Who classified the incident. Null when is_reclassified is true (use reclassified_by for that case).
+        type: string
+        minLength: 1
+        x-nullable: true
+      resolved_on:
+        title: Resolved on
+        description: When the incident was classified. Null when is_reclassified is true (use reclassified_on for that case).
+        type: string
+        format: date-time
+        x-nullable: true
+      reclassified_by:
+        title: Reclassified by
+        description: Who reclassified this incident from another cluster. Only set when is_reclassified is true; null otherwise.
+          Uses the same resolver source as resolved_by for non-reclassified incidents.
+        type: string
+        minLength: 1
+        x-nullable: true
+      reclassified_on:
+        title: Reclassified on
+        description: When the incident was reclassified from another cluster. Only set when is_reclassified is true; null
+          otherwise. Uses the same resolver source as resolved_on for non-reclassified incidents.
+        type: string
+        format: date-time
+        x-nullable: true
+      affected_mailboxes:
+        description: List of affected mailboxes (mitigations) for this incident
+        type: array
+        items:
+          $ref: '#/definitions/AffectedMailbox'
+      is_reclassified:
+        title: Is reclassified
+        description: Incident was created by reclassifying emails from another incident
+        type: boolean
+      original_cluster_incident_id:
+        title: Original cluster incident id
+        description: The ID of the original incident this was reclassified from (null if not reclassified)
+        type: integer
+        x-nullable: true
+      can_revert:
+        title: Can revert
+        description: Can be reverted to the original incident
+        type: boolean
+      revert_blocked_reason:
+        title: Revert blocked reason
+        description: Why revert is not possible (null if revert is possible)
+        type: string
+        minLength: 1
+        x-nullable: true
+      resolution_tags:
+        description: Tags on the incident whose type matches the incident's current classification (Phishing/Spam/Safe). Empty
+          list when none.
+        type: array
+        items:
+          type: string
+          minLength: 1
+      additional_tags:
+        description: Tags on the incident whose type does not match the current classification (e.g. left over from a prior
+          classification). Empty list when none.
+        type: array
+        items:
+          type: string
+          minLength: 1
+      threat_type:
+        title: Threat type
+        description: Categorized threat/attack label derived from Themis (e.g. 'VIP Impersonation', 'Business Email Compromise').
+          Empty string when Themis is disabled or produced no label.
+        type: string
+      comments:
+        description: Comments on the incident, across the internal and community threads.
+        type: array
+        items:
+          $ref: '#/definitions/IncidentComment'
+  IncidentList:
+    required:
+    - incidentID
+    - emailSubject
+    - linksCount
+    - attachmentsCount
+    - recipientEmail
+    - recipientName
+    - classification
+    - assignee
+    - senderName
+    - senderEmail
+    - affectedMailboxesCount
+    - created
+    - reportedBy
+    - resolvedBy
+    - challengedType
+    - firstChallengedDate
+    - incidentType
+    - commentsCount
+    - internalCommentsCount
+    - communityCommentsCount
+    - releaseRequestCount
+    - latestEmailDate
+    type: object
+    properties:
+      incidentID:
+        title: Incidentid
+        type: integer
+      emailSubject:
+        title: Emailsubject
+        type: string
+        minLength: 1
+        x-nullable: true
+      linksCount:
+        title: Linkscount
+        type: integer
+        x-nullable: true
+      attachmentsCount:
+        title: Attachmentscount
+        type: integer
+        x-nullable: true
+      recipientEmail:
+        title: Recipientemail
+        type: string
+        minLength: 1
+        x-nullable: true
+      recipientName:
+        title: Recipientname
+        type: string
+        minLength: 1
+        x-nullable: true
+      classification:
+        title: Classification
+        type: string
+        minLength: 1
+      assignee:
+        title: Assignee
+        type: string
+        minLength: 1
+        x-nullable: true
+      senderName:
+        title: Sendername
+        type: string
+        minLength: 1
+      senderEmail:
+        title: Senderemail
+        type: string
+        format: email
+        minLength: 1
+      affectedMailboxesCount:
+        title: Affectedmailboxescount
+        type: integer
+      created:
+        title: Created
+        type: string
+        format: date-time
+      reportedBy:
+        title: Reportedby
+        type: string
+        minLength: 1
+        x-nullable: true
+      resolvedBy:
+        title: Resolvedby
+        type: string
+        minLength: 1
+        x-nullable: true
+      challengedType:
+        title: Challengedtype
+        type: string
+        minLength: 1
+        x-nullable: true
+      firstChallengedDate:
+        title: Firstchallengeddate
+        type: string
+        format: date-time
+        x-nullable: true
+      incidentType:
+        title: Incidenttype
+        type: string
+        minLength: 1
+      commentsCount:
+        title: Commentscount
+        type: integer
+      internalCommentsCount:
+        title: Internalcommentscount
+        description: Number of internal (non-public) comments on this incident
+        type: integer
+      communityCommentsCount:
+        title: Communitycommentscount
+        description: Number of community (public) comments on this incident
+        type: integer
+      releaseRequestCount:
+        title: Releaserequestcount
+        type: integer
+        x-nullable: true
+      latestEmailDate:
+        title: Latestemaildate
+        type: string
+        format: date-time
+        x-nullable: true
+  IncidentListPage:
+    required:
+    - page
+    - total_pages
+    - total_count
+    - incidents
+    type: object
+    properties:
+      page:
+        title: Page
+        type: integer
+      total_pages:
+        title: Total pages
+        type: integer
+      total_count:
+        title: Total count
+        type: integer
+      incidents:
+        type: array
+        items:
+          $ref: '#/definitions/IncidentList'
+  Link:
+    required:
+    - url
+    - name
+    - scan_result
+    type: object
+    properties:
+      url:
+        title: Url
+        type: string
+        minLength: 1
+      name:
+        title: Name
+        type: string
+        minLength: 1
+      scan_result:
+        title: Scan result
+        type: string
+        minLength: 1
+        x-nullable: true
+  MailServer:
+    required:
+    - host
+    - ip
+    type: object
+    properties:
+      host:
+        title: Host
+        type: string
+        minLength: 1
+      ip:
+        title: Ip
+        type: string
+        minLength: 1
+  ReclusterIncident:
+    type: object
+    properties:
+      mitigationsList:
+        description: List of mitigation IDs to move.
+        type: array
+        items:
+          type: integer
+      excludeMitigations:
+        description: List of mitigation IDs to exclude when using the 'all' flag.
+        type: array
+        items:
+          type: integer
+        default: []
+      notFoundFilter:
+        title: Notfoundfilter
+        description: Filter mitigations that were not found in mailbox.
+        type: boolean
+        default: false
+      isReadFilter:
+        title: Isreadfilter
+        description: Filter mitigations by read status.
+        type: boolean
+        x-nullable: true
+      reclusterAll:
+        title: Reclusterall
+        description: If true, move all mitigations matching filters (uses incident_id from URL).
+        type: boolean
+        default: false
+  RemediationStatusStats:
+    required:
+    - incidents_count
+    - emails_count
+    type: object
+    properties:
+      incidents_count:
+        title: Incidents count
+        type: integer
+      emails_count:
+        title: Emails count
+        type: integer
+  RemediationStatusesStats:
+    required:
+    - phishing
+    - spam
+    - safe
+    - unclassified
+    type: object
+    properties:
+      phishing:
+        $ref: '#/definitions/RemediationStatusStats'
+      spam:
+        $ref: '#/definitions/RemediationStatusStats'
+      safe:
+        $ref: '#/definitions/RemediationStatusStats'
+      unclassified:
+        $ref: '#/definitions/RemediationStatusStats'
+  ReportedEmail:
+    required:
+    - name
+    - email
+    - subject
+    - sender_email
+    - mail_server
+    - headers
+    type: object
+    properties:
+      name:
+        title: Name
+        type: string
+        minLength: 1
+      email:
+        title: Email
+        type: string
+        minLength: 1
+      subject:
+        title: Subject
+        type: string
+        minLength: 1
+      sender_email:
+        title: Sender email
+        type: string
+        minLength: 1
+      mail_server:
+        $ref: '#/definitions/MailServer'
+      headers:
+        type: array
+        items:
+          $ref: '#/definitions/Header'
+  ScanBackList:
+    required:
+    - incidentID
+    - emailSubject
+    - linksCount
+    - attachmentsCount
+    - recipientEmail
+    - recipientName
+    - classification
+    - assignee
+    - senderName
+    - senderEmail
+    - affectedMailboxesCount
+    - created
+    - reportedBy
+    - resolvedBy
+    - challengedType
+    - firstChallengedDate
+    type: object
+    properties:
+      incidentID:
+        title: Incidentid
+        type: integer
+      emailSubject:
+        title: Emailsubject
+        type: string
+        minLength: 1
+        x-nullable: true
+      linksCount:
+        title: Linkscount
+        type: integer
+        x-nullable: true
+      attachmentsCount:
+        title: Attachmentscount
+        type: integer
+        x-nullable: true
+      recipientEmail:
+        title: Recipientemail
+        type: string
+        minLength: 1
+        x-nullable: true
+      recipientName:
+        title: Recipientname
+        type: string
+        minLength: 1
+        x-nullable: true
+      classification:
+        title: Classification
+        type: string
+        minLength: 1
+      assignee:
+        title: Assignee
+        type: string
+        minLength: 1
+        x-nullable: true
+      senderName:
+        title: Sendername
+        type: string
+        minLength: 1
+      senderEmail:
+        title: Senderemail
+        type: string
+        format: email
+        minLength: 1
+      affectedMailboxesCount:
+        title: Affectedmailboxescount
+        type: integer
+      created:
+        title: Created
+        type: string
+        format: date-time
+      reportedBy:
+        title: Reportedby
+        type: string
+        minLength: 1
+        x-nullable: true
+      resolvedBy:
+        title: Resolvedby
+        type: string
+        minLength: 1
+        x-nullable: true
+      challengedType:
+        title: Challengedtype
+        type: string
+        minLength: 1
+        x-nullable: true
+      firstChallengedDate:
+        title: Firstchallengeddate
+        type: string
+        format: date-time
+        x-nullable: true
+  ScanBackPage:
+    required:
+    - page
+    - total_pages
+    - total_count
+    - incidents
+    type: object
+    properties:
+      page:
+        title: Page
+        type: integer
+      total_pages:
+        title: Total pages
+        type: integer
+      total_count:
+        title: Total count
+        type: integer
+      incidents:
+        type: array
+        items:
+          $ref: '#/definitions/ScanBackList'
+  UnclusterIncident:
+    required:
+    - classification
+    type: object
+    properties:
+      mitigationsList:
+        description: List of mitigation IDs to move.
+        type: array
+        items:
+          type: integer
+      excludeMitigations:
+        description: List of mitigation IDs to exclude when using the 'all' flag.
+        type: array
+        items:
+          type: integer
+        default: []
+      notFoundFilter:
+        title: Notfoundfilter
+        description: Filter mitigations that were not found in mailbox.
+        type: boolean
+        default: false
+      isReadFilter:
+        title: Isreadfilter
+        description: Filter mitigations by read status.
+        type: boolean
+        x-nullable: true
+      unclusterAll:
+        title: Unclusterall
+        description: If true, move all mitigations matching filters (uses incident_id from URL).
+        type: boolean
+        default: false
+      classification:
+        title: Classification
+        description: 'New classification for the unclustered incident. Must be one of: Attack, False Positive, Spam'
+        type: string
+        minLength: 1

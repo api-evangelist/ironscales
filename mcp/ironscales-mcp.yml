@@ -1,0 +1,65 @@
+generated: '2026-08-04'
+method: probed
+source: https://mcp.ironscales.com/mcp/
+status: published
+server:
+  name: ironscales
+  transport: http
+  url: https://mcp.ironscales.com/mcp/
+  runtime_banner: uvicorn
+authorization:
+  protected: true
+  scheme: OAuth 2.0 Bearer (RFC 6750)
+  resource_metadata: https://mcp.ironscales.com/.well-known/oauth-protected-resource
+  authorization_servers:
+  - https://members.ironscales.com/
+  authorization_endpoint: https://members.ironscales.com/o/authorize/
+  token_endpoint: https://members.ironscales.com/o/token/
+  registration_endpoint: https://members.ironscales.com/o/register/
+  revocation_endpoint: https://members.ironscales.com/o/revoke_token/
+  introspection_endpoint: https://members.ironscales.com/o/introspect/
+  grant_types:
+  - authorization_code
+  - refresh_token
+  code_challenge_methods:
+  - S256
+  dynamic_client_registration: true
+  bearer_methods_supported:
+  - header
+  specs:
+  - RFC 6750
+  - RFC 7591
+  - RFC 8414
+  - RFC 9728
+tools: []
+tools_note: >-
+  The live tool manifest is auth-gated. An anonymous POST of
+  {"jsonrpc":"2.0","id":1,"method":"tools/list"} to https://mcp.ironscales.com/mcp/ returns HTTP 401
+  {"error":"invalid_token","error_description":"Authentication required"} with a WWW-Authenticate
+  challenge naming the RFC 9728 resource metadata document. IRONSCALES publishes no anonymous tool
+  list — not in llms.txt, not in the public docs — so no tool names are recorded here. Enumerating
+  them requires an authenticated introspection with an IRONSCALES tenant account. NOTHING IS
+  INFERRED: no candidate tool list has been derived from the OpenAPI, because this server is real and
+  published and a derived list would misrepresent what it actually exposes.
+x-evidence:
+- fetched: '2026-08-04'
+  url: https://mcp.ironscales.com/mcp/
+  method: POST tools/list
+  http_status: 401
+  www_authenticate: >-
+    Bearer error="invalid_token", error_description="Authentication required",
+    resource_metadata="https://mcp.ironscales.com/.well-known/oauth-protected-resource"
+- fetched: '2026-08-04'
+  url: https://mcp.ironscales.com/.well-known/oauth-protected-resource
+  http_status: 200
+  content_type: application/json
+  file: ../well-known/ironscales-oauth-protected-resource.json
+- fetched: '2026-08-04'
+  url: https://members.ironscales.com/.well-known/oauth-authorization-server
+  http_status: 200
+  content_type: application/json
+  file: ../well-known/ironscales-oauth-authorization-server.json
+- fetched: '2026-08-04'
+  url: https://mcp.ironscales.com/mcp
+  http_status: 307
+  note: bare /mcp redirects to /mcp/

@@ -1,0 +1,933 @@
+# Derived from the provider-published Swagger 2.0 spec, split by tag.
+# source: https://appapi.ironscales.com/appapi/docs/?format=openapi
+# original: openapi/_original/ironscales-management-api-openapi.json
+# generated: '2026-08-04'
+# method: derived
+swagger: '2.0'
+info:
+  title: IRONSCALES Management API — Settings
+  description: The Settings operations of the IRONSCALES Management API, split by tag from the provider-published Swagger
+    2.0 document at https://appapi.ironscales.com/appapi/docs/?format=openapi. Operations, parameters, responses and definitions
+    are carried verbatim from the source specification.
+  version: v1
+host: appapi.ironscales.com
+basePath: /appapi
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+securityDefinitions:
+  JWT:
+    type: apikey
+    name: Authorization
+    in: header
+security:
+- JWT: []
+tags:
+- name: Settings
+paths:
+  /settings/{company_id}/account-takeover/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    get:
+      operationId: Get account takeover sensitivity settings
+      description: "\nRetrieve the account takeover sensitivity settings for the specified company.\n<br/><br/>\n<b>Sensitivity\
+        \ Options:</b>\n<ul>\n    <li><b>1 (Aggressive):</b> Most sensitive - requires fewer alerts to trigger an incident</li>\n\
+        \    <li><b>2 (Balanced):</b> Default sensitivity level</li>\n    <li><b>3 (Relaxed):</b> Least sensitive - requires\
+        \ more alerts to trigger an incident</li>\n</ul>\n<br/><b>Scopes:</b>\n<ul>\n    <li>company.all</li>\n    <li>company.view</li>\n\
+        </ul>\n"
+      parameters: []
+      responses:
+        '200':
+          description: Successful response containing account takeover sensitivity settings.
+          schema:
+            $ref: '#/definitions/AccountTakeoverSettings'
+          examples:
+            application/json:
+              sensitivity: 2
+        '404':
+          description: Company was not found
+          examples:
+            application/json:
+            - message: Company not found
+        '403':
+          description: Permission Denied
+          examples:
+            application/json:
+            - detail: Missing JWT
+            - detail: You do not have permission to perform this action.
+            - message: You do not have permission for company <company_id>
+        '429':
+          description: Too many requests
+          examples:
+            application/json:
+            - detail: Request was throttled. Expected available in 60 seconds.
+      tags:
+      - Settings
+    put:
+      operationId: Update account takeover sensitivity settings
+      description: "\nUpdate account takeover sensitivity settings for the specified company.\n<br/><br/>\n<b>Sensitivity\
+        \ Options:</b>\n<ul>\n    <li><b>1 (Aggressive):</b> Most sensitive - requires fewer alerts to trigger an incident</li>\n\
+        \    <li><b>2 (Balanced):</b> Default sensitivity level</li>\n    <li><b>3 (Relaxed):</b> Least sensitive - requires\
+        \ more alerts to trigger an incident</li>\n</ul>\n<br/><b>Scopes:</b>\n<ul>\n    <li>company.all</li>\n    <li>company.edit</li>\n\
+        </ul>\n"
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/AccountTakeoverSettings'
+      responses:
+        '200':
+          description: Successfully updated account takeover sensitivity settings.
+          schema:
+            $ref: '#/definitions/AccountTakeoverSettings'
+          examples:
+            application/json:
+              sensitivity: 3
+        '400':
+          description: Invalid request body - validation errors
+          schema:
+            type: object
+            properties:
+              sensitivity:
+                description: Field validation errors
+                type: array
+                items:
+                  type: string
+          examples:
+            application/json:
+              sensitivity:
+              - This field is required.
+        '404':
+          description: Company was not found
+          examples:
+            application/json:
+            - message: Company not found
+        '403':
+          description: Permission Denied
+          examples:
+            application/json:
+            - detail: Missing JWT
+            - detail: You do not have permission to perform this action.
+            - message: You do not have permission for company <company_id>
+        '429':
+          description: Too many requests
+          examples:
+            application/json:
+            - detail: Request was throttled. Expected available in 60 seconds.
+      tags:
+      - Settings
+  /settings/{company_id}/allow-list/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    get:
+      operationId: Get allow list settings
+      description: '
+
+        Retrieve the list of allow list settings for the specified company.
+
+        <b>Scopes:</b><ul><li>company.all</li><li>company.view</li></ul>'
+      parameters:
+      - name: sort
+        in: query
+        description: 'Options: type | scope | date | allowed_for | noSorting'
+        required: false
+        type: string
+        enum:
+        - type
+        - scope
+        - date
+        - allowed_for
+        - noSorting
+        default: noSorting
+      - name: order
+        in: query
+        description: 'Options: desc | asc'
+        required: false
+        type: string
+        enum:
+        - desc
+        - asc
+        default: desc
+      - name: type
+        in: query
+        description: Filter by entry type.
+        required: false
+        type: string
+        enum:
+        - all
+        - ip
+        - domain
+        - address
+        - link_domain
+        default: all
+      - name: search
+        in: query
+        description: Search term to filter entries by their value field (case-insensitive partial match).
+        required: false
+        type: string
+        x-nullable: true
+      - name: page
+        in: query
+        description: Page number for pagination results. Starts at 1.
+        required: false
+        type: integer
+        default: 1
+        minimum: 1
+      - name: items_per_page
+        in: query
+        description: 'Number of items per page in pagination results. Min: 1, Max: 500, Default: 100.'
+        required: false
+        type: integer
+        default: 100
+        maximum: 500
+        minimum: 1
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/WhiteListResponse'
+        '404':
+          description: Company was not found
+          examples:
+            application/json:
+            - message: Company not found
+        '403':
+          description: Permission Denied
+          examples:
+            application/json:
+            - detail: Missing JWT
+            - detail: You do not have permission to perform this action.
+            - message: You do not have permission for company <company_id>
+        '400':
+          description: Invalid query parameters, page must be a number, or page not found
+          schema:
+            type: object
+            properties:
+              message:
+                description: Error message for validation failure or pagination error
+                type: string
+        '429':
+          description: Too many requests
+          examples:
+            application/json:
+            - detail: Request was throttled. Expected available in 60 seconds.
+      tags:
+      - Settings
+    post:
+      operationId: Create allow list settings
+      description: '
+
+        Add a new entry to the allow list for the specified company.
+
+        <b>Scopes:</b><ul><li>company.all</li><li>company.edit</li></ul>'
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/WhitelistAddRow'
+      responses:
+        '204':
+          description: Allow list entry successfully added.
+          examples:
+            application/json: {}
+        '404':
+          description: Company was not found
+          examples:
+            application/json:
+            - message: Company not found
+        '403':
+          description: Permission Denied
+          examples:
+            application/json:
+            - detail: Missing JWT
+            - detail: You do not have permission to perform this action.
+            - message: You do not have permission for company <company_id>
+        '400':
+          description: Invalid request body or allowed records limit reached
+          schema:
+            type: object
+            properties:
+              error_message:
+                description: Error message for validation failure or limits reached
+                type: string
+        '429':
+          description: Too many requests
+          examples:
+            application/json:
+            - detail: Request was throttled. Expected available in 60 seconds.
+      tags:
+      - Settings
+    put:
+      operationId: Update allow list entry
+      description: '
+
+        Update an existing allow list entry for the specified company.
+
+        <b>Scopes:</b><ul><li>company.all</li><li>company.edit</li></ul>'
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/WhitelistUpdateRow'
+      responses:
+        '204':
+          description: Allow list entry successfully updated.
+          examples:
+            application/json: {}
+        '404':
+          description: Company was not found
+          examples:
+            application/json:
+            - message: Company not found
+        '403':
+          description: Permission Denied
+          examples:
+            application/json:
+            - detail: Missing JWT
+            - detail: You do not have permission to perform this action.
+            - message: You do not have permission for company <company_id>
+        '400':
+          description: Invalid request body or whitelist entry not found
+          schema:
+            type: object
+            properties:
+              error_message:
+                description: Error message for validation failure or entry not found
+                type: string
+        '429':
+          description: Too many requests
+          examples:
+            application/json:
+            - detail: Request was throttled. Expected available in 60 seconds.
+      tags:
+      - Settings
+    delete:
+      operationId: Delete allow list entries
+      description: '
+
+        Delete selected entries from the allow list for the specified company.
+
+        <b>Scopes:</b><ul><li>company.all</li><li>company.edit</li></ul>'
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/WhiteListDelete'
+      responses:
+        '204':
+          description: Allow list entries successfully deleted.
+          examples:
+            application/json: {}
+        '404':
+          description: Company was not found
+          examples:
+            application/json:
+            - message: Company not found
+        '403':
+          description: Permission Denied
+          examples:
+            application/json:
+            - detail: Missing JWT
+            - detail: You do not have permission to perform this action.
+            - message: You do not have permission for company <company_id>
+        '400':
+          description: Invalid request data
+          schema:
+            type: object
+            properties:
+              error_message:
+                description: Error message for validation failure
+                type: string
+        '429':
+          description: Too many requests
+          examples:
+            application/json:
+            - detail: Request was throttled. Expected available in 60 seconds.
+      tags:
+      - Settings
+  /settings/{company_id}/challenged-alerts/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    get:
+      operationId: Get challenged notification settings
+      description: "\nRetrieve the list of email recipients configured for challenged alert notifications for the specified\
+        \ company.\n<br/><b>Scopes:</b>\n<ul>\n    <li>company.all</li>\n    <li>company.view</li>\n</ul>\n"
+      parameters: []
+      responses:
+        '200':
+          description: Successful response containing notification recipients.
+          schema:
+            $ref: '#/definitions/ChallengedSettings'
+          examples:
+            application/json:
+              recipients:
+              - email1@company1.com
+              - email2@company1.com
+        '404':
+          description: Company was not found
+          examples:
+            application/json:
+            - message: Company not found
+        '403':
+          description: Permission Denied
+          examples:
+            application/json:
+            - detail: Missing JWT
+            - detail: You do not have permission to perform this action.
+            - message: You do not have permission for company <company_id>
+        '429':
+          description: Too many requests
+          examples:
+            application/json:
+            - detail: Request was throttled. Expected available in 60 seconds.
+      tags:
+      - Settings
+    post:
+      operationId: Create challenged notification settings
+      description: "\nSet the list of email recipients configured for challenged alert notifications for the specified company.\n\
+        <br/><b>Scopes:</b>\n<ul>\n    <li>company.all</li>\n    <li>company.edit</li>\n</ul>\n"
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ChallengedSettings'
+      responses:
+        '200':
+          description: Successful response containing the updated recipients list.
+          schema:
+            $ref: '#/definitions/ChallengedSettings'
+          examples:
+            application/json:
+              recipients:
+              - email1@company1.com
+              - email2@company1.com
+        '404':
+          description: Company was not found
+          examples:
+            application/json:
+            - message: Company not found
+        '403':
+          description: Permission Denied
+          examples:
+            application/json:
+            - detail: Missing JWT
+            - detail: You do not have permission to perform this action.
+            - message: You do not have permission for company <company_id>
+        '400':
+          description: Invalid request body - field validations failed
+          schema:
+            type: object
+            properties:
+              recipients:
+                description: Field validation errors
+                type: array
+                items:
+                  type: string
+        '429':
+          description: Too many requests
+          examples:
+            application/json:
+            - detail: Request was throttled. Expected available in 60 seconds.
+      tags:
+      - Settings
+    put:
+      operationId: Append challenged notification settings
+      description: "\nAppend email recipients to existing challenged alert notifications, removing duplicates, returning the\
+        \ updated list.\n<br/><b>Scopes:</b>\n<ul>\n    <li>company.all</li>\n    <li>company.edit</li>\n</ul>\n"
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ChallengedSettings'
+      responses:
+        '200':
+          description: Successful response containing the appended recipients list.
+          schema:
+            $ref: '#/definitions/ChallengedSettings'
+          examples:
+            application/json:
+              recipients:
+              - email1@company1.com
+              - email2@company1.com
+              - email3@company1.com
+        '404':
+          description: Company was not found
+          examples:
+            application/json:
+            - message: Company not found
+        '403':
+          description: Permission Denied
+          examples:
+            application/json:
+            - detail: Missing JWT
+            - detail: You do not have permission to perform this action.
+            - message: You do not have permission for company <company_id>
+        '400':
+          description: Invalid request body - field validations failed
+          schema:
+            type: object
+            properties:
+              recipients:
+                description: Field validation errors
+                type: array
+                items:
+                  type: string
+        '429':
+          description: Too many requests
+          examples:
+            application/json:
+            - detail: Request was throttled. Expected available in 60 seconds.
+      tags:
+      - Settings
+    delete:
+      operationId: Delete challenged notification settings
+      description: "\nRemove all configured email recipients for challenged alert notifications. After deletion, the recipients\
+        \ list will be empty.\n<br/><b>Scopes:</b>\n<ul>\n    <li>company.all</li>\n    <li>company.edit</li>\n</ul>\n"
+      parameters: []
+      responses:
+        '204':
+          description: Alert emails successfully cleared.
+          examples:
+            application/json: {}
+        '404':
+          description: Company was not found
+          examples:
+            application/json:
+            - message: Company not found
+        '403':
+          description: Permission Denied
+          examples:
+            application/json:
+            - detail: Missing JWT
+            - detail: You do not have permission to perform this action.
+            - message: You do not have permission for company <company_id>
+        '429':
+          description: Too many requests
+          examples:
+            application/json:
+            - detail: Request was throttled. Expected available in 60 seconds.
+      tags:
+      - Settings
+  /settings/{company_id}/incident-alerts/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    get:
+      operationId: Get company notification settings
+      description: "\nRetrieve the list of email recipients configured for incident alert notifications for the specified\
+        \ company.\n<br/><b>Scopes:</b>\n<ul>\n    <li>company.all</li>\n    <li>company.view</li>\n</ul>\n"
+      parameters: []
+      responses:
+        '200':
+          description: Successful response containing notification recipients.
+          schema:
+            $ref: '#/definitions/NotificationSettings'
+          examples:
+            application/json:
+              recipients:
+              - user1@validdomain.com
+              - user2@validdomain.com
+        '404':
+          description: Company was not found
+          examples:
+            application/json:
+            - message: Company not found
+        '403':
+          description: Permission Denied
+          examples:
+            application/json:
+            - detail: Missing JWT
+            - detail: You do not have permission to perform this action.
+            - message: You do not have permission for company <company_id>
+        '429':
+          description: Too many requests
+          examples:
+            application/json:
+            - detail: Request was throttled. Expected available in 60 seconds.
+      tags:
+      - Settings
+    post:
+      operationId: Create company notification settings
+      description: "\nSet the list of email recipients for incident alert notifications, replacing any existing recipients.\n\
+        <br/><b>Scopes:</b>\n<ul>\n    <li>company.all</li>\n    <li>company.edit</li>\n</ul>\n"
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/NotificationSettings'
+      responses:
+        '200':
+          description: Successful response containing the updated recipients list.
+          schema:
+            $ref: '#/definitions/NotificationSettings'
+          examples:
+            application/json:
+              recipients:
+              - user1@validdomain.com
+              - user2@validdomain.com
+        '404':
+          description: Company was not found
+          examples:
+            application/json:
+            - message: Company not found
+        '403':
+          description: Permission Denied
+          examples:
+            application/json:
+            - detail: Missing JWT
+            - detail: You do not have permission to perform this action.
+            - message: You do not have permission for company <company_id>
+        '400':
+          description: Invalid request body - field validations failed
+          examples:
+            application/json:
+            - error_message: explanation
+        '429':
+          description: Too many requests
+          examples:
+            application/json:
+            - detail: Request was throttled. Expected available in 60 seconds.
+      tags:
+      - Settings
+    put:
+      operationId: Append to company notification settings
+      description: "\nAppend email recipients to the existing notification settings list, removing duplicates, returning the\
+        \ updated list.\n<br/><b>Scopes:</b>\n<ul>\n    <li>company.all</li>\n    <li>company.edit</li>\n</ul>\n"
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/NotificationSettings'
+      responses:
+        '200':
+          description: Successful response containing the appended recipients list.
+          schema:
+            $ref: '#/definitions/NotificationSettings'
+          examples:
+            application/json:
+              recipients:
+              - user1@validdomain.com
+              - user2@validdomain.com
+              - user3@validdomain.com
+        '404':
+          description: Company was not found
+          examples:
+            application/json:
+            - message: Company not found
+        '403':
+          description: Permission Denied
+          examples:
+            application/json:
+            - detail: Missing JWT
+            - detail: You do not have permission to perform this action.
+            - message: You do not have permission for company <company_id>
+        '400':
+          description: Invalid request body - field validations failed
+          examples:
+            application/json:
+            - error_message: explanation
+        '429':
+          description: Too many requests
+          examples:
+            application/json:
+            - detail: Request was throttled. Expected available in 60 seconds.
+      tags:
+      - Settings
+    delete:
+      operationId: Delete company notification settings
+      description: "\nRemove all configured email recipients for incident alert notifications. After deletion, the recipients\
+        \ list will be empty.\n<br/><b>Scopes:</b>\n<ul>\n    <li>company.all</li>\n    <li>company.edit</li>\n</ul>\n"
+      parameters: []
+      responses:
+        '204':
+          description: Alert emails successfully cleared.
+          examples:
+            application/json: {}
+        '404':
+          description: Company was not found
+          examples:
+            application/json:
+            - message: Company not found
+        '403':
+          description: Permission Denied
+          examples:
+            application/json:
+            - detail: Missing JWT
+            - detail: You do not have permission to perform this action.
+            - message: You do not have permission for company <company_id>
+        '429':
+          description: Too many requests
+          examples:
+            application/json:
+            - detail: Request was throttled. Expected available in 60 seconds.
+      tags:
+      - Settings
+definitions:
+  AccountTakeoverSettings:
+    required:
+    - sensitivity
+    type: object
+    properties:
+      sensitivity:
+        title: Sensitivity
+        description: 'ATO sensitivity level: 1 (Aggressive), 2 (Balanced), 3 (Relaxed)'
+        type: integer
+        enum:
+        - 1
+        - 2
+        - 3
+  ChallengedSettings:
+    required:
+    - recipients
+    type: object
+    properties:
+      recipients:
+        type: array
+        items:
+          type: string
+          format: email
+          minLength: 1
+  NotificationSettings:
+    required:
+    - recipients
+    type: object
+    properties:
+      recipients:
+        type: array
+        items:
+          type: string
+          format: email
+          minLength: 1
+  WhiteListDelete:
+    required:
+    - selected_ids
+    type: object
+    properties:
+      selected_ids:
+        description: List of allow list entry IDs to delete
+        type: array
+        items:
+          type: integer
+          minimum: 1
+        minItems: 1
+  WhiteListEntry:
+    description: List of allowed entries
+    required:
+    - id
+    - date
+    - value
+    - type
+    - scope
+    - comment
+    - user_first_name
+    - user_last_name
+    - user_email
+    - external_campaigns
+    - ignore_auth
+    type: object
+    properties:
+      id:
+        title: Id
+        description: Unique identifier of the whitelist entry
+        type: integer
+      date:
+        title: Date
+        description: Date and time when the entry was created or modified
+        type: string
+        format: date-time
+      value:
+        title: Value
+        description: Value of the whitelist entry (domain, IP, email, etc.)
+        type: string
+        minLength: 1
+      type:
+        title: Type
+        description: 'Type of whitelist entry: 1 (IP Network), 2 (Domain), 3 (Sender Address), 4 (Unscanned Domain Link)'
+        type: integer
+      scope:
+        title: Scope
+        description: 'Scope of the whitelist entry: 1=Skip All Inspections, 2=Bypass Impersonation Banners, 3=Bypass link
+          clicking by IRONSCALES, 4=Spam Filter, 6=Bypass all scanning for links'
+        type: integer
+        maximum: 6
+        minimum: 1
+      comment:
+        title: Comment
+        description: Optional comment for the entry
+        type: string
+        minLength: 1
+        x-nullable: true
+      user_first_name:
+        title: User first name
+        description: First name of the user who created the entry
+        type: string
+        minLength: 1
+      user_last_name:
+        title: User last name
+        description: Last name of the user who created the entry
+        type: string
+        minLength: 1
+      user_email:
+        title: User email
+        description: Email of the user who created the entry
+        type: string
+        minLength: 1
+      external_campaigns:
+        title: External campaigns
+        description: Whether this entry applies to external campaigns
+        type: boolean
+      ignore_auth:
+        title: Ignore auth
+        description: Whether authentication should be ignored for this entry
+        type: boolean
+  WhiteListResponse:
+    required:
+    - allow_list
+    - internal_active
+    - external_active
+    - pages_count
+    - page
+    - items_per_page
+    type: object
+    properties:
+      allow_list:
+        description: List of allowed entries
+        type: array
+        items:
+          $ref: '#/definitions/WhiteListEntry'
+      internal_active:
+        title: Internal active
+        description: Whether internal whitelist is active
+        type: boolean
+      external_active:
+        title: External active
+        description: Whether external whitelist is active
+        type: boolean
+      pages_count:
+        title: Pages count
+        description: Total number of pages
+        type: integer
+      page:
+        title: Page
+        description: Current page number
+        type: integer
+      items_per_page:
+        title: Items per page
+        description: Number of items per page
+        type: integer
+  WhitelistAddRow:
+    required:
+    - type
+    - value
+    type: object
+    properties:
+      type:
+        title: Type
+        description: 'Type of whitelist entry. Choices: 1=IP Network (for IP addresses or CIDR notation), 2=Domain (for domain
+          names), 3=Sender Address (for email addresses), 4=Unscanned Domain Link (for domain names in links)'
+        type: string
+        enum:
+        - 1
+        - 2
+        - 3
+        - 4
+      scope:
+        title: Scope
+        description: 'Scope of the whitelist entry: 1=Skip All Inspections, 2=Bypass Impersonation Banners, 3=Bypass link
+          clicking by IRONSCALES, 4=Spam Filter, 6=Bypass all scanning for links'
+        type: integer
+        default: 1
+      value:
+        title: Value
+        description: 'Value to whitelist. For type=1: provide IP address or CIDR notation (e.g., 192.168.1.1 or 10.0.0.0/24).
+          For type=2: provide domain name (e.g., example.com). For type=3: provide email address (e.g., user@example.com).
+          For type=4: provide domain name for unscanned links.'
+        type: string
+        minLength: 1
+      comment:
+        title: Comment
+        description: Optional comment or description for this whitelist entry
+        type: string
+        x-nullable: true
+      external_campaigns:
+        title: External campaigns
+        description: When true, this whitelist entry will also apply to external campaigns
+        type: boolean
+        default: false
+      ignore_auth:
+        title: Ignore auth
+        description: When true, authentication will be ignored for this whitelist entry
+        type: boolean
+        default: false
+  WhitelistUpdateRow:
+    required:
+    - type
+    - value
+    - selected_id
+    type: object
+    properties:
+      type:
+        title: Type
+        description: 'Type of whitelist entry. Choices: 1=IP Network (for IP addresses or CIDR notation), 2=Domain (for domain
+          names), 3=Sender Address (for email addresses), 4=Unscanned Domain Link (for domain names in links)'
+        type: string
+        enum:
+        - 1
+        - 2
+        - 3
+        - 4
+      scope:
+        title: Scope
+        description: 'Scope of the whitelist entry: 1=Skip All Inspections, 2=Bypass Impersonation Banners, 3=Bypass link
+          clicking by IRONSCALES, 4=Spam Filter, 6=Bypass all scanning for links'
+        type: integer
+        default: 1
+      value:
+        title: Value
+        description: 'Value to whitelist. For type=1: provide IP address or CIDR notation (e.g., 192.168.1.1 or 10.0.0.0/24).
+          For type=2: provide domain name (e.g., example.com). For type=3: provide email address (e.g., user@example.com).
+          For type=4: provide domain name for unscanned links.'
+        type: string
+        minLength: 1
+      comment:
+        title: Comment
+        description: Optional comment or description for this whitelist entry
+        type: string
+        x-nullable: true
+      external_campaigns:
+        title: External campaigns
+        description: When true, this whitelist entry will also apply to external campaigns
+        type: boolean
+        default: false
+      ignore_auth:
+        title: Ignore auth
+        description: When true, authentication will be ignored for this whitelist entry
+        type: boolean
+        default: false
+      selected_id:
+        title: Selected id
+        description: ID of the existing allow list entry to update.
+        type: integer
+        minimum: 1

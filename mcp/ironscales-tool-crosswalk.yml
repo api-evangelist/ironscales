@@ -1,0 +1,234 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/_original/ironscales-management-api-openapi.json + probe of https://mcp.ironscales.com/mcp/
+status: partial
+note: 'IRONSCALES publishes BOTH a public REST contract (the Swagger 2.0 IRONSCALES Management API) and a first-party
+  remote MCP server. The crosswalk is therefore in scope — but the MCP tool manifest is OAuth-gated and IRONSCALES
+  publishes no anonymous tool list anywhere (no llms.txt tool section, no public MCP docs page), so there are ZERO
+  tool names to bind. No crosswalk rows are asserted: guessing tool names from the REST operations would fabricate
+  the very thing this artifact exists to verify. Only the REST side is enumerated below, so that a later authenticated
+  tools/list can be diffed against it. Re-run this artifact once the tool manifest is obtainable.'
+surfaces:
+  openapi:
+    file: openapi/_original/ironscales-management-api-openapi.json
+    public: true
+    gated: false
+    url: https://appapi.ironscales.com/appapi/docs/?format=openapi
+    spec: Swagger 2.0
+  mcp:
+    url: https://mcp.ironscales.com/mcp/
+    public: true
+    gated: true
+    gate: OAuth 2.0 bearer (RFC 6750/9728); anonymous tools/list returns 401 invalid_token
+  graphql: null
+crosswalk: []
+mcp_only: []
+rest_only:
+- capability: Authorization
+  operations:
+  - operationId: get JWT token
+    method: POST
+    path: /get-token/
+- capability: Campaigns
+  operations:
+  - operationId: Get campaigns details
+    method: GET
+    path: /campaigns/{company_id}/details
+  - operationId: Perform participants action
+    method: PUT
+    path: /campaigns/{company_id}/participants-actions/
+  - operationId: Get campaign participants details
+    method: GET
+    path: /campaigns/{company_id}/participants-details
+- capability: Deepfake
+  operations:
+  - operationId: Get list of Deepfake SIEM events
+    method: GET
+    path: /deepfake/{company_id}/events/
+- capability: Emails
+  operations:
+  - operationId: List of escalated emails
+    method: GET
+    path: /emails/{company_id}/
+- capability: Incident
+  operations:
+  - operationId: Get Account Takeover incident details
+    method: GET
+    path: /incident/{company_id}/account-takeover/{incident_id}/details/
+  - operationId: Create Account Takeover remediation
+    method: POST
+    path: /incident/{company_id}/account-takeover/{incident_id}/remediation/
+  - operationId: Classify specific incident
+    method: POST
+    path: /incident/{company_id}/classify/{incident_id}
+  - operationId: Get details of specific incident
+    method: GET
+    path: /incident/{company_id}/details/{incident_id}
+  - operationId: Get list of Incidents
+    method: GET
+    path: /incident/{company_id}/list/
+  - operationId: Recluster incident
+    method: POST
+    path: /incident/{company_id}/recluster/{incident_id}
+  - operationId: Get list of Scanback Incidents
+    method: GET
+    path: /incident/{company_id}/scanback-list/
+  - operationId: Remediation statuses stats
+    method: GET
+    path: /incident/{company_id}/stats/remediation-statuses/
+  - operationId: Uncluster incident
+    method: POST
+    path: /incident/{company_id}/uncluster/{incident_id}
+  - operationId: Get IDs list of unclassified incidents
+    method: GET
+    path: /incident/{company_id}/{status}/
+- capability: Mailboxes
+  operations:
+  - operationId: Get compliance report
+    method: GET
+    path: /mailboxes/{company_id}/compliance-report/
+  - operationId: List of a company mailboxes
+    method: GET
+    path: /mailboxes/{company_id}/list/
+  - operationId: Bulk edit of a company mailboxes
+    method: PUT
+    path: /mailboxes/{company_id}/list/
+  - operationId: Get user campaign performance
+    method: GET
+    path: /mailboxes/{company_id}/user-campaigns-performance/
+- capability: Mitigation
+  operations:
+  - operationId: Get details of mitigations per mailbox
+    method: POST
+    path: /mitigation/{company_id}/details/
+  - operationId: Get the latest company impersonation incidents
+    method: GET
+    path: /mitigation/{company_id}/impersonation/details/
+  - operationId: Get the latest company impersonation paginated incidents
+    method: POST
+    path: /mitigation/{company_id}/impersonation/details/
+  - operationId: Get a company mitigation details
+    method: GET
+    path: /mitigation/{company_id}/incidents/details/
+  - operationId: Get a company mitigation statistics
+    method: GET
+    path: /mitigation/{company_id}/stats/
+  - operationId: Get emails stats
+    method: GET
+    path: /mitigation/{company_id}/stats/emails/
+  - operationId: Most targeted departments
+    method: GET
+    path: /mitigation/{company_id}/stats/most-targeted-departments/
+  - operationId: Most targeted employees
+    method: GET
+    path: /mitigation/{company_id}/stats/most-targeted-employees/
+  - operationId: Get a company mitigation statistics V2
+    method: GET
+    path: /mitigation/{company_id}/stats/v2/
+- capability: SAT
+  operations:
+  - operationId: Get Campaigns List
+    method: GET
+    path: /sat/{company_id}/campaigns/
+  - operationId: Create Draft Campaign
+    method: POST
+    path: /sat/{company_id}/campaigns/
+  - operationId: Get Campaigns Lookup
+    method: GET
+    path: /sat/{company_id}/campaigns/lookup/
+  - operationId: Get Campaign Details
+    method: GET
+    path: /sat/{company_id}/campaigns/{campaign_id}/
+  - operationId: Delete Campaign
+    method: DELETE
+    path: /sat/{company_id}/campaigns/{campaign_id}/
+  - operationId: Approve Campaign
+    method: POST
+    path: /sat/{company_id}/campaigns/{campaign_id}/approve/
+  - operationId: Stop Campaign
+    method: POST
+    path: /sat/{company_id}/campaigns/{campaign_id}/stop/
+  - operationId: Get call for action pages
+    method: GET
+    path: /sat/{company_id}/cta/
+  - operationId: Get landing pages
+    method: GET
+    path: /sat/{company_id}/landing-pages/
+  - operationId: Get Participants List
+    method: GET
+    path: /sat/{company_id}/participants/
+  - operationId: Calculate Participants
+    method: POST
+    path: /sat/{company_id}/participants/
+  - operationId: Search Participants
+    method: POST
+    path: /sat/{company_id}/participants/search/
+  - operationId: Get Campaign Setup
+    method: GET
+    path: /sat/{company_id}/setup/
+  - operationId: Get Templates List
+    method: GET
+    path: /sat/{company_id}/templates/
+  - operationId: Get Template Categories
+    method: GET
+    path: /sat/{company_id}/templates/categories/
+  - operationId: Get Trainings List
+    method: GET
+    path: /sat/{company_id}/trainings/
+  - operationId: Get Training Providers
+    method: GET
+    path: /sat/{company_id}/trainings/providers/
+  - operationId: Get Training Preview URL
+    method: GET
+    path: /sat/{company_id}/trainings/{training_id}/preview/
+- capability: Settings
+  operations:
+  - operationId: Get account takeover sensitivity settings
+    method: GET
+    path: /settings/{company_id}/account-takeover/
+  - operationId: Update account takeover sensitivity settings
+    method: PUT
+    path: /settings/{company_id}/account-takeover/
+  - operationId: Get allow list settings
+    method: GET
+    path: /settings/{company_id}/allow-list/
+  - operationId: Create allow list settings
+    method: POST
+    path: /settings/{company_id}/allow-list/
+  - operationId: Update allow list entry
+    method: PUT
+    path: /settings/{company_id}/allow-list/
+  - operationId: Delete allow list entries
+    method: DELETE
+    path: /settings/{company_id}/allow-list/
+  - operationId: Get challenged notification settings
+    method: GET
+    path: /settings/{company_id}/challenged-alerts/
+  - operationId: Create challenged notification settings
+    method: POST
+    path: /settings/{company_id}/challenged-alerts/
+  - operationId: Append challenged notification settings
+    method: PUT
+    path: /settings/{company_id}/challenged-alerts/
+  - operationId: Delete challenged notification settings
+    method: DELETE
+    path: /settings/{company_id}/challenged-alerts/
+  - operationId: Get company notification settings
+    method: GET
+    path: /settings/{company_id}/incident-alerts/
+  - operationId: Create company notification settings
+    method: POST
+    path: /settings/{company_id}/incident-alerts/
+  - operationId: Append to company notification settings
+    method: PUT
+    path: /settings/{company_id}/incident-alerts/
+  - operationId: Delete company notification settings
+    method: DELETE
+    path: /settings/{company_id}/incident-alerts/
+coverage:
+  tools_named: 0
+  tools_bound: 0
+  mcp_only: 0
+  rest_operations: 61
+  rest_operations_with_tool: 0
+  tool_manifest_available: false

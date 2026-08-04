@@ -1,0 +1,1142 @@
+# Derived from the provider-published Swagger 2.0 spec, split by tag.
+# source: https://appapi.ironscales.com/appapi/docs/?format=openapi
+# original: openapi/_original/ironscales-management-api-openapi.json
+# generated: '2026-08-04'
+# method: derived
+swagger: '2.0'
+info:
+  title: IRONSCALES Management API — Mitigation
+  description: The Mitigation operations of the IRONSCALES Management API, split by tag from the provider-published Swagger
+    2.0 document at https://appapi.ironscales.com/appapi/docs/?format=openapi. Operations, parameters, responses and definitions
+    are carried verbatim from the source specification.
+  version: v1
+host: appapi.ironscales.com
+basePath: /appapi
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+securityDefinitions:
+  JWT:
+    type: apikey
+    name: Authorization
+    in: header
+security:
+- JWT: []
+tags:
+- name: Mitigation
+paths:
+  /mitigation/{company_id}/details/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    post:
+      operationId: Get details of mitigations per mailbox
+      description: "Get details of mitigations per mailbox<br />\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n  \
+        \  <li>partner.company.view</li>\n    <li>company.view</li>\n</ul>\n<b>Period values:</b>\n<ul>\n    <li>0 - Last\
+        \ 24 hours</li>\n    <li>1 - Last 7 days</li>\n    <li>2 - Last 90 days</li>\n    <li>3 - Last 180 days</li>\n   \
+        \ <li>4 - Last 360 days</li>\n    <li>5 - Current year to date</li>\n    <li>6 - All time (Default)</li>\n</ul>"
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/IncidentDetailsRequest'
+      - name: company_id
+        in: path
+        description: company id
+        required: true
+        type: integer
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/MitigationPageDetails'
+        '400':
+          description: Error explanation in error_message
+          examples:
+            application/json:
+              error_message: explanation
+        '404':
+          description: Company was not found
+        '403':
+          description: No permissions
+      tags:
+      - Mitigation
+  /mitigation/{company_id}/impersonation/details/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    get:
+      operationId: Get the latest company impersonation incidents
+      description: "Get the latest company impersonation incidents<br/>\nResults are limited to the latest 1000 incidents,\
+        \ a message will appear\ndisplaying if the amount of incidents in the period is over this limit<br/>\n<b>\nPlease\
+        \ note that the IDs returned here are of impersonation attempts,\nnot incidents or reports, so searching these IDs\
+        \ in other endpoints\nwill not return the expected incidents\n</b>\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n\
+        \    <li>partner.company.view</li>\n    <li>company.view</li>\n</ul>\n<br/><b>Period values:</b>\n<ul>\n    <li>0\
+        \ - Last 24 hours</li>\n    <li>1 - Last 7 days</li>\n    <li>2 - Last 90 days</li>\n    <li>3 - Last 180 days</li>\n\
+        \    <li>4 - Last 360 days</li>\n    <li>5 - Current year to date</li>\n    <li>6 - All time</li>\n</ul>"
+      parameters:
+      - name: company_id
+        in: path
+        description: company id
+        required: true
+        type: integer
+      - name: period
+        in: query
+        description: period
+        required: true
+        type: integer
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/ImpersonationDetailsPage'
+        '400':
+          description: Error explanation in error_message
+          examples:
+            application/json:
+              error_message: explanation
+        '404':
+          description: Company was not found
+        '403':
+          description: No permissions
+      tags:
+      - Mitigation
+    post:
+      operationId: Get the latest company impersonation paginated incidents
+      description: "Get the latest company impersonation paginated incidents<br/>\n<b>\nPlease note that the IDs returned\
+        \ here are of impersonation attempts,\nnot incidents or reports, so searching these IDs in other endpoints\nwill not\
+        \ return the expected incidents\n</b>\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>partner.company.view</li>\n\
+        \    <li>company.view</li>\n</ul>\n<b>Period values:</b>\n<ul>\n    <li>0 - Last 24 hours</li>\n    <li>1 - Last 7\
+        \ days</li>\n    <li>2 - Last 90 days</li>\n    <li>3 - Last 180 days</li>\n    <li>4 - Last 360 days</li>\n    <li>5\
+        \ - Current year to date</li>\n    <li>6 - All time</li>\n</ul>"
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ImpersonationDetailsRequest'
+      - name: company_id
+        in: path
+        description: company id
+        required: true
+        type: integer
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/ImpersonationDetailsPage'
+        '400':
+          description: Error explanation in error_message
+          examples:
+            application/json:
+              error_message: explanation
+        '404':
+          description: Company was not found
+        '403':
+          description: No permissions
+      tags:
+      - Mitigation
+  /mitigation/{company_id}/incidents/details/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    get:
+      operationId: Get a company mitigation details
+      description: "Get a company mitigation details<br />\n<br/><b>Scopes:</b>\n<ul>\n<li>partner.all</li>\n<li>partner.company.view</li>\n\
+        <li>company.view</li>\n</ul>\n<b>Period values:</b>\n<ul>\n    <li>0 - Last 24 hours</li>\n    <li>1 - Last 7 days</li>\n\
+        \    <li>2 - Last 90 days</li>\n    <li>3 - Last 180 days</li>\n    <li>4 - Last 360 days</li>\n    <li>5 - Current\
+        \ year to date</li>\n    <li>6 - All time</li>\n</ul>"
+      parameters:
+      - name: page
+        in: query
+        required: false
+        type: integer
+        default: 1
+      - name: period
+        in: query
+        required: false
+        type: string
+        default: '6'
+        minLength: 1
+      - name: company_id
+        in: path
+        description: company id
+        required: true
+        type: integer
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/IncidentPageDetails'
+        '400':
+          description: Error explanation in error_message
+          examples:
+            application/json:
+              error_message: explanation
+        '404':
+          description: Company was not found
+        '403':
+          description: No permissions
+      tags:
+      - Mitigation
+  /mitigation/{company_id}/stats/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    get:
+      operationId: Get a company mitigation statistics
+      description: 'Get a company mitigation statistics
+
+        <br/><b>Scopes:</b>
+
+        <ul>
+
+        <li>partner.all</li>
+
+        <li>partner.company.view</li>
+
+        <li>company.view</li>
+
+        </ul>
+
+        <b>Period values:</b>
+
+        <ul>
+
+        <li>0 - Last 24 hours</li>
+
+        <li>1 - Last 7 days</li>
+
+        <li>2 - Last 90 days</li>
+
+        <li>3 - Last 180 days</li>
+
+        <li>4 - Last 360 days</li>
+
+        <li>5 - Current year to date</li>
+
+        <li>6 - All time</li>
+
+        </ul>'
+      parameters:
+      - name: company_id
+        in: path
+        description: company id
+        required: true
+        type: integer
+      - name: period
+        in: query
+        description: period
+        required: true
+        type: integer
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/MitigationStats'
+        '400':
+          description: Error explanation in error_message
+          examples:
+            application/json:
+              error_message: explanation
+        '404':
+          description: Company was not found
+        '403':
+          description: No permissions
+      tags:
+      - Mitigation
+  /mitigation/{company_id}/stats/emails/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    get:
+      operationId: Get emails stats
+      description: '<b>Rate Limit</b>: 20 requests per second<br /><b>Scopes:</b><ul><li>company.view</li></ul>'
+      parameters:
+      - name: start_time
+        in: query
+        description: iso-8601 format
+        required: true
+        type: string
+        format: date-time
+      - name: end_time
+        in: query
+        description: iso-8601 format
+        required: true
+        type: string
+        format: date-time
+      - name: include_scanback
+        in: query
+        required: false
+        type: boolean
+        default: false
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/EmailsStats'
+        '400':
+          description: Validation Errors
+          examples:
+            application/json:
+            - end_time:
+              - This field is required.
+              start_time:
+              - This field is required.
+            - end_time:
+              - 'Datetime has wrong format. Use one of these formats instead: YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z].'
+              start_time:
+              - 'Datetime has wrong format. Use one of these formats instead: YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z].'
+            - end_time:
+              - The `end_time` must be later than the `start_time`.
+            - end_time:
+              - The time range between `start_time` and `end_time` cannot exceed 365 days.
+            - include_scanback:
+              - Must be a valid boolean.
+        '404':
+          description: Company was not found
+          examples:
+            application/json:
+            - message: Company not found
+        '403':
+          description: Permission Denied
+          examples:
+            application/json:
+            - detail: Missing JWT
+            - detail: You do not have permission to perform this action.
+            - message: You do not have permission for company <company_id>
+        '429':
+          description: Too many requests
+          examples:
+            application/json:
+            - detail: Request was throttled. Expected available in 60 seconds.
+      tags:
+      - Mitigation
+  /mitigation/{company_id}/stats/most-targeted-departments/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    get:
+      operationId: Most targeted departments
+      description: 'Returns top 5 most targeted departments within requested timeframe<br/>
+
+        <b>Rate Limit</b>: 20 requests per second<br /><b>Scopes:</b><ul><li>company.view</li></ul>'
+      parameters:
+      - name: start_time
+        in: query
+        description: iso-8601 format
+        required: true
+        type: string
+        format: date-time
+      - name: end_time
+        in: query
+        description: iso-8601 format
+        required: true
+        type: string
+        format: date-time
+      - name: include_scanback
+        in: query
+        required: false
+        type: boolean
+        default: false
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/MostTargetedDepartments'
+        '400':
+          description: Validation Errors
+          examples:
+            application/json:
+            - end_time:
+              - This field is required.
+              start_time:
+              - This field is required.
+            - end_time:
+              - 'Datetime has wrong format. Use one of these formats instead: YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z].'
+              start_time:
+              - 'Datetime has wrong format. Use one of these formats instead: YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z].'
+            - end_time:
+              - The `end_time` must be later than the `start_time`.
+            - end_time:
+              - The time range between `start_time` and `end_time` cannot exceed 365 days.
+            - include_scanback:
+              - Must be a valid boolean.
+        '404':
+          description: Company was not found
+          examples:
+            application/json:
+            - message: Company not found
+        '403':
+          description: Permission Denied
+          examples:
+            application/json:
+            - detail: Missing JWT
+            - detail: You do not have permission to perform this action.
+            - message: You do not have permission for company <company_id>
+        '429':
+          description: Too many requests
+          examples:
+            application/json:
+            - detail: Request was throttled. Expected available in 60 seconds.
+      tags:
+      - Mitigation
+  /mitigation/{company_id}/stats/most-targeted-employees/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    get:
+      operationId: Most targeted employees
+      description: 'Returns top 5 most targeted employees within requested timeframe<br/>
+
+        <b>Rate Limit</b>: 20 requests per second<br /><b>Scopes:</b><ul><li>company.view</li></ul>'
+      parameters:
+      - name: start_time
+        in: query
+        description: iso-8601 format
+        required: true
+        type: string
+        format: date-time
+      - name: end_time
+        in: query
+        description: iso-8601 format
+        required: true
+        type: string
+        format: date-time
+      - name: include_scanback
+        in: query
+        required: false
+        type: boolean
+        default: false
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/MostTargetedEmployees'
+        '400':
+          description: Validation Errors
+          examples:
+            application/json:
+            - end_time:
+              - This field is required.
+              start_time:
+              - This field is required.
+            - end_time:
+              - 'Datetime has wrong format. Use one of these formats instead: YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z].'
+              start_time:
+              - 'Datetime has wrong format. Use one of these formats instead: YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z].'
+            - end_time:
+              - The `end_time` must be later than the `start_time`.
+            - end_time:
+              - The time range between `start_time` and `end_time` cannot exceed 365 days.
+            - include_scanback:
+              - Must be a valid boolean.
+        '404':
+          description: Company was not found
+          examples:
+            application/json:
+            - message: Company not found
+        '403':
+          description: Permission Denied
+          examples:
+            application/json:
+            - detail: Missing JWT
+            - detail: You do not have permission to perform this action.
+            - message: You do not have permission for company <company_id>
+        '429':
+          description: Too many requests
+          examples:
+            application/json:
+            - detail: Request was throttled. Expected available in 60 seconds.
+      tags:
+      - Mitigation
+  /mitigation/{company_id}/stats/v2/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      type: string
+    get:
+      operationId: Get a company mitigation statistics V2
+      description: 'Get a company mitigation statistics V2
+
+        <br/><b>Scopes:</b>
+
+        <ul>
+
+        <li>partner.all</li>
+
+        <li>partner.company.view</li>
+
+        <li>company.view</li>
+
+        </ul>
+
+        <b>Period values:</b>
+
+        <ul>
+
+        <li>0 - Last 24 hours</li>
+
+        <li>1 - Last 7 days</li>
+
+        <li>2 - Last 90 days</li>
+
+        <li>3 - Last 180 days</li>
+
+        <li>4 - Last 360 days</li>
+
+        <li>5 - Current year to date</li>
+
+        <li>6 - All time</li>
+
+        </ul>'
+      parameters:
+      - name: company_id
+        in: path
+        description: company id
+        required: true
+        type: integer
+      - name: period
+        in: query
+        description: period
+        required: true
+        type: integer
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/MitigationStatsV2View'
+        '400':
+          description: Error explanation in error_message
+          examples:
+            application/json:
+              error_message: explanation
+        '404':
+          description: Company was not found
+        '403':
+          description: No permissions
+      tags:
+      - Mitigation
+definitions:
+  EmailPhishingThreatTypeStats:
+    required:
+    - name
+    - emails_count
+    type: object
+    properties:
+      name:
+        title: Name
+        type: string
+        minLength: 1
+      emails_count:
+        title: Emails count
+        type: integer
+  EmailsStats:
+    required:
+    - inspected_count
+    - phishing_count
+    - spam_count
+    - impersonations_count
+    - phishing_threat_types
+    type: object
+    properties:
+      inspected_count:
+        title: Inspected count
+        type: integer
+      phishing_count:
+        title: Phishing count
+        type: integer
+      spam_count:
+        title: Spam count
+        type: integer
+      impersonations_count:
+        title: Impersonations count
+        type: integer
+      phishing_threat_types:
+        type: array
+        items:
+          $ref: '#/definitions/EmailPhishingThreatTypeStats'
+  ImpersonationDetails:
+    required:
+    - incidentID
+    - mailboxId
+    - remediatedTime
+    - mailboxEmail
+    - senderEmail
+    - subject
+    - reportedBy
+    - incidentType
+    - resolution
+    - remediations
+    type: object
+    properties:
+      incidentID:
+        title: Incidentid
+        type: integer
+      mailboxId:
+        title: Mailboxid
+        type: integer
+      remediatedTime:
+        title: Remediatedtime
+        type: string
+        format: date-time
+      mailboxEmail:
+        title: Mailboxemail
+        type: string
+        format: email
+        minLength: 1
+      senderEmail:
+        title: Senderemail
+        type: string
+        format: email
+        minLength: 1
+      subject:
+        title: Subject
+        type: string
+        minLength: 1
+      reportedBy:
+        title: Reportedby
+        type: string
+        format: email
+        minLength: 1
+      incidentType:
+        title: Incidenttype
+        type: string
+        minLength: 1
+      resolution:
+        title: Resolution
+        type: string
+        minLength: 1
+      remediations:
+        title: Remediations
+        type: integer
+  ImpersonationDetailsPage:
+    required:
+    - incidents
+    - messages
+    type: object
+    properties:
+      page:
+        title: Page
+        type: integer
+        x-nullable: true
+      total_pages:
+        title: Total pages
+        type: integer
+        x-nullable: true
+      incidents:
+        type: array
+        items:
+          $ref: '#/definitions/ImpersonationDetails'
+      messages:
+        type: array
+        items:
+          type: string
+          minLength: 1
+  ImpersonationDetailsRequest:
+    type: object
+    properties:
+      page:
+        title: Page
+        type: integer
+        default: 1
+      period:
+        title: Period
+        type: string
+        default: '6'
+        minLength: 1
+  IncidentDetailsRequest:
+    required:
+    - incidents
+    type: object
+    properties:
+      incidents:
+        type: array
+        items:
+          type: integer
+      page:
+        title: Page
+        type: integer
+        default: 1
+      period:
+        title: Period
+        type: string
+        default: '6'
+        minLength: 1
+  IncidentPageDetails:
+    required:
+    - page
+    - total_pages
+    - incidents
+    - messages
+    type: object
+    properties:
+      page:
+        title: Page
+        type: integer
+      total_pages:
+        title: Total pages
+        type: integer
+      incidents:
+        type: array
+        items:
+          $ref: '#/definitions/MitigationIncidentDetails'
+      messages:
+        type: array
+        items:
+          type: string
+          minLength: 1
+  InspectedEmails:
+    required:
+    - phishing
+    - false_positive
+    - incidents
+    - inspected
+    - spam
+    type: object
+    properties:
+      phishing:
+        title: Phishing
+        type: integer
+        x-nullable: true
+      false_positive:
+        title: False positive
+        type: integer
+        x-nullable: true
+      incidents:
+        title: Incidents
+        type: integer
+        x-nullable: true
+      inspected:
+        title: Inspected
+        type: integer
+        x-nullable: true
+      spam:
+        title: Spam
+        type: integer
+        x-nullable: true
+  MailboxesDetails:
+    required:
+    - id
+    - firstName
+    - lastName
+    - title
+    - department
+    - email
+    - phoneNumber
+    - tags
+    - language
+    - riskLevel
+    - awarenessLevel
+    - protected
+    - unprotectedReason
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+      firstName:
+        title: Firstname
+        type: string
+        minLength: 1
+        x-nullable: true
+      lastName:
+        title: Lastname
+        type: string
+        minLength: 1
+        x-nullable: true
+      title:
+        title: Title
+        type: string
+        minLength: 1
+        x-nullable: true
+      department:
+        title: Department
+        type: string
+        minLength: 1
+        x-nullable: true
+      email:
+        title: Email
+        type: string
+        minLength: 1
+      phoneNumber:
+        title: Phonenumber
+        type: string
+        minLength: 1
+        x-nullable: true
+      tags:
+        type: array
+        items:
+          type: string
+          minLength: 1
+        x-nullable: true
+      language:
+        title: Language
+        type: string
+        minLength: 1
+        x-nullable: true
+      enabled:
+        title: Enabled
+        type: boolean
+      riskLevel:
+        title: Risklevel
+        type: string
+        minLength: 1
+        x-nullable: true
+      awarenessLevel:
+        title: Awarenesslevel
+        type: string
+        minLength: 1
+        x-nullable: true
+      protected:
+        title: Protected
+        type: boolean
+        x-nullable: true
+      unprotectedReason:
+        title: Unprotectedreason
+        type: string
+        minLength: 1
+        x-nullable: true
+  MaliciousContentIncidents:
+    required:
+    - computer_vision
+    - total_malicious_incidents
+    - attachments
+    - malware_and_url_protection
+    type: object
+    properties:
+      computer_vision:
+        title: Computer vision
+        type: integer
+        x-nullable: true
+      total_malicious_incidents:
+        title: Total malicious incidents
+        type: integer
+        x-nullable: true
+      attachments:
+        title: Attachments
+        type: integer
+        x-nullable: true
+      malware_and_url_protection:
+        title: Malware and url protection
+        type: integer
+        x-nullable: true
+  MitigationDetails:
+    required:
+    - incidentID
+    - mitigationID
+    - incidentState
+    - remediatedTime
+    - mailboxId
+    - mailboxEmail
+    - subject
+    - senderEmail
+    - senderIP
+    - reportedBy
+    - resolution
+    - spfResult
+    type: object
+    properties:
+      incidentID:
+        title: Incidentid
+        type: integer
+      mitigationID:
+        title: Mitigationid
+        type: integer
+      incidentState:
+        title: Incidentstate
+        type: string
+        minLength: 1
+      remediatedTime:
+        title: Remediatedtime
+        type: string
+        format: date-time
+      mailboxId:
+        title: Mailboxid
+        type: integer
+      mailboxEmail:
+        title: Mailboxemail
+        type: string
+        minLength: 1
+      subject:
+        title: Subject
+        type: string
+        minLength: 1
+      senderEmail:
+        title: Senderemail
+        type: string
+        minLength: 1
+      senderIP:
+        title: Senderip
+        type: string
+        minLength: 1
+      reportedBy:
+        title: Reportedby
+        type: string
+        minLength: 1
+      resolution:
+        title: Resolution
+        type: string
+        minLength: 1
+      spfResult:
+        title: Spfresult
+        type: string
+        minLength: 1
+  MitigationIncidentDetails:
+    required:
+    - incidentID
+    - incidentState
+    - remediatedTime
+    - affectedMailboxCount
+    - mailboxId
+    - mailboxEmail
+    - senderEmail
+    - subject
+    - threatType
+    - detectionType
+    - reportedBy
+    type: object
+    properties:
+      incidentID:
+        title: Incidentid
+        type: integer
+      incidentState:
+        title: Incidentstate
+        type: integer
+      remediatedTime:
+        title: Remediatedtime
+        type: string
+        format: date-time
+      affectedMailboxCount:
+        title: Affectedmailboxcount
+        type: integer
+      mailboxId:
+        title: Mailboxid
+        type: integer
+      mailboxEmail:
+        title: Mailboxemail
+        type: string
+        format: email
+        minLength: 1
+      senderEmail:
+        title: Senderemail
+        type: string
+        format: email
+        minLength: 1
+      subject:
+        title: Subject
+        type: string
+        minLength: 1
+      threatType:
+        title: Threattype
+        type: string
+        minLength: 1
+      detectionType:
+        title: Detectiontype
+        type: string
+        minLength: 1
+      reportedBy:
+        title: Reportedby
+        type: string
+        format: email
+        minLength: 1
+  MitigationPageDetails:
+    required:
+    - page
+    - total_pages
+    - mitigations
+    - messages
+    type: object
+    properties:
+      page:
+        title: Page
+        type: integer
+      total_pages:
+        title: Total pages
+        type: integer
+      mitigations:
+        type: array
+        items:
+          $ref: '#/definitions/MitigationDetails'
+      messages:
+        type: array
+        items:
+          type: string
+          minLength: 1
+  MitigationStats:
+    required:
+    - openIncidentCount
+    - resolvedIncidentCount
+    - phishingCount
+    - remediationCount
+    - maliciousAttachmentsCount
+    - maliciousLinksCount
+    - impersonationCount
+    - reportedByEmployeesCount
+    type: object
+    properties:
+      openIncidentCount:
+        title: Openincidentcount
+        type: integer
+      resolvedIncidentCount:
+        title: Resolvedincidentcount
+        type: integer
+      phishingCount:
+        title: Phishingcount
+        type: integer
+      remediationCount:
+        title: Remediationcount
+        type: integer
+      maliciousAttachmentsCount:
+        title: Maliciousattachmentscount
+        type: integer
+      maliciousLinksCount:
+        title: Maliciouslinkscount
+        type: integer
+      impersonationCount:
+        title: Impersonationcount
+        type: integer
+      reportedByEmployeesCount:
+        title: Reportedbyemployeescount
+        type: integer
+  MitigationStatsV2View:
+    type: object
+    properties:
+      resolved_by_analyst:
+        $ref: '#/definitions/ResolvedByAnalyst'
+      inspected_emails:
+        $ref: '#/definitions/InspectedEmails'
+      resolved_automatically:
+        $ref: '#/definitions/ResolvedAutomatically'
+      malicious_content_incidents:
+        $ref: '#/definitions/MaliciousContentIncidents'
+  MostTargetedDepartment:
+    required:
+    - name
+    - emails_count
+    type: object
+    properties:
+      name:
+        title: Name
+        type: string
+        minLength: 1
+      emails_count:
+        title: Emails count
+        type: integer
+  MostTargetedDepartments:
+    required:
+    - items
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/MostTargetedDepartment'
+  MostTargetedEmployee:
+    type: object
+    properties:
+      mailbox:
+        $ref: '#/definitions/MailboxesDetails'
+      emails_count:
+        title: Emails count
+        type: integer
+        readOnly: true
+  MostTargetedEmployees:
+    required:
+    - items
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/MostTargetedEmployee'
+  ResolvedAutomatically:
+    required:
+    - time_saved
+    - from_users
+    - from_community
+    - from_mailbox_anomaly
+    - by_visual_scanner
+    - total
+    - by_malware_and_url_scanners
+    - by_themis
+    type: object
+    properties:
+      time_saved:
+        title: Time saved
+        type: number
+        x-nullable: true
+      from_users:
+        title: From users
+        type: integer
+        x-nullable: true
+      from_community:
+        title: From community
+        type: integer
+        x-nullable: true
+      from_mailbox_anomaly:
+        title: From mailbox anomaly
+        type: integer
+        x-nullable: true
+      by_visual_scanner:
+        title: By visual scanner
+        type: integer
+        x-nullable: true
+      total:
+        title: Total
+        type: integer
+        x-nullable: true
+      by_malware_and_url_scanners:
+        title: By malware and url scanners
+        type: integer
+        x-nullable: true
+      by_themis:
+        title: By themis
+        type: integer
+        x-nullable: true
+  ResolvedByAnalyst:
+    type: object
+    properties:
+      time_saved:
+        title: Time saved
+        type: number
+        x-nullable: true
+      from_users:
+        title: From users
+        type: integer
+        x-nullable: true
+      from_community:
+        title: From community
+        type: integer
+        x-nullable: true
+      from_mailbox_anomaly:
+        title: From mailbox anomaly
+        type: integer
+        x-nullable: true
+      avg_resolution_time:
+        title: Avg resolution time
+        type: number
+        x-nullable: true
+      total:
+        title: Total
+        type: integer
+        x-nullable: true

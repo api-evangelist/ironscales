@@ -1,0 +1,37 @@
+generated: '2026-08-04'
+method: searched
+source: public package registry search
+packages: []
+result: none-found
+registries_checked:
+- registry: npm
+  query: ironscales
+  results: 0
+  url: https://registry.npmjs.org/-/v1/search?text=ironscales
+- registry: pypi
+  queries:
+  - ironscales
+  - ironscales-api
+  - ironscales-sdk
+  results: 0
+- registry: rubygems
+  query: ironscales
+  results: 0
+- registry: packagist
+  query: ironscales
+  results: 0
+- registry: nuget
+  query: ironscales
+  results: 0
+- registry: crates.io
+  query: ironscales
+  results: 0
+notes: >-
+  IRONSCALES publishes no first-party client libraries in any public package registry as of the probe
+  date, and no SDK or CLI download is offered on ironscales.com or in the API reference. Integration is
+  done directly against the REST API, or through third-party connectors maintained by the partner (Elastic,
+  Cortex XSOAR, Google SecOps/Chronicle SOAR, Blink, Syncro, RocketCyber, CrowdStrike Falcon Next-Gen SIEM)
+  — those are partner-maintained, not IRONSCALES packages, so none is recorded as official.
+  No `SDKs` pointer is wired in apis.yml because there is no first-party SDK to point at.
+x-evidence:
+  fetched: '2026-08-04'

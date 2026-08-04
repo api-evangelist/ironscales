@@ -1,0 +1,45 @@
+generated: '2026-08-04'
+method: searched
+source: https://ironscales.com/blog/tag/release-notes
+docs: https://ironscales.com/blog/tag/release-notes
+scheme: >-
+  Two parallel streams. Product releases are numbered on a major train (v55.00.00, v60.00.00, v71.00.00)
+  and published as "Product Release Notes vNN.00.00" blog posts by the IRONSCALES Product Management team.
+  Larger feature waves are additionally announced as seasonal releases (Winter '25, Spring '24, Fall 2023)
+  on the blog and the news wire. Neither stream is an API changelog: the IRONSCALES Management API contract
+  itself has no dated change log, no version history, and no breaking-change notices.
+current_version: not published for the API
+api_changelog_published: false
+entries:
+- title: IRONSCALES Winter '25 Release — Automating Smarter Email Security
+  type: seasonal-release
+  url: https://ironscales.com/blog/ironscales-winter-24-release-automating-smarter-email-security
+  highlights:
+  - Autopilot
+  - Adaptive AI spam hygiene
+  - DMARC management
+  - automated multi-language delivery
+  breaking: unknown
+- title: Product Release Notes v60.00.00
+  type: numbered-release
+  url: https://ironscales.com/blog/product-release-notes-v600000
+  breaking: unknown
+- title: Product Release Notes v55.00.00
+  type: numbered-release
+  url: https://ironscales.com/blog/product-release-notes-v550000
+  breaking: unknown
+- title: IRONSCALES launches three AI agents (Red Teaming, Phishing SOC, Phishing Simulation)
+  type: seasonal-release
+  url: https://ironscales.com/news/ironscales-launches-three-ai-agents-to-help-security-teams-outsmart-bad-actors-and-agentic-cybercrime-in-the-era-of-phishing-3.0
+  highlights:
+  - Red Teaming Agent
+  - Phishing SOC Agent
+  - Phishing Simulation Agent
+  breaking: unknown
+gaps:
+- No dated changelog for the Management API contract.
+- Release notes do not state whether a release changes API request/response shapes.
+- No RSS/Atom or machine-readable feed for the release-notes stream is advertised.
+x-evidence:
+  fetched: '2026-08-04'
+  http_status: 200
