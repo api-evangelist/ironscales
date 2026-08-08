@@ -112,7 +112,7 @@ apis:
   properties:
   - type: MCPServer
     url: mcp/ironscales-mcp.yml
-  - type: MCP
+  - type: MCPServer
     url: https://mcp.ironscales.com/mcp/
   - type: ToolCrosswalk
     url: mcp/ironscales-tool-crosswalk.yml

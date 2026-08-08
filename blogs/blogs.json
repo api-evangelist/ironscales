@@ -1,0 +1,11 @@
+{
+  "repo": "ironscales",
+  "feeds": [
+    {
+      "source": "https://support.ironscales.com/hc/en-us",
+      "error": "HTTPError"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-08-06T14:08:46Z"
+}
