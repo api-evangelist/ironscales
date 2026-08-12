@@ -36,72 +36,13 @@ tags:
 - deepfake-detection
 - mcp
 apis:
-- name: IRONSCALES Management API
-  description: >-
-    The public IRONSCALES Management API — a Swagger 2.0 (drf-yasg) contract covering incident retrieval and
-    classification, account-takeover remediation, mitigation and email statistics, escalated emails, mailbox
-    listing and compliance reporting, deepfake SIEM events, phishing-simulation campaigns and participant
-    actions, SAT training/landing-page/template catalogs, and per-tenant security settings (allow list,
-    incident alerts, challenged alerts, account-takeover sensitivity). Tenant-scoped: nearly every operation
-    takes a company_id path parameter. Authentication is a JWT obtained from the /get-token/ operation using
-    the APP API token generated in the IRONSCALES dashboard, presented in the Authorization header. Documented
-    throttling limit is 120 API calls per minute per company.
-  humanURL: https://appapi.ironscales.com/appapi/docs/
-  baseURL: https://appapi.ironscales.com/appapi
-  tags:
-  - email-security
-  - cybersecurity
-  - phishing
-  - incident-response
-  - threat-intelligence
-  - security-awareness-training
-  - phishing-simulation
-  - soc-automation
-  - deepfake-detection
-  properties:
-  - type: APIReference
-    url: https://appapi.ironscales.com/appapi/docs/
-  - type: Documentation
-    url: https://ironscales.com/platform/api
-  - type: OpenAPI
-    url: openapi/ironscales-authorization-openapi.yml
-  - type: OpenAPI
-    url: openapi/ironscales-campaigns-openapi.yml
-  - type: OpenAPI
-    url: openapi/ironscales-deepfake-openapi.yml
-  - type: OpenAPI
-    url: openapi/ironscales-emails-openapi.yml
-  - type: OpenAPI
-    url: openapi/ironscales-incident-openapi.yml
-  - type: OpenAPI
-    url: openapi/ironscales-mailboxes-openapi.yml
-  - type: OpenAPI
-    url: openapi/ironscales-mitigation-openapi.yml
-  - type: OpenAPI
-    url: openapi/ironscales-sat-openapi.yml
-  - type: OpenAPI
-    url: openapi/ironscales-settings-openapi.yml
-  - type: Swagger
-    url: openapi/_original/ironscales-management-api-openapi.json
-  - type: Authentication
-    url: authentication/ironscales-authentication.yml
-  - type: Conventions
-    url: conventions/ironscales-conventions.yml
-  - type: RateLimits
-    url: rate-limits/ironscales-rate-limits.yml
-  - type: ErrorCatalog
-    url: errors/ironscales-problem-types.yml
-  - type: DataModel
-    url: data-model/ironscales-data-model.yml
-  - type: Overlay
-    url: overlays/ironscales-management-api-overlay.yaml
 - name: IRONSCALES MCP Server
   description: >-
     Remote Model Context Protocol server operated by IRONSCALES at mcp.ironscales.com, served over streamable
-    HTTP at /mcp/. Access is OAuth 2.0 protected — an unauthenticated tools/list returns an RFC 6750
-    challenge pointing at RFC 9728 protected-resource metadata, which names members.ironscales.com as the
-    authorization server (authorization code + PKCE S256, refresh tokens, and RFC 7591 dynamic client
-    registration). The live tool manifest requires an authenticated session and is not published anonymously.
+    HTTP at /mcp/. Access is OAuth 2.0 protected — an unauthenticated tools/list returns an RFC 6750 challenge
+    pointing at RFC 9728 protected-resource metadata, which names members.ironscales.com as the authorization
+    server (authorization code + PKCE S256, refresh tokens, and RFC 7591 dynamic client registration).
+    The live tool manifest requires an authenticated session and is not published anonymously.
   humanURL: https://ironscales.com/platform/agents
   baseURL: https://mcp.ironscales.com/mcp/
   tags:
@@ -120,7 +61,243 @@ apis:
     url: authentication/ironscales-authentication.yml
   - type: WellKnown
     url: well-known/ironscales-well-known.yml
+- aid: ironscales:ironscales-authorization-api
+  name: IRONSCALES Authorization API
+  description: The Authorization API from IRONSCALES — 1 operation(s) for authorization.
+  humanURL: https://appapi.ironscales.com/appapi/docs/
+  baseURL: https://appapi.ironscales.com/appapi
+  tags:
+  - Authorization
+  properties:
+  - type: OpenAPI
+    url: openapi/ironscales-authorization-api-openapi.yml
+  - type: APIReference
+    url: https://appapi.ironscales.com/appapi/docs/
+  - type: Documentation
+    url: https://ironscales.com/platform/api
+  - type: Swagger
+    url: openapi/_original/ironscales-management-api-openapi.json
+  - type: Authentication
+    url: authentication/ironscales-authentication.yml
+  - type: Conventions
+    url: conventions/ironscales-conventions.yml
+  - type: RateLimits
+    url: rate-limits/ironscales-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/ironscales-problem-types.yml
+  - type: DataModel
+    url: data-model/ironscales-data-model.yml
+- aid: ironscales:ironscales-campaigns-api
+  name: IRONSCALES Campaigns API
+  description: The Campaigns API from IRONSCALES — 3 operation(s) for campaigns.
+  humanURL: https://appapi.ironscales.com/appapi/docs/
+  baseURL: https://appapi.ironscales.com/appapi
+  tags:
+  - Campaigns
+  properties:
+  - type: OpenAPI
+    url: openapi/ironscales-campaigns-api-openapi.yml
+  - type: APIReference
+    url: https://appapi.ironscales.com/appapi/docs/
+  - type: Documentation
+    url: https://ironscales.com/platform/api
+  - type: Swagger
+    url: openapi/_original/ironscales-management-api-openapi.json
+  - type: Authentication
+    url: authentication/ironscales-authentication.yml
+  - type: Conventions
+    url: conventions/ironscales-conventions.yml
+  - type: RateLimits
+    url: rate-limits/ironscales-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/ironscales-problem-types.yml
+  - type: DataModel
+    url: data-model/ironscales-data-model.yml
+- aid: ironscales:ironscales-deepfake-api
+  name: IRONSCALES Deepfake API
+  description: The Deepfake API from IRONSCALES — 1 operation(s) for deepfake.
+  humanURL: https://appapi.ironscales.com/appapi/docs/
+  baseURL: https://appapi.ironscales.com/appapi
+  tags:
+  - Deepfake
+  properties:
+  - type: OpenAPI
+    url: openapi/ironscales-deepfake-api-openapi.yml
+  - type: APIReference
+    url: https://appapi.ironscales.com/appapi/docs/
+  - type: Documentation
+    url: https://ironscales.com/platform/api
+  - type: Swagger
+    url: openapi/_original/ironscales-management-api-openapi.json
+  - type: Authentication
+    url: authentication/ironscales-authentication.yml
+  - type: Conventions
+    url: conventions/ironscales-conventions.yml
+  - type: RateLimits
+    url: rate-limits/ironscales-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/ironscales-problem-types.yml
+  - type: DataModel
+    url: data-model/ironscales-data-model.yml
+- aid: ironscales:ironscales-emails-api
+  name: IRONSCALES Emails API
+  description: The Emails API from IRONSCALES — 1 operation(s) for emails.
+  humanURL: https://appapi.ironscales.com/appapi/docs/
+  baseURL: https://appapi.ironscales.com/appapi
+  tags:
+  - Emails
+  properties:
+  - type: OpenAPI
+    url: openapi/ironscales-emails-api-openapi.yml
+  - type: APIReference
+    url: https://appapi.ironscales.com/appapi/docs/
+  - type: Documentation
+    url: https://ironscales.com/platform/api
+  - type: Swagger
+    url: openapi/_original/ironscales-management-api-openapi.json
+  - type: Authentication
+    url: authentication/ironscales-authentication.yml
+  - type: Conventions
+    url: conventions/ironscales-conventions.yml
+  - type: RateLimits
+    url: rate-limits/ironscales-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/ironscales-problem-types.yml
+  - type: DataModel
+    url: data-model/ironscales-data-model.yml
+- aid: ironscales:ironscales-incident-api
+  name: IRONSCALES Incident API
+  description: The Incident API from IRONSCALES — 10 operation(s) for incident.
+  humanURL: https://appapi.ironscales.com/appapi/docs/
+  baseURL: https://appapi.ironscales.com/appapi
+  tags:
+  - Incident
+  properties:
+  - type: OpenAPI
+    url: openapi/ironscales-incident-api-openapi.yml
+  - type: APIReference
+    url: https://appapi.ironscales.com/appapi/docs/
+  - type: Documentation
+    url: https://ironscales.com/platform/api
+  - type: Swagger
+    url: openapi/_original/ironscales-management-api-openapi.json
+  - type: Authentication
+    url: authentication/ironscales-authentication.yml
+  - type: Conventions
+    url: conventions/ironscales-conventions.yml
+  - type: RateLimits
+    url: rate-limits/ironscales-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/ironscales-problem-types.yml
+  - type: DataModel
+    url: data-model/ironscales-data-model.yml
+- aid: ironscales:ironscales-mailboxes-api
+  name: IRONSCALES Mailboxes API
+  description: The Mailboxes API from IRONSCALES — 3 operation(s) for mailboxes.
+  humanURL: https://appapi.ironscales.com/appapi/docs/
+  baseURL: https://appapi.ironscales.com/appapi
+  tags:
+  - Mailboxes
+  properties:
+  - type: OpenAPI
+    url: openapi/ironscales-mailboxes-api-openapi.yml
+  - type: APIReference
+    url: https://appapi.ironscales.com/appapi/docs/
+  - type: Documentation
+    url: https://ironscales.com/platform/api
+  - type: Swagger
+    url: openapi/_original/ironscales-management-api-openapi.json
+  - type: Authentication
+    url: authentication/ironscales-authentication.yml
+  - type: Conventions
+    url: conventions/ironscales-conventions.yml
+  - type: RateLimits
+    url: rate-limits/ironscales-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/ironscales-problem-types.yml
+  - type: DataModel
+    url: data-model/ironscales-data-model.yml
+- aid: ironscales:ironscales-mitigation-api
+  name: IRONSCALES Mitigation API
+  description: The Mitigation API from IRONSCALES — 8 operation(s) for mitigation.
+  humanURL: https://appapi.ironscales.com/appapi/docs/
+  baseURL: https://appapi.ironscales.com/appapi
+  tags:
+  - Mitigation
+  properties:
+  - type: OpenAPI
+    url: openapi/ironscales-mitigation-api-openapi.yml
+  - type: APIReference
+    url: https://appapi.ironscales.com/appapi/docs/
+  - type: Documentation
+    url: https://ironscales.com/platform/api
+  - type: Swagger
+    url: openapi/_original/ironscales-management-api-openapi.json
+  - type: Authentication
+    url: authentication/ironscales-authentication.yml
+  - type: Conventions
+    url: conventions/ironscales-conventions.yml
+  - type: RateLimits
+    url: rate-limits/ironscales-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/ironscales-problem-types.yml
+  - type: DataModel
+    url: data-model/ironscales-data-model.yml
+- aid: ironscales:ironscales-sat-api
+  name: IRONSCALES SAT API
+  description: The SAT API from IRONSCALES — 15 operation(s) for sat.
+  humanURL: https://appapi.ironscales.com/appapi/docs/
+  baseURL: https://appapi.ironscales.com/appapi
+  tags:
+  - SAT
+  properties:
+  - type: OpenAPI
+    url: openapi/ironscales-sat-api-openapi.yml
+  - type: APIReference
+    url: https://appapi.ironscales.com/appapi/docs/
+  - type: Documentation
+    url: https://ironscales.com/platform/api
+  - type: Swagger
+    url: openapi/_original/ironscales-management-api-openapi.json
+  - type: Authentication
+    url: authentication/ironscales-authentication.yml
+  - type: Conventions
+    url: conventions/ironscales-conventions.yml
+  - type: RateLimits
+    url: rate-limits/ironscales-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/ironscales-problem-types.yml
+  - type: DataModel
+    url: data-model/ironscales-data-model.yml
+- aid: ironscales:ironscales-settings-api
+  name: IRONSCALES Settings API
+  description: The Settings API from IRONSCALES — 4 operation(s) for settings.
+  humanURL: https://appapi.ironscales.com/appapi/docs/
+  baseURL: https://appapi.ironscales.com/appapi
+  tags:
+  - Settings
+  properties:
+  - type: OpenAPI
+    url: openapi/ironscales-settings-api-openapi.yml
+  - type: APIReference
+    url: https://appapi.ironscales.com/appapi/docs/
+  - type: Documentation
+    url: https://ironscales.com/platform/api
+  - type: Swagger
+    url: openapi/_original/ironscales-management-api-openapi.json
+  - type: Authentication
+    url: authentication/ironscales-authentication.yml
+  - type: Conventions
+    url: conventions/ironscales-conventions.yml
+  - type: RateLimits
+    url: rate-limits/ironscales-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/ironscales-problem-types.yml
+  - type: DataModel
+    url: data-model/ironscales-data-model.yml
 common:
+- type: Overlay
+  url: overlays/ironscales-management-api-overlay.yaml
 - type: TrustCenter
   url: security/ironscales-trust-center.yml
 - type: VulnerabilityDisclosure
