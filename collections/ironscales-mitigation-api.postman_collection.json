@@ -1,0 +1,3026 @@
+{
+  "item": [
+    {
+      "id": "d92a3176-e2c1-40a6-bb2c-baddd6933d36",
+      "name": "Mitigation",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "51f5ffaf-44a5-4a15-bd79-9529045dfb01",
+          "name": "Get details of mitigations per mailbox",
+          "request": {
+            "name": "Get details of mitigations per mailbox",
+            "description": {
+              "content": "Get details of mitigations per mailbox<br />\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>partner.company.view</li>\n    <li>company.view</li>\n</ul>\n<b>Period values:</b>\n<ul>\n    <li>0 - Last 24 hours</li>\n    <li>1 - Last 7 days</li>\n    <li>2 - Last 90 days</li>\n    <li>3 - Last 180 days</li>\n    <li>4 - Last 360 days</li>\n    <li>5 - Current year to date</li>\n    <li>6 - All time (Default)</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "mitigation",
+                ":company_id",
+                "details",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "company_id",
+                  "description": "(Required) company id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"incidents\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"page\": 1,\n  \"period\": \"6\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1d23f424-c0c9-4c06-8159-d141b122f816",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "details",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"incidents\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"page\": 1,\n  \"period\": \"6\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page\": 8215,\n  \"total_pages\": 856,\n  \"mitigations\": [\n    {\n      \"incidentID\": 3951,\n      \"mitigationID\": 2657,\n      \"incidentState\": \"string\",\n      \"remediatedTime\": \"2021-12-03T08:20:04.433Z\",\n      \"mailboxId\": 8955,\n      \"mailboxEmail\": \"string\",\n      \"subject\": \"string\",\n      \"senderEmail\": \"string\",\n      \"senderIP\": \"string\",\n      \"reportedBy\": \"string\",\n      \"resolution\": \"string\",\n      \"spfResult\": \"string\"\n    },\n    {\n      \"incidentID\": 4202,\n      \"mitigationID\": 8913,\n      \"incidentState\": \"string\",\n      \"remediatedTime\": \"1985-08-18T08:26:43.906Z\",\n      \"mailboxId\": 3939,\n      \"mailboxEmail\": \"string\",\n      \"subject\": \"string\",\n      \"senderEmail\": \"string\",\n      \"senderIP\": \"string\",\n      \"reportedBy\": \"string\",\n      \"resolution\": \"string\",\n      \"spfResult\": \"st\"\n    }\n  ],\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1eba4db4-5d34-4b3c-bc96-62f58d8bfb42",
+              "name": "Error explanation in error_message",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "details",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"incidents\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"page\": 1,\n  \"period\": \"6\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_message\": \"explanation\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9c45b80-97df-442c-8165-29c7c11afe46",
+              "name": "No permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "details",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"incidents\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"page\": 1,\n  \"period\": \"6\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "810a7dcf-00f1-4a73-b158-98c9466ef0d0",
+              "name": "Company was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "details",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"incidents\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"page\": 1,\n  \"period\": \"6\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b8507622-226a-498e-a4c8-4a91bd30e20c",
+          "name": "Get the latest company impersonation incidents",
+          "request": {
+            "name": "Get the latest company impersonation incidents",
+            "description": {
+              "content": "Get the latest company impersonation incidents<br/>\nResults are limited to the latest 1000 incidents, a message will appear\ndisplaying if the amount of incidents in the period is over this limit<br/>\n<b>\nPlease note that the IDs returned here are of impersonation attempts,\nnot incidents or reports, so searching these IDs in other endpoints\nwill not return the expected incidents\n</b>\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>partner.company.view</li>\n    <li>company.view</li>\n</ul>\n<br/><b>Period values:</b>\n<ul>\n    <li>0 - Last 24 hours</li>\n    <li>1 - Last 7 days</li>\n    <li>2 - Last 90 days</li>\n    <li>3 - Last 180 days</li>\n    <li>4 - Last 360 days</li>\n    <li>5 - Current year to date</li>\n    <li>6 - All time</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "mitigation",
+                ":company_id",
+                "impersonation",
+                "details",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "<integer>",
+                  "description": "(Required) period"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "company_id",
+                  "description": "(Required) company id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8230f699-e0e6-40bb-bbf8-0958dfcba879",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "impersonation",
+                    "details",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"incidents\": [\n    {\n      \"incidentID\": 1230,\n      \"mailboxId\": 9871,\n      \"remediatedTime\": \"1986-09-11T18:28:00.637Z\",\n      \"mailboxEmail\": \"WjIMzQHK@jwijxgWnccjy.ef\",\n      \"senderEmail\": \"EsBrNUO@xqIbwRdArioeEiXmje.kbke\",\n      \"subject\": \"string\",\n      \"reportedBy\": \"aNI6RK@BJwbKfVElh.skk\",\n      \"incidentType\": \"string\",\n      \"resolution\": \"string\",\n      \"remediations\": 3564\n    },\n    {\n      \"incidentID\": 2751,\n      \"mailboxId\": 2580,\n      \"remediatedTime\": \"1955-08-25T16:26:15.042Z\",\n      \"mailboxEmail\": \"6fZPfvq@OChCeHZ.szz\",\n      \"senderEmail\": \"m1kVlsNuY0Dc9T3@HtNTkOtKnJYjCxbVPvGWDwaPYOFzdYX.spno\",\n      \"subject\": \"string\",\n      \"reportedBy\": \"ovc2aVjYqAA4EtO@lNxtBHSNatZZXvGFbWXfSlqv.odv\",\n      \"incidentType\": \"string\",\n      \"resolution\": \"string\",\n      \"remediations\": 2540\n    }\n  ],\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"page\": null,\n  \"total_pages\": 9333\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f952f4c-eaee-42fb-ae9a-1c5c12682574",
+              "name": "Error explanation in error_message",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "impersonation",
+                    "details",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_message\": \"explanation\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fff9e1ca-6bed-43b0-b073-13ebba644cc4",
+              "name": "No permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "impersonation",
+                    "details",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "06a86ada-ee8d-4b45-98be-40d9a65e4c35",
+              "name": "Company was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "impersonation",
+                    "details",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2ef47941-e9f1-4cb1-b580-f938296b1c41",
+          "name": "Get the latest company impersonation paginated incidents",
+          "request": {
+            "name": "Get the latest company impersonation paginated incidents",
+            "description": {
+              "content": "Get the latest company impersonation paginated incidents<br/>\n<b>\nPlease note that the IDs returned here are of impersonation attempts,\nnot incidents or reports, so searching these IDs in other endpoints\nwill not return the expected incidents\n</b>\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>partner.company.view</li>\n    <li>company.view</li>\n</ul>\n<b>Period values:</b>\n<ul>\n    <li>0 - Last 24 hours</li>\n    <li>1 - Last 7 days</li>\n    <li>2 - Last 90 days</li>\n    <li>3 - Last 180 days</li>\n    <li>4 - Last 360 days</li>\n    <li>5 - Current year to date</li>\n    <li>6 - All time</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "mitigation",
+                ":company_id",
+                "impersonation",
+                "details",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "company_id",
+                  "description": "(Required) company id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"page\": 1,\n  \"period\": \"6\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ea912117-5a8b-4828-bf95-2258208c0145",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "impersonation",
+                    "details",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"page\": 1,\n  \"period\": \"6\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"incidents\": [\n    {\n      \"incidentID\": 6394,\n      \"mailboxId\": 3412,\n      \"remediatedTime\": \"2008-03-25T14:35:45.888Z\",\n      \"mailboxEmail\": \"yJxnTVdaT@yKSHOeNkTfZTYwQGCnohv.nx\",\n      \"senderEmail\": \"NNvJGzuo3hKM@MGILiATASmWWhzzQtXhHmyoxeTeogS.zutq\",\n      \"subject\": \"string\",\n      \"reportedBy\": \"n5rkz@srIBACjiGZBSOTOVyK.khw\",\n      \"incidentType\": \"string\",\n      \"resolution\": \"string\",\n      \"remediations\": 7109\n    },\n    {\n      \"incidentID\": 9319,\n      \"mailboxId\": 364,\n      \"remediatedTime\": \"1976-09-16T07:45:10.034Z\",\n      \"mailboxEmail\": \"hN8B0khHyG@vzBEfSX.enyp\",\n      \"senderEmail\": \"lRhq-GA1jjH6@VkDnEODJOGJmUADU.ssnt\",\n      \"subject\": \"string\",\n      \"reportedBy\": \"sT9mGfQ8wn@nsBFNIhefkYp.axuu\",\n      \"incidentType\": \"string\",\n      \"resolution\": \"string\",\n      \"remediations\": 3114\n    }\n  ],\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"page\": 6934,\n  \"total_pages\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b164b2d1-06d4-426a-b04c-b5e5f4113b62",
+              "name": "Error explanation in error_message",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "impersonation",
+                    "details",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"page\": 1,\n  \"period\": \"6\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_message\": \"explanation\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fcb9dc26-795e-480a-8ff9-476470304093",
+              "name": "No permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "impersonation",
+                    "details",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"page\": 1,\n  \"period\": \"6\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5b5bd5fd-3ab2-4969-8fdf-bca889ba8750",
+              "name": "Company was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "impersonation",
+                    "details",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"page\": 1,\n  \"period\": \"6\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0cfbc9d2-64c7-4cf2-b257-7e72da04a5d2",
+          "name": "Get a company mitigation details",
+          "request": {
+            "name": "Get a company mitigation details",
+            "description": {
+              "content": "Get a company mitigation details<br />\n<br/><b>Scopes:</b>\n<ul>\n<li>partner.all</li>\n<li>partner.company.view</li>\n<li>company.view</li>\n</ul>\n<b>Period values:</b>\n<ul>\n    <li>0 - Last 24 hours</li>\n    <li>1 - Last 7 days</li>\n    <li>2 - Last 90 days</li>\n    <li>3 - Last 180 days</li>\n    <li>4 - Last 360 days</li>\n    <li>5 - Current year to date</li>\n    <li>6 - All time</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "mitigation",
+                ":company_id",
+                "incidents",
+                "details",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "6"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "company_id",
+                  "description": "(Required) company id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bd01c896-9acb-4193-b797-0a13e2f7759e",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "incidents",
+                    "details",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "period",
+                      "value": "6"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page\": 6325,\n  \"total_pages\": 1758,\n  \"incidents\": [\n    {\n      \"incidentID\": 8863,\n      \"incidentState\": 8886,\n      \"remediatedTime\": \"1979-03-27T17:53:05.892Z\",\n      \"affectedMailboxCount\": 6009,\n      \"mailboxId\": 9631,\n      \"mailboxEmail\": \"Z4OiwoI@JtKMSmpVabWYTDWtAXYOqbyWTthXoUq.jij\",\n      \"senderEmail\": \"kLlxD@UTctluSNqVMDUqIctjfjVRFqtIfNdaONq.xx\",\n      \"subject\": \"string\",\n      \"threatType\": \"string\",\n      \"detectionType\": \"string\",\n      \"reportedBy\": \"P6ltfNA28mV@kpU.zojz\"\n    },\n    {\n      \"incidentID\": 8887,\n      \"incidentState\": 9290,\n      \"remediatedTime\": \"1949-03-24T04:46:09.350Z\",\n      \"affectedMailboxCount\": 4881,\n      \"mailboxId\": 9265,\n      \"mailboxEmail\": \"6lF8XE@ailsRiUGNWkWahMjmWfQMPVyv.zdze\",\n      \"senderEmail\": \"YsS91z68@W.drr\",\n      \"subject\": \"string\",\n      \"threatType\": \"string\",\n      \"detectionType\": \"string\",\n      \"reportedBy\": \"UP3aKF0@syEPJEfTCWsZAEyr.qut\"\n    }\n  ],\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3f224aee-6bd7-49b0-b1de-bbd9e930b51f",
+              "name": "Error explanation in error_message",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "incidents",
+                    "details",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "period",
+                      "value": "6"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_message\": \"explanation\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e41c8bbd-721e-4292-9baa-68dcccb30e6f",
+              "name": "No permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "incidents",
+                    "details",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "period",
+                      "value": "6"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a27f3b8d-1300-413b-84f6-475cb7f6a41f",
+              "name": "Company was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "incidents",
+                    "details",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "period",
+                      "value": "6"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ae4e8268-49c4-475b-bf01-9340825cb0a3",
+          "name": "Get a company mitigation statistics",
+          "request": {
+            "name": "Get a company mitigation statistics",
+            "description": {
+              "content": "Get a company mitigation statistics\n<br/><b>Scopes:</b>\n<ul>\n<li>partner.all</li>\n<li>partner.company.view</li>\n<li>company.view</li>\n</ul>\n<b>Period values:</b>\n<ul>\n<li>0 - Last 24 hours</li>\n<li>1 - Last 7 days</li>\n<li>2 - Last 90 days</li>\n<li>3 - Last 180 days</li>\n<li>4 - Last 360 days</li>\n<li>5 - Current year to date</li>\n<li>6 - All time</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "mitigation",
+                ":company_id",
+                "stats",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "<integer>",
+                  "description": "(Required) period"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "company_id",
+                  "description": "(Required) company id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "79c7180b-ded1-4c06-9400-911956cdd897",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"openIncidentCount\": 6904,\n  \"resolvedIncidentCount\": 6091,\n  \"phishingCount\": 5202,\n  \"remediationCount\": 2744,\n  \"maliciousAttachmentsCount\": 1404,\n  \"maliciousLinksCount\": 1029,\n  \"impersonationCount\": 1535,\n  \"reportedByEmployeesCount\": 5103\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4718040e-256a-47d2-a020-95f14aa9c5be",
+              "name": "Error explanation in error_message",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_message\": \"explanation\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "74971822-9bf8-4555-913d-eb1c12d20d11",
+              "name": "No permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b425a734-d88a-4ea6-9571-3ed554585840",
+              "name": "Company was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "63c9fcac-a3b5-4f06-952e-62d42381a7ad",
+          "name": "Get emails stats",
+          "request": {
+            "name": "Get emails stats",
+            "description": {
+              "content": "<b>Rate Limit</b>: 20 requests per second<br /><b>Scopes:</b><ul><li>company.view</li></ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "mitigation",
+                ":company_id",
+                "stats",
+                "emails",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_time",
+                  "value": "<dateTime>",
+                  "description": "(Required) iso-8601 format"
+                },
+                {
+                  "disabled": false,
+                  "key": "end_time",
+                  "value": "<dateTime>",
+                  "description": "(Required) iso-8601 format"
+                },
+                {
+                  "disabled": false,
+                  "key": "include_scanback",
+                  "value": "false"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "company_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8d0aa171-865c-4664-b0bd-99c3ff59e5b6",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    "emails",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "include_scanback",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"inspected_count\": 5276,\n  \"phishing_count\": 8872,\n  \"spam_count\": 4474,\n  \"impersonations_count\": 6908,\n  \"phishing_threat_types\": [\n    {\n      \"name\": \"string\",\n      \"emails_count\": 6638\n    },\n    {\n      \"name\": \"string\",\n      \"emails_count\": 1556\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "81dadda9-6d36-4aaa-adcb-93ff36303a31",
+              "name": "Validation Errors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    "emails",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "include_scanback",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"end_time\": [\n      \"This field is required.\"\n    ],\n    \"start_time\": [\n      \"This field is required.\"\n    ]\n  },\n  {\n    \"end_time\": [\n      \"Datetime has wrong format. Use one of these formats instead: YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z].\"\n    ],\n    \"start_time\": [\n      \"Datetime has wrong format. Use one of these formats instead: YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z].\"\n    ]\n  },\n  {\n    \"end_time\": [\n      \"The `end_time` must be later than the `start_time`.\"\n    ]\n  },\n  {\n    \"end_time\": [\n      \"The time range between `start_time` and `end_time` cannot exceed 365 days.\"\n    ]\n  },\n  {\n    \"include_scanback\": [\n      \"Must be a valid boolean.\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "450f95f1-53ea-400d-998d-1cfb5792874a",
+              "name": "Permission Denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    "emails",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "include_scanback",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"detail\": \"Missing JWT\"\n  },\n  {\n    \"detail\": \"You do not have permission to perform this action.\"\n  },\n  {\n    \"message\": \"You do not have permission for company <company_id>\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e24ef971-8879-4270-8353-8c17c38f2b31",
+              "name": "Company was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    "emails",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "include_scanback",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"message\": \"Company not found\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "47f2e644-5fcb-4f99-b059-763f0a1f2312",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    "emails",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "include_scanback",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"detail\": \"Request was throttled. Expected available in 60 seconds.\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "75490126-f3e9-48cf-af99-d38d13e14e17",
+          "name": "Most targeted departments",
+          "request": {
+            "name": "Most targeted departments",
+            "description": {
+              "content": "Returns top 5 most targeted departments within requested timeframe<br/>\n<b>Rate Limit</b>: 20 requests per second<br /><b>Scopes:</b><ul><li>company.view</li></ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "mitigation",
+                ":company_id",
+                "stats",
+                "most-targeted-departments",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_time",
+                  "value": "<dateTime>",
+                  "description": "(Required) iso-8601 format"
+                },
+                {
+                  "disabled": false,
+                  "key": "end_time",
+                  "value": "<dateTime>",
+                  "description": "(Required) iso-8601 format"
+                },
+                {
+                  "disabled": false,
+                  "key": "include_scanback",
+                  "value": "false"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "company_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "26d7ae35-6d0e-43c0-ad04-0c33edf778b8",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    "most-targeted-departments",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "include_scanback",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"name\": \"string\",\n      \"emails_count\": 308\n    },\n    {\n      \"name\": \"string\",\n      \"emails_count\": 608\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e203cdf8-dd78-47a7-9721-a3a1fcb306ff",
+              "name": "Validation Errors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    "most-targeted-departments",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "include_scanback",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"end_time\": [\n      \"This field is required.\"\n    ],\n    \"start_time\": [\n      \"This field is required.\"\n    ]\n  },\n  {\n    \"end_time\": [\n      \"Datetime has wrong format. Use one of these formats instead: YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z].\"\n    ],\n    \"start_time\": [\n      \"Datetime has wrong format. Use one of these formats instead: YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z].\"\n    ]\n  },\n  {\n    \"end_time\": [\n      \"The `end_time` must be later than the `start_time`.\"\n    ]\n  },\n  {\n    \"end_time\": [\n      \"The time range between `start_time` and `end_time` cannot exceed 365 days.\"\n    ]\n  },\n  {\n    \"include_scanback\": [\n      \"Must be a valid boolean.\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e1500d7a-3352-435f-b70e-d12360390547",
+              "name": "Permission Denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    "most-targeted-departments",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "include_scanback",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"detail\": \"Missing JWT\"\n  },\n  {\n    \"detail\": \"You do not have permission to perform this action.\"\n  },\n  {\n    \"message\": \"You do not have permission for company <company_id>\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9066ce64-cd6d-4165-a37d-1573ad37503e",
+              "name": "Company was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    "most-targeted-departments",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "include_scanback",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"message\": \"Company not found\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5cc6d8b2-8dee-4e90-b6f7-9ab532560feb",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    "most-targeted-departments",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "include_scanback",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"detail\": \"Request was throttled. Expected available in 60 seconds.\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "36a1489f-743d-430b-a5a9-ac94e86288bf",
+          "name": "Most targeted employees",
+          "request": {
+            "name": "Most targeted employees",
+            "description": {
+              "content": "Returns top 5 most targeted employees within requested timeframe<br/>\n<b>Rate Limit</b>: 20 requests per second<br /><b>Scopes:</b><ul><li>company.view</li></ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "mitigation",
+                ":company_id",
+                "stats",
+                "most-targeted-employees",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_time",
+                  "value": "<dateTime>",
+                  "description": "(Required) iso-8601 format"
+                },
+                {
+                  "disabled": false,
+                  "key": "end_time",
+                  "value": "<dateTime>",
+                  "description": "(Required) iso-8601 format"
+                },
+                {
+                  "disabled": false,
+                  "key": "include_scanback",
+                  "value": "false"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "company_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3a0fe944-5b7d-4455-b896-fbdb63641435",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    "most-targeted-employees",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "include_scanback",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"mailbox\": {\n        \"id\": 8246,\n        \"firstName\": \"string\",\n        \"lastName\": \"string\",\n        \"title\": \"string\",\n        \"department\": null,\n        \"email\": \"string\",\n        \"phoneNumber\": null,\n        \"tags\": [\n          \"string\",\n          \"string\"\n        ],\n        \"language\": \"string\",\n        \"riskLevel\": null,\n        \"awarenessLevel\": \"string\",\n        \"protected\": true,\n        \"unprotectedReason\": null,\n        \"enabled\": false\n      },\n      \"emails_count\": 7903\n    },\n    {\n      \"mailbox\": {\n        \"id\": 384,\n        \"firstName\": \"string\",\n        \"lastName\": null,\n        \"title\": \"string\",\n        \"department\": null,\n        \"email\": \"string\",\n        \"phoneNumber\": null,\n        \"tags\": [\n          \"string\",\n          \"string\"\n        ],\n        \"language\": \"string\",\n        \"riskLevel\": null,\n        \"awarenessLevel\": \"string\",\n        \"protected\": null,\n        \"unprotectedReason\": \"string\",\n        \"enabled\": true\n      },\n      \"emails_count\": 9206\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2921c6e8-320b-424c-b666-c529e25a1cf7",
+              "name": "Validation Errors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    "most-targeted-employees",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "include_scanback",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"end_time\": [\n      \"This field is required.\"\n    ],\n    \"start_time\": [\n      \"This field is required.\"\n    ]\n  },\n  {\n    \"end_time\": [\n      \"Datetime has wrong format. Use one of these formats instead: YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z].\"\n    ],\n    \"start_time\": [\n      \"Datetime has wrong format. Use one of these formats instead: YYYY-MM-DDThh:mm[:ss[.uuuuuu]][+HH:MM|-HH:MM|Z].\"\n    ]\n  },\n  {\n    \"end_time\": [\n      \"The `end_time` must be later than the `start_time`.\"\n    ]\n  },\n  {\n    \"end_time\": [\n      \"The time range between `start_time` and `end_time` cannot exceed 365 days.\"\n    ]\n  },\n  {\n    \"include_scanback\": [\n      \"Must be a valid boolean.\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07a59385-67af-485c-99f6-1c3f40ad0249",
+              "name": "Permission Denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    "most-targeted-employees",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "include_scanback",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"detail\": \"Missing JWT\"\n  },\n  {\n    \"detail\": \"You do not have permission to perform this action.\"\n  },\n  {\n    \"message\": \"You do not have permission for company <company_id>\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e184c779-6b3b-472b-873b-69635c0d9bd0",
+              "name": "Company was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    "most-targeted-employees",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "include_scanback",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"message\": \"Company not found\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ff97697-84cf-43d2-a8ba-cc272ff0d2ec",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    "most-targeted-employees",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "include_scanback",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"detail\": \"Request was throttled. Expected available in 60 seconds.\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a5cde181-1dee-4a06-82cd-8a9837d288a7",
+          "name": "Get a company mitigation statistics V2",
+          "request": {
+            "name": "Get a company mitigation statistics V2",
+            "description": {
+              "content": "Get a company mitigation statistics V2\n<br/><b>Scopes:</b>\n<ul>\n<li>partner.all</li>\n<li>partner.company.view</li>\n<li>company.view</li>\n</ul>\n<b>Period values:</b>\n<ul>\n<li>0 - Last 24 hours</li>\n<li>1 - Last 7 days</li>\n<li>2 - Last 90 days</li>\n<li>3 - Last 180 days</li>\n<li>4 - Last 360 days</li>\n<li>5 - Current year to date</li>\n<li>6 - All time</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "mitigation",
+                ":company_id",
+                "stats",
+                "v2",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "<integer>",
+                  "description": "(Required) period"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "company_id",
+                  "description": "(Required) company id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "585843c0-e913-4ba0-a501-04c4d45dc2c1",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    "v2",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"resolved_by_analyst\": {\n    \"time_saved\": 2018.7649312699862,\n    \"from_users\": 6023,\n    \"from_community\": 2720,\n    \"from_mailbox_anomaly\": 2608,\n    \"avg_resolution_time\": null,\n    \"total\": null\n  },\n  \"inspected_emails\": {\n    \"phishing\": 2449,\n    \"false_positive\": 9990,\n    \"incidents\": null,\n    \"inspected\": null,\n    \"spam\": null\n  },\n  \"resolved_automatically\": {\n    \"time_saved\": null,\n    \"from_users\": 156,\n    \"from_community\": null,\n    \"from_mailbox_anomaly\": null,\n    \"by_visual_scanner\": 5216,\n    \"total\": 3680,\n    \"by_malware_and_url_scanners\": 9543,\n    \"by_themis\": null\n  },\n  \"malicious_content_incidents\": {\n    \"computer_vision\": null,\n    \"total_malicious_incidents\": null,\n    \"attachments\": null,\n    \"malware_and_url_protection\": 1096\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "49206b87-d5b9-4ae9-8084-94e578d889a7",
+              "name": "Error explanation in error_message",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    "v2",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_message\": \"explanation\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d26f1c37-5c5c-447d-b9d5-5d1a6a656876",
+              "name": "No permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    "v2",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a12fa509-45dc-4893-bd71-d1fdd5ee8b43",
+              "name": "Company was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mitigation",
+                    ":company_id",
+                    "stats",
+                    "v2",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://appapi.ironscales.com/appapi",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "92e05a1a-003f-426b-84f9-e35c359653b8",
+    "name": "IRONSCALES Management Mitigation API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Mitigation operations of the IRONSCALES Management API, split by tag from the provider-published Swagger 2.0 document at https://appapi.ironscales.com/appapi/docs/?format=openapi. Operations, parameters, responses and definitions are carried verbatim from the source specification.",
+      "type": "text/plain"
+    }
+  }
+}

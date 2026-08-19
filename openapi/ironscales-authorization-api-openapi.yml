@@ -1,0 +1,68 @@
+openapi: 3.2.0
+info:
+  title: IRONSCALES Management Authorization API
+  description: The Authorization operations of the IRONSCALES Management API, split by tag from the provider-published Swagger 2.0 document at https://appapi.ironscales.com/appapi/docs/?format=openapi. Operations, parameters, responses and definitions are carried verbatim from the source specification.
+  version: v1
+servers:
+- url: https://appapi.ironscales.com/appapi
+security:
+- JWT: []
+tags:
+- name: Authorization
+paths:
+  /get-token/:
+    parameters: []
+    post:
+      operationId: get JWT token
+      description: 'Get JWT used for interacting with the other endpoints of the AppAPI <br />
+
+        Company Key can be found under Settings -> General -> "Company Token"'
+      responses:
+        '200':
+          description: Successfully Response
+          content:
+            application/json:
+              example:
+                jwt: <token>
+        '400':
+          description: Missing scope list under "scopes"
+          content:
+            application/json:
+              example:
+                error_message: explanation
+        '403':
+          description: One of the following:<ul><li>No company found for API key</li><li>API permission disabled</li><li>Company does not have permission for requested scopes</li>
+          content:
+            application/json:
+              example:
+                error_message: explanation
+      tags:
+      - Authorization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JwtRequest'
+        required: true
+components:
+  schemas:
+    JwtRequest:
+      required:
+      - key
+      - scopes
+      type: object
+      properties:
+        key:
+          title: Key
+          type: string
+          minLength: 1
+        scopes:
+          type: array
+          items:
+            type: string
+            minLength: 1
+  securitySchemes:
+    JWT:
+      type: apiKey
+      name: Authorization
+      in: header

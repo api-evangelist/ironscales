@@ -1,0 +1,346 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "IRONSCALES Management Settings API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Settings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get account takeover sensitivity settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/settings/:company_id/account-takeover/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "\nRetrieve the account takeover sensitivity settings for the specified company.\n<br/><br/>\n<b>Sensitivity Options:</b>\n<ul>\n    <li><b>1 (Aggressive):</b> Most sensitive - requires fewer alerts to trigger an incident</li>\n    <li><b>2 (Balanced):</b> Default sensitivity level</li>\n    <li><b>3 (Relaxed):</b> Least sensitive - requires more alerts to trigger an incident</li>\n</ul>\n<br/><b>Scopes:</b>\n<ul>\n    <li>company.all</li>\n    <li>company.view</li>\n</ul>\n"
+        },
+        {
+          "info": {
+            "name": "Update account takeover sensitivity settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://appapi.ironscales.com/appapi/settings/:company_id/account-takeover/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\nUpdate account takeover sensitivity settings for the specified company.\n<br/><br/>\n<b>Sensitivity Options:</b>\n<ul>\n    <li><b>1 (Aggressive):</b> Most sensitive - requires fewer alerts to trigger an incident</li>\n    <li><b>2 (Balanced):</b> Default sensitivity level</li>\n    <li><b>3 (Relaxed):</b> Least sensitive - requires more alerts to trigger an incident</li>\n</ul>\n<br/><b>Scopes:</b>\n<ul>\n    <li>company.all</li>\n    <li>company.edit</li>\n</ul>\n"
+        },
+        {
+          "info": {
+            "name": "Get allow list settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/settings/:company_id/allow-list/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Options: type | scope | date | allowed_for | noSorting"
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Options: desc | asc"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by entry type."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter entries by their value field (case-insensitive partial match)."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination results. Starts at 1."
+              },
+              {
+                "name": "items_per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page in pagination results. Min: 1, Max: 500, Default: 100."
+              }
+            ]
+          },
+          "docs": "\nRetrieve the list of allow list settings for the specified company.\n<b>Scopes:</b><ul><li>company.all</li><li>company.view</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Create allow list settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://appapi.ironscales.com/appapi/settings/:company_id/allow-list/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\nAdd a new entry to the allow list for the specified company.\n<b>Scopes:</b><ul><li>company.all</li><li>company.edit</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Update allow list entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://appapi.ironscales.com/appapi/settings/:company_id/allow-list/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\nUpdate an existing allow list entry for the specified company.\n<b>Scopes:</b><ul><li>company.all</li><li>company.edit</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Delete allow list entries",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://appapi.ironscales.com/appapi/settings/:company_id/allow-list/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\nDelete selected entries from the allow list for the specified company.\n<b>Scopes:</b><ul><li>company.all</li><li>company.edit</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Get challenged notification settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/settings/:company_id/challenged-alerts/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "\nRetrieve the list of email recipients configured for challenged alert notifications for the specified company.\n<br/><b>Scopes:</b>\n<ul>\n    <li>company.all</li>\n    <li>company.view</li>\n</ul>\n"
+        },
+        {
+          "info": {
+            "name": "Create challenged notification settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://appapi.ironscales.com/appapi/settings/:company_id/challenged-alerts/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\nSet the list of email recipients configured for challenged alert notifications for the specified company.\n<br/><b>Scopes:</b>\n<ul>\n    <li>company.all</li>\n    <li>company.edit</li>\n</ul>\n"
+        },
+        {
+          "info": {
+            "name": "Append challenged notification settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://appapi.ironscales.com/appapi/settings/:company_id/challenged-alerts/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\nAppend email recipients to existing challenged alert notifications, removing duplicates, returning the updated list.\n<br/><b>Scopes:</b>\n<ul>\n    <li>company.all</li>\n    <li>company.edit</li>\n</ul>\n"
+        },
+        {
+          "info": {
+            "name": "Delete challenged notification settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://appapi.ironscales.com/appapi/settings/:company_id/challenged-alerts/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "\nRemove all configured email recipients for challenged alert notifications. After deletion, the recipients list will be empty.\n<br/><b>Scopes:</b>\n<ul>\n    <li>company.all</li>\n    <li>company.edit</li>\n</ul>\n"
+        },
+        {
+          "info": {
+            "name": "Get company notification settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/settings/:company_id/incident-alerts/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "\nRetrieve the list of email recipients configured for incident alert notifications for the specified company.\n<br/><b>Scopes:</b>\n<ul>\n    <li>company.all</li>\n    <li>company.view</li>\n</ul>\n"
+        },
+        {
+          "info": {
+            "name": "Create company notification settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://appapi.ironscales.com/appapi/settings/:company_id/incident-alerts/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\nSet the list of email recipients for incident alert notifications, replacing any existing recipients.\n<br/><b>Scopes:</b>\n<ul>\n    <li>company.all</li>\n    <li>company.edit</li>\n</ul>\n"
+        },
+        {
+          "info": {
+            "name": "Append to company notification settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://appapi.ironscales.com/appapi/settings/:company_id/incident-alerts/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\nAppend email recipients to the existing notification settings list, removing duplicates, returning the updated list.\n<br/><b>Scopes:</b>\n<ul>\n    <li>company.all</li>\n    <li>company.edit</li>\n</ul>\n"
+        },
+        {
+          "info": {
+            "name": "Delete company notification settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://appapi.ironscales.com/appapi/settings/:company_id/incident-alerts/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "\nRemove all configured email recipients for incident alert notifications. After deletion, the recipients list will be empty.\n<br/><b>Scopes:</b>\n<ul>\n    <li>company.all</li>\n    <li>company.edit</li>\n</ul>\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

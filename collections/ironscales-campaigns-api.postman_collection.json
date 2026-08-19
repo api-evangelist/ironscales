@@ -1,0 +1,1019 @@
+{
+  "item": [
+    {
+      "id": "dae7e5a7-39d8-42b2-957c-41d14b9bf4b2",
+      "name": "Campaigns",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cccdd778-bebf-4d81-b9ac-b860cfc4c95b",
+          "name": "Get campaigns details",
+          "request": {
+            "name": "Get campaigns details",
+            "description": {
+              "content": "Get campaigns details <br/>\nEach page contains 25 campaigns results<br/>\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>partner.company.view</li>\n    <li>company.view</li>\n</ul>\n\nStatuses mapping to UI values:\n<ul>\n    <li>Draft (0) -> Draft</li>\n    <li>Collecting (1) -> Active</li>\n    <li>Closed (2) -> Completed</li>\n    <li>Approved by User (3) -> Pending</li>\n    <li>Sending (4) -> Active</li>\n    <li>Inactive (5) -> Inactive</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "campaigns",
+                ":company_id",
+                "details"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "<integer>",
+                  "description": "(Required) <p>Applied over campaign creation date</p>\n                                <ul>\n                                <li>0 - Last 24 hours</li>\n                                <li>1 - Last 7 days</li>\n                                <li>2 - Last 90 days</li>\n                                <li>3 - Last 180 days</li>\n                                <li>4 - Last 360 days</li>\n                                <li>5 - Current year to date</li>\n                                <li>6 - All time</li>\n                                </ul>\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "2",
+                  "description": "<ul>\n                                <li>0 - Draft</li>\n                                <li>1 - Collecting</li>\n                                <li>2 - Closed</li>\n                                <li>3 - Approved</li>\n                                <li>4 - Sending</li>\n                                </ul>\n                                <p>Can be multiple statuses: status=0&status=2&status=3...</p>\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Optional, search by partial campaign name"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "company_id",
+                  "description": "(Required) Company ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "070da232-ef60-4e88-9e17-2bfdd88e6f31",
+              "name": "Successfully Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "campaigns",
+                    ":company_id",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "2"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) Company ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page\": 4760,\n  \"total_pages\": 9456,\n  \"campaigns\": [\n    {\n      \"campaignID\": 6031,\n      \"campaignName\": \"string\",\n      \"language\": \"string\",\n      \"companyId\": 693,\n      \"campaignStatus\": \"string\",\n      \"flowType\": \"string\",\n      \"maxEmailPerDay\": 7823,\n      \"endDate\": \"1972-04-11T09:44:40.323Z\",\n      \"launchDate\": \"1955-03-26T18:25:27.303Z\",\n      \"emailsSent\": 8322,\n      \"participants\": 7109,\n      \"emailsBounced\": 6253,\n      \"numberOfClickedParticipants\": 648,\n      \"numberOfTrainedParticipants\": 2992,\n      \"numberOfTrainedParticipatns\": 709,\n      \"numberOfReportedParticipants\": 4918,\n      \"numberOfReadParticipants\": 50,\n      \"numberOfDeleted\": 1235,\n      \"attackReadinessFirstReport\": \"string\",\n      \"attackReadinessMitigationTime\": \"string\",\n      \"attackReadinessLuredBeforeMitigation\": \"string\",\n      \"attackReadinessReportsToMitigate\": \"st\",\n      \"randomized\": true\n    },\n    {\n      \"campaignID\": 7329,\n      \"campaignName\": \"string\",\n      \"language\": \"string\",\n      \"companyId\": 451,\n      \"campaignStatus\": \"string\",\n      \"flowType\": \"string\",\n      \"maxEmailPerDay\": 8259,\n      \"endDate\": \"1974-05-06T15:20:32.844Z\",\n      \"launchDate\": \"1968-03-01T13:57:45.996Z\",\n      \"emailsSent\": 5801,\n      \"participants\": 4251,\n      \"emailsBounced\": 190,\n      \"numberOfClickedParticipants\": 6607,\n      \"numberOfTrainedParticipants\": 4725,\n      \"numberOfTrainedParticipatns\": 8555,\n      \"numberOfReportedParticipants\": 3236,\n      \"numberOfReadParticipants\": 6754,\n      \"numberOfDeleted\": 7847,\n      \"attackReadinessFirstReport\": \"string\",\n      \"attackReadinessMitigationTime\": \"string\",\n      \"attackReadinessLuredBeforeMitigation\": \"string\",\n      \"attackReadinessReportsToMitigate\": \"string\",\n      \"randomized\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd5dc1b2-cd32-4014-9a65-f6f3a50e14f1",
+              "name": "Missing or wrong period",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "campaigns",
+                    ":company_id",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "2"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) Company ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_message\": \"explanation\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8d5fe4de-6174-4dd4-aafe-d9aade285620",
+              "name": "No permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "campaigns",
+                    ":company_id",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "2"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) Company ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1c04b6c9-38d2-41f3-a43c-5d6e84c2b203",
+              "name": "Company or campaign does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "campaigns",
+                    ":company_id",
+                    "details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "2"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) Company ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bb0f406d-a049-4b0d-a8bc-97de58cc7027",
+          "name": "Perform participants action",
+          "request": {
+            "name": "Perform participants action",
+            "description": {
+              "content": "Perform action on campaign participants.<br/><b>Scopes:</b><ul><li>partner.company.edit</li><li>company.edit</li></ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "campaigns",
+                ":company_id",
+                "participants-actions",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "campaign_id",
+                  "value": "<integer>",
+                  "description": "(Required) Campaign ID"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "company_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filters\": {\n    \"emails\": [\n      \"<email>\",\n      \"<email>\"\n    ]\n  },\n  \"action\": \"<integer>\",\n  \"expiration_date\": \"<string,null-date>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4baf10fe-5caa-49ba-b98c-8d29f867cd35",
+              "name": "Successfully updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "campaigns",
+                    ":company_id",
+                    "participants-actions",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "campaign_id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"filters\": {\n    \"emails\": [\n      \"<email>\",\n      \"<email>\"\n    ]\n  },\n  \"action\": \"<integer>\",\n  \"expiration_date\": \"<string,null-date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5bbbbd18-4164-45bf-9d00-67a455b2d8f7",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "campaigns",
+                    ":company_id",
+                    "participants-actions",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "campaign_id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"filters\": {\n    \"emails\": [\n      \"<email>\",\n      \"<email>\"\n    ]\n  },\n  \"action\": \"<integer>\",\n  \"expiration_date\": \"<string,null-date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"explanation\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6bcebd08-87e2-4c9c-b99e-e90b9f08e339",
+              "name": "No permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "campaigns",
+                    ":company_id",
+                    "participants-actions",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "campaign_id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"filters\": {\n    \"emails\": [\n      \"<email>\",\n      \"<email>\"\n    ]\n  },\n  \"action\": \"<integer>\",\n  \"expiration_date\": \"<string,null-date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "14b72269-ea9a-4f50-a2ff-9aee33ab6e43",
+              "name": "Too many emails",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "campaigns",
+                    ":company_id",
+                    "participants-actions",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "campaign_id",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"filters\": {\n    \"emails\": [\n      \"<email>\",\n      \"<email>\"\n    ]\n  },\n  \"action\": \"<integer>\",\n  \"expiration_date\": \"<string,null-date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The emails list exceeds the maximum allowed limit of 300.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce5e3839-417f-4a6e-b64f-6babfcbdb19f",
+          "name": "Get campaign participants details",
+          "request": {
+            "name": "Get campaign participants details",
+            "description": {
+              "content": "Get campaign participants details <br/>\nEach page contains 100 participants<br/>\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>partner.company.view</li>\n    <li>company.view</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "campaigns",
+                ":company_id",
+                "participants-details"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "campaign_id",
+                  "value": "<integer>",
+                  "description": "(Required) Campaign ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "company_id",
+                  "description": "(Required) Company ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "15dd2e5b-bce2-49f4-9aa2-5867647184b2",
+              "name": "Successfully Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "campaigns",
+                    ":company_id",
+                    "participants-details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "campaign_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) Company ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page\": 1519,\n  \"total_pages\": 2181,\n  \"campaign_id\": 8267,\n  \"participants\": [\n    {\n      \"internalID\": \"string\",\n      \"name\": \"string\",\n      \"displayName\": \"string\",\n      \"lastUpdate\": null,\n      \"title\": \"string\",\n      \"department\": \"string\",\n      \"company\": \"string\",\n      \"manager\": \"string\",\n      \"office\": \"string\",\n      \"country\": null,\n      \"city\": \"string\",\n      \"sentAt\": null,\n      \"opened\": \"No\",\n      \"openedAt\": \"1978-11-21T03:11:38.269Z\",\n      \"enteredDetails\": \"No\",\n      \"trainingModule\": \"string\",\n      \"trainingVideoStarted\": \"Yes\",\n      \"awarenessLevel\": \"Mid Level\",\n      \"customTags\": \"string\",\n      \"reported\": \"No\",\n      \"reportedTime\": \"1957-01-10T09:56:05.264Z\",\n      \"read\": \"No\",\n      \"clicked\": \"Yes\",\n      \"clickedTime\": \"1996-03-24T00:02:58.240Z\",\n      \"resendTrainingDates\": [\n        \"1980-12-23T17:34:22.859Z\",\n        \"1955-12-05T07:35:49.567Z\"\n      ],\n      \"deleted\": \"No\",\n      \"trained\": \"Yes\",\n      \"trainingCompletionDate\": null,\n      \"trainingScore\": null,\n      \"trainingDuration\": 2703,\n      \"trainingStartedOn\": \"2011-04-18T05:34:48.593Z\",\n      \"email\": \"string\",\n      \"template\": \"string\",\n      \"userIp\": \"string\"\n    },\n    {\n      \"internalID\": \"string\",\n      \"name\": \"string\",\n      \"displayName\": \"string\",\n      \"lastUpdate\": null,\n      \"title\": \"string\",\n      \"department\": \"string\",\n      \"company\": \"string\",\n      \"manager\": \"string\",\n      \"office\": \"string\",\n      \"country\": \"string\",\n      \"city\": \"string\",\n      \"sentAt\": null,\n      \"opened\": \"Yes\",\n      \"openedAt\": \"1991-05-01T08:34:38.594Z\",\n      \"enteredDetails\": \"No\",\n      \"trainingModule\": \"string\",\n      \"trainingVideoStarted\": \"No\",\n      \"awarenessLevel\": \"Beginner Level\",\n      \"customTags\": \"string\",\n      \"reported\": \"No\",\n      \"reportedTime\": \"2004-08-07T08:35:45.033Z\",\n      \"read\": \"No\",\n      \"clicked\": \"Yes\",\n      \"clickedTime\": \"2019-03-06T01:47:08.389Z\",\n      \"resendTrainingDates\": [\n        \"1969-01-28T09:53:47.374Z\",\n        \"1993-12-08T22:37:35.650Z\"\n      ],\n      \"deleted\": \"No\",\n      \"trained\": \"Manually trained\",\n      \"trainingCompletionDate\": \"2020-01-05T15:09:07.701Z\",\n      \"trainingScore\": 4190,\n      \"trainingDuration\": 339,\n      \"trainingStartedOn\": \"1975-11-11T02:11:21.413Z\",\n      \"email\": \"string\",\n      \"template\": \"string\",\n      \"userIp\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9cb0fa10-c8da-48be-8275-c12d3ce0f3b0",
+              "name": "Missing or a wrong Campaign",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "campaigns",
+                    ":company_id",
+                    "participants-details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "campaign_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) Company ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_message\": \"explanation\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2619f4cd-e285-4510-8ff6-de6e840b8da7",
+              "name": "No permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "campaigns",
+                    ":company_id",
+                    "participants-details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "campaign_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) Company ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a85da417-8aa6-47b2-b1e9-228ea751ee42",
+              "name": "Company or page not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "campaigns",
+                    ":company_id",
+                    "participants-details"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "campaign_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) Company ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://appapi.ironscales.com/appapi",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c566477b-38eb-48a9-8922-cfbaaa001752",
+    "name": "IRONSCALES Management Campaigns API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Campaigns operations of the IRONSCALES Management API, split by tag from the provider-published Swagger 2.0 document at https://appapi.ironscales.com/appapi/docs/?format=openapi. Operations, parameters, responses and definitions are carried verbatim from the source specification.",
+      "type": "text/plain"
+    }
+  }
+}

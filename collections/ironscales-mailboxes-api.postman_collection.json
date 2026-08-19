@@ -1,0 +1,1637 @@
+{
+  "item": [
+    {
+      "id": "b2d7e328-39ed-4bba-b537-304b3f84e8c0",
+      "name": "Mailboxes",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bef438a9-d52d-49da-8584-93473b1a4bbb",
+          "name": "Get compliance report",
+          "request": {
+            "name": "Get compliance report",
+            "description": {
+              "content": "Compliance report for a company per user\n<br/><b>Scopes:</b>\n<ul>\n<li>partner.all</li>\n<li>company.all</li>\n<li>partner.company.view</li>\n<li>company.view</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "mailboxes",
+                ":company_id",
+                "compliance-report",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "3",
+                  "description": "\nPeriod to filter the campaigns by:\n<ul>\n    <li>1 - Last 7 days</li>\n    <li>2 - Last year</li>\n    <li>3 - Last 3 month</li>\n    <li>4 - Last 6 month</li>\n    <li>5 - Custom range (up to 180d) - MM-DD-YYYY - MM-DD-YYYY</li>\n</ul>\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "customPeriodFrom",
+                  "value": "<date>",
+                  "description": "Start date of the custom period in MM-DD-YYYY format"
+                },
+                {
+                  "disabled": false,
+                  "key": "customPeriodTo",
+                  "value": "<date>",
+                  "description": "End date of the custom period in MM-DD-YYYY format"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "company_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "980cac57-30c5-4d8d-ae3d-777c9eff7373",
+              "name": "Successfully Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mailboxes",
+                    ":company_id",
+                    "compliance-report",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "3"
+                    },
+                    {
+                      "key": "customPeriodFrom",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "customPeriodTo",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page\": 268,\n  \"total_pages\": 69,\n  \"data\": [\n    {\n      \"firstName\": \"strin\",\n      \"email\": \"1z9yrZ@rUGtGSMljrJCZAJP.rzau\",\n      \"id\": 1138,\n      \"lastName\": \"string\",\n      \"country\": \"string\",\n      \"department\": null,\n      \"title\": \"string\",\n      \"language\": \"string\",\n      \"simulationCampaignsCompletionsCount\": 4313,\n      \"lastSimulationCampaignDate\": \"1948-12-28T09:44:36.322Z\",\n      \"trainingCampaignsCompletionsCount\": 982,\n      \"lastTrainingCampaignDate\": null,\n      \"riskLevel\": \"Medium\",\n      \"awarenessLevel\": \"Expert Level\"\n    },\n    {\n      \"firstName\": \"string\",\n      \"email\": \"ea7oqf@ZYUsYcOnUYub.yxoo\",\n      \"id\": 8949,\n      \"lastName\": \"string\",\n      \"country\": null,\n      \"department\": null,\n      \"title\": null,\n      \"language\": \"string\",\n      \"simulationCampaignsCompletionsCount\": 7521,\n      \"lastSimulationCampaignDate\": \"1992-03-01T14:02:19.010Z\",\n      \"trainingCampaignsCompletionsCount\": 3564,\n      \"lastTrainingCampaignDate\": null,\n      \"riskLevel\": \"Medium\",\n      \"awarenessLevel\": \"Mid Level\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ddd7ecf5-0057-4888-a683-b861a47ef156",
+          "name": "List of a company mailboxes",
+          "request": {
+            "name": "List of a company mailboxes",
+            "description": {
+              "content": "List of a company mailboxes\n<br/><b>Scopes:</b>\n<ul>\n<li>partner.all</li>\n<li>company.all</li>\n<li>partner.company.view</li>\n<li>company.view</li>\n</ul>\n\nAll filters with string values are case-insensitive",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "mailboxes",
+                ":company_id",
+                "list",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<integer>",
+                  "description": "List of mailbox ids"
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<integer>",
+                  "description": "List of mailbox ids"
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_ids",
+                  "value": "<integer>",
+                  "description": "List of mailbox ids to exclude"
+                },
+                {
+                  "disabled": false,
+                  "key": "exclude_ids",
+                  "value": "<integer>",
+                  "description": "List of mailbox ids to exclude"
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Search term to look for in first_name, last_name, title, department, email or phone_number fields"
+                },
+                {
+                  "disabled": false,
+                  "key": "is_enabled",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>",
+                  "description": "Array of tag names"
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>",
+                  "description": "Array of tag names"
+                },
+                {
+                  "disabled": false,
+                  "key": "first_name",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "last_name",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "department",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "title",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "is_protected",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "<string>",
+                  "description": "Language full name"
+                },
+                {
+                  "disabled": false,
+                  "key": "awareness",
+                  "value": "<integer>",
+                  "description": "0 - Beginner Level, 1 - Mid Level, 2 - Expert Level"
+                },
+                {
+                  "disabled": false,
+                  "key": "awareness",
+                  "value": "<integer>",
+                  "description": "0 - Beginner Level, 1 - Mid Level, 2 - Expert Level"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "id"
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "asc"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page Number"
+                },
+                {
+                  "disabled": false,
+                  "key": "items_per_page",
+                  "value": "100",
+                  "description": "Number of items per page (optional, overrides default)"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "company_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c4ec96a5-59ee-4dd3-a1b8-2cde96829f53",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mailboxes",
+                    ":company_id",
+                    "list",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude_ids",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude_ids",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "is_enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "last_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "department",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "is_protected",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "awareness",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "awareness",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "id"
+                    },
+                    {
+                      "key": "order",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "items_per_page",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page\": 1861,\n  \"total_pages\": 3440,\n  \"total_count\": 6917,\n  \"mailboxes\": [\n    {\n      \"id\": 2099,\n      \"firstName\": \"string\",\n      \"lastName\": null,\n      \"title\": \"string\",\n      \"department\": \"string\",\n      \"email\": \"string\",\n      \"phoneNumber\": \"string\",\n      \"tags\": null,\n      \"language\": \"string\",\n      \"riskLevel\": null,\n      \"awarenessLevel\": null,\n      \"protected\": false,\n      \"unprotectedReason\": null,\n      \"enabled\": false\n    },\n    {\n      \"id\": 4749,\n      \"firstName\": null,\n      \"lastName\": null,\n      \"title\": \"string\",\n      \"department\": \"string\",\n      \"email\": \"string\",\n      \"phoneNumber\": null,\n      \"tags\": null,\n      \"language\": null,\n      \"riskLevel\": \"string\",\n      \"awarenessLevel\": \"string\",\n      \"protected\": null,\n      \"unprotectedReason\": null,\n      \"enabled\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4166363-b9fd-41b8-9c55-73e371170e45",
+              "name": "Error explanation in error_message",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mailboxes",
+                    ":company_id",
+                    "list",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude_ids",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude_ids",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "is_enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "last_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "department",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "is_protected",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "awareness",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "awareness",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "id"
+                    },
+                    {
+                      "key": "order",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "items_per_page",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_message\": \"explanation\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "349eb64d-70c1-451a-a0ff-bf06d4105d64",
+              "name": "No permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mailboxes",
+                    ":company_id",
+                    "list",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude_ids",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude_ids",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "is_enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "last_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "department",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "is_protected",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "awareness",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "awareness",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "id"
+                    },
+                    {
+                      "key": "order",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "items_per_page",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "80ab1443-02d6-4f28-9b61-d6f6507e5a19",
+              "name": "Company was not found or page out of range",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mailboxes",
+                    ":company_id",
+                    "list",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude_ids",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "exclude_ids",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "is_enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "first_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "last_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "department",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "is_protected",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "awareness",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "awareness",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "id"
+                    },
+                    {
+                      "key": "order",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "items_per_page",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8e29b553-1039-440f-8a5c-6ce7aed7938b",
+          "name": "Bulk edit of a company mailboxes",
+          "request": {
+            "name": "Bulk edit of a company mailboxes",
+            "description": {
+              "content": "List of a company mailboxes\n<br/><b>Scopes:</b>\n<ul>\n<li>partner.all</li>\n<li>company.all</li>\n<li>partner.company.edit</li>\n<li>company.edit</li>\n</ul>\n\nTags manipulation - both adding and deletion - is performed asynchronously by background task.\nThe result of these operations may be not available immediately after getting a response.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "mailboxes",
+                ":company_id",
+                "list",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "company_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"params\": {\n    \"is_enabled\": \"<boolean>\",\n    \"add_tags\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"remove_tags\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"filters\": {\n    \"ids\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"exclude_ids\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"search\": \"<string>\",\n    \"is_enabled\": \"<boolean,null>\",\n    \"tags\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "504e7efc-9c13-443a-afe0-183414585611",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mailboxes",
+                    ":company_id",
+                    "list",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"params\": {\n    \"is_enabled\": \"<boolean>\",\n    \"add_tags\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"remove_tags\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"filters\": {\n    \"ids\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"exclude_ids\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"search\": \"<string>\",\n    \"is_enabled\": \"<boolean,null>\",\n    \"tags\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"mailbox_ids\": [\n    2197,\n    2074\n  ],\n  \"error_message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a91d9b08-e8fc-4a17-8b16-126eeac7cda2",
+              "name": "Error explanation in error_message",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mailboxes",
+                    ":company_id",
+                    "list",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"params\": {\n    \"is_enabled\": \"<boolean>\",\n    \"add_tags\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"remove_tags\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"filters\": {\n    \"ids\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"exclude_ids\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"search\": \"<string>\",\n    \"is_enabled\": \"<boolean,null>\",\n    \"tags\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_message\": \"explanation\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b9241e23-31bb-4304-8352-bc17dd168d21",
+              "name": "No permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mailboxes",
+                    ":company_id",
+                    "list",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"params\": {\n    \"is_enabled\": \"<boolean>\",\n    \"add_tags\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"remove_tags\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"filters\": {\n    \"ids\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"exclude_ids\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"search\": \"<string>\",\n    \"is_enabled\": \"<boolean,null>\",\n    \"tags\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dab1bfc5-8d40-4d3c-b760-e4df9934ca5f",
+              "name": "Company was not found or page out of range",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mailboxes",
+                    ":company_id",
+                    "list",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"params\": {\n    \"is_enabled\": \"<boolean>\",\n    \"add_tags\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"remove_tags\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"filters\": {\n    \"ids\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"exclude_ids\": [\n      \"<integer>\",\n      \"<integer>\"\n    ],\n    \"search\": \"<string>\",\n    \"is_enabled\": \"<boolean,null>\",\n    \"tags\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e6e337f6-e8fa-4c37-a103-8fd24667ad57",
+          "name": "Get user campaign performance",
+          "request": {
+            "name": "Get user campaign performance",
+            "description": {
+              "content": "\nList of a company users performances per campaign\n<br/><b>Scopes:</b>\n<ul>\n<li>partner.all</li>\n<li>company.all</li>\n<li>partner.company.view</li>\n<li>company.view</li>\n</ul>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "mailboxes",
+                ":company_id",
+                "user-campaigns-performance",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "3",
+                  "description": "\nPeriod to filter the campaigns by:\n<ul>\n    <li>1 - Last 7 days</li>\n    <li>2 - Last year</li>\n    <li>3 - Last 3 month</li>\n    <li>4 - Last 6 month</li>\n    <li>5 - Custom range (up to 180d) - MM-DD-YYYY - MM-DD-YYYY</li>\n</ul>\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "customPeriodFrom",
+                  "value": "<date>",
+                  "description": "Start date of the custom period in MM-DD-YYYY format"
+                },
+                {
+                  "disabled": false,
+                  "key": "customPeriodTo",
+                  "value": "<date>",
+                  "description": "End date of the custom period in MM-DD-YYYY format"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                },
+                {
+                  "disabled": false,
+                  "key": "country",
+                  "value": "<string>",
+                  "description": "Country name to filter the users by"
+                },
+                {
+                  "disabled": false,
+                  "key": "department",
+                  "value": "<string>",
+                  "description": "Department name to filter the users by"
+                },
+                {
+                  "disabled": false,
+                  "key": "campaignType",
+                  "value": "<integer>",
+                  "description": "\nType of the campaign:\n<ul>\n    <li>1 - Simulation</li>\n    <li>2 - Training</li>\n    <li>3 - Spear Phishing</li>\n</ul>\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "campaignType",
+                  "value": "<integer>",
+                  "description": "\nType of the campaign:\n<ul>\n    <li>1 - Simulation</li>\n    <li>2 - Training</li>\n    <li>3 - Spear Phishing</li>\n</ul>\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "company_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "82aa1ef3-76e6-407e-9973-2355fff9ac28",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mailboxes",
+                    ":company_id",
+                    "user-campaigns-performance",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "3"
+                    },
+                    {
+                      "key": "customPeriodFrom",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "customPeriodTo",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "department",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "campaignType",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "campaignType",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page\": 1737,\n  \"total_pages\": 3622,\n  \"data\": [\n    {\n      \"userId\": 1192,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"country\": \"string\",\n      \"department\": \"string\",\n      \"title\": \"string\",\n      \"email\": \"string\",\n      \"campaignId\": 1319,\n      \"campaignName\": \"string\",\n      \"campaignCollectingEndDate\": \"1964-01-22T06:58:32.665Z\",\n      \"id\": 5996,\n      \"campaignType\": \"Training\",\n      \"campaignSimulationResult\": \"Reported\",\n      \"campaignTrainingStatus\": \"Not started\",\n      \"campaignTrainingName\": \"string\",\n      \"campaignScore\": 74,\n      \"campaignLocale\": \"string\",\n      \"campaignTemplateName\": null\n    },\n    {\n      \"userId\": 6022,\n      \"firstName\": \"string\",\n      \"lastName\": \"string\",\n      \"country\": \"string\",\n      \"department\": \"string\",\n      \"title\": \"string\",\n      \"email\": \"string\",\n      \"campaignId\": 6746,\n      \"campaignName\": \"string\",\n      \"campaignCollectingEndDate\": \"1954-04-13T17:06:18.137Z\",\n      \"id\": 7465,\n      \"campaignType\": \"Spear Phishing\",\n      \"campaignSimulationResult\": \"Opened\",\n      \"campaignTrainingStatus\": \"Postponed\",\n      \"campaignTrainingName\": null,\n      \"campaignScore\": null,\n      \"campaignLocale\": \"string\",\n      \"campaignTemplateName\": null\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3b145a6-344b-4e16-b0e6-74620ce99c6f",
+              "name": "Error explanation in error_message",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mailboxes",
+                    ":company_id",
+                    "user-campaigns-performance",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "3"
+                    },
+                    {
+                      "key": "customPeriodFrom",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "customPeriodTo",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "department",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "campaignType",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "campaignType",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_message\": \"explanation\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b2b19ed-744a-408d-b815-3edfdb78034d",
+              "name": "No permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mailboxes",
+                    ":company_id",
+                    "user-campaigns-performance",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "3"
+                    },
+                    {
+                      "key": "customPeriodFrom",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "customPeriodTo",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "department",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "campaignType",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "campaignType",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8420a74d-4af3-462d-a2a6-5226862654cb",
+              "name": "Company was not found or page out of range",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mailboxes",
+                    ":company_id",
+                    "user-campaigns-performance",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "3"
+                    },
+                    {
+                      "key": "customPeriodFrom",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "customPeriodTo",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "department",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "campaignType",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "campaignType",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://appapi.ironscales.com/appapi",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7a934a14-dd79-43ea-9569-0198576b359b",
+    "name": "IRONSCALES Management Mailboxes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Mailboxes operations of the IRONSCALES Management API, split by tag from the provider-published Swagger 2.0 document at https://appapi.ironscales.com/appapi/docs/?format=openapi. Operations, parameters, responses and definitions are carried verbatim from the source specification.",
+      "type": "text/plain"
+    }
+  }
+}

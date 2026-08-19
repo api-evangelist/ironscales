@@ -1,0 +1,637 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "IRONSCALES Management SAT API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SAT",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Campaigns List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/sat/:company_id/campaigns/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (default: 1)"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (default: 25, max: 50)"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Case-insensitive substring filter for campaign names.\n- Example: 'training' matches 'Security Training'"
+              },
+              {
+                "name": "flow_types",
+                "value": "",
+                "type": "query",
+                "description": "Filter by campaign flow type IDs.\n- `1` = Training Only - Filter for campaigns that only include training content\n- `2` = Simulation and Training - Filter for campaigns that include both phishing simulation and training\n"
+              },
+              {
+                "name": "locale_ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by locale IDs.\n- Use numeric identifiers from the locale catalog"
+              },
+              {
+                "name": "statuses",
+                "value": "",
+                "type": "query",
+                "description": "Filter by campaign status codes.\n- `0` = Draft - Filter for campaigns in draft state\n- `1` = Collecting (Active) - Filter for campaigns actively collecting participant data\n- `2` = Completed - Filter for campaigns that have finished\n- `3` = Pending - Filter for campaigns approved but waiting to start\n- `4` = Active - Filter for campaigns currently running\n- `5` = Inactive - Filter for inactive campaigns"
+              },
+              {
+                "name": "scheduled_date_from",
+                "value": "",
+                "type": "query",
+                "description": "Earliest campaign schedule date (inclusive).\n- Format: MM-DD-YYYY\n- Cannot be combined with `scheduled_time_from` / `scheduled_time_to`."
+              },
+              {
+                "name": "scheduled_date_to",
+                "value": "",
+                "type": "query",
+                "description": "Latest campaign schedule date (inclusive).\n- Format: MM-DD-YYYY\n- Cannot be combined with `scheduled_time_from` / `scheduled_time_to`."
+              },
+              {
+                "name": "scheduled_time_from",
+                "value": "",
+                "type": "query",
+                "description": "Earliest campaign schedule timestamp (inclusive).\n- Format: ISO 8601 datetime (e.g., `2026-03-01T00:00:00Z`)\n- Cannot be combined with `scheduled_date_from` / `scheduled_date_to`."
+              },
+              {
+                "name": "scheduled_time_to",
+                "value": "",
+                "type": "query",
+                "description": "Latest campaign schedule timestamp (inclusive).\n- Format: ISO 8601 datetime (e.g., `2026-03-31T23:59:59Z`)\n- Cannot be combined with `scheduled_date_from` / `scheduled_date_to`."
+              }
+            ]
+          },
+          "docs": "<b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Create a new draft campaign.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://appapi.ironscales.com/appapi/sat/:company_id/campaigns/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new campaign in DRAFT status. The campaign can be configured\nwith various settings including participants, scenarios, trainings,\nnotifications, and campaign-specific data based on the flow type.<b>Scopes:</b><ul><li>company.edit</li><li>partner.company.edit</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Return a lightweight id/name list of campaigns.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/sat/:company_id/campaigns/lookup/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (default: 1)"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (default: 25, max: 50)"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Case-insensitive substring filter for campaign names.\n- Example: 'training' matches 'Security Training'"
+              },
+              {
+                "name": "flow_types",
+                "value": "",
+                "type": "query",
+                "description": "Filter by campaign flow type IDs.\n- `1` = Training Only - Filter for campaigns that only include training content\n- `2` = Simulation and Training - Filter for campaigns that include both phishing simulation and training\n"
+              },
+              {
+                "name": "locale_ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by locale IDs.\n- Use numeric identifiers from the locale catalog"
+              },
+              {
+                "name": "statuses",
+                "value": "",
+                "type": "query",
+                "description": "Filter by campaign status codes.\n- `0` = Draft - Filter for campaigns in draft state\n- `1` = Collecting (Active) - Filter for campaigns actively collecting participant data\n- `2` = Completed - Filter for campaigns that have finished\n- `3` = Pending - Filter for campaigns approved but waiting to start\n- `4` = Active - Filter for campaigns currently running\n- `5` = Inactive - Filter for inactive campaigns"
+              },
+              {
+                "name": "scheduled_date_from",
+                "value": "",
+                "type": "query",
+                "description": "Earliest campaign schedule date (inclusive).\n- Format: MM-DD-YYYY\n- Cannot be combined with `scheduled_time_from` / `scheduled_time_to`."
+              },
+              {
+                "name": "scheduled_date_to",
+                "value": "",
+                "type": "query",
+                "description": "Latest campaign schedule date (inclusive).\n- Format: MM-DD-YYYY\n- Cannot be combined with `scheduled_time_from` / `scheduled_time_to`."
+              },
+              {
+                "name": "scheduled_time_from",
+                "value": "",
+                "type": "query",
+                "description": "Earliest campaign schedule timestamp (inclusive).\n- Format: ISO 8601 datetime (e.g., `2026-03-01T00:00:00Z`)\n- Cannot be combined with `scheduled_date_from` / `scheduled_date_to`."
+              },
+              {
+                "name": "scheduled_time_to",
+                "value": "",
+                "type": "query",
+                "description": "Latest campaign schedule timestamp (inclusive).\n- Format: ISO 8601 datetime (e.g., `2026-03-31T23:59:59Z`)\n- Cannot be combined with `scheduled_date_from` / `scheduled_date_to`."
+              }
+            ]
+          },
+          "docs": "Accepts the same filters and pagination as the campaigns list\nendpoint but omits the per-campaign statistic annotations, making it\nsuitable for pickers and other lookups that only need identifiers and\nnames.<b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Get Campaign Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/sat/:company_id/campaigns/:campaign_id/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "<b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Delete Campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://appapi.ironscales.com/appapi/sat/:company_id/campaigns/:campaign_id/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a campaign.<b>Scopes:</b><ul><li>company.edit</li><li>partner.company.edit</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Approve a draft campaign.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://appapi.ironscales.com/appapi/sat/:company_id/campaigns/:campaign_id/approve/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Approves a campaign in DRAFT or PENDING status, making it ready for execution.\nThe campaign must pass various validation checks including license validation,\nparticipant count validation, and scenario/training validation based on flow type.<b>Scopes:</b><ul><li>company.edit</li><li>partner.company.edit</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Stop an active campaign.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://appapi.ironscales.com/appapi/sat/:company_id/campaigns/:campaign_id/stop/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Stops an active campaign by stopping email sending and event tracking.<b>Scopes:</b><ul><li>company.edit</li><li>partner.company.edit</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Get call for action pages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/sat/:company_id/cta/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination (default: 1)"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (default: 25, max: 50)"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter call for action pages by name"
+              }
+            ]
+          },
+          "docs": "<p>Retrieve a paginated list of call for action pages available for the specified company. The endpoint returns system pages, public pages, company-owned pages, and brand owner pages (if the company is part of a brand). Results can be filtered by search term. </p><b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Get landing pages for a company.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/sat/:company_id/landing-pages/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "locale_ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by locale IDs.\n- Use numeric identifiers from the locale catalog\n- If not provided, company's selected locales will be used"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "created_by",
+                "value": "",
+                "type": "query",
+                "description": "Filter by created by codes.\n- `1` = System\n- `2` = Company\n- `3` = MSP\n- Provide one or both codes"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of landing pages that are available\nfor the specified company. This includes:\n- System landing pages\n- Company-owned landing pages\n- Brand owner's landing pages (if company is part of a brand)<b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Get list of campaign participants grouped by categories.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/sat/:company_id/participants/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns participants data organized by departments, cities, countries,\ntitles, tags, featured groups, segments, and awareness levels.<b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Calculate participants based on include/exclude filters.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://appapi.ironscales.com/appapi/sat/:company_id/participants/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns a list of participant candidates matching the specified\ninclude and exclude criteria, along with metadata including total count,\nlocale IDs, and awareness levels distribution.<b>Scopes:</b><ul><li>company.edit</li><li>partner.company.edit</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Search for campaign participants.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://appapi.ironscales.com/appapi/sat/:company_id/participants/search/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns a flattened list of matching items based on the search query.<b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Get Campaign Setup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/sat/:company_id/setup/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "\nRetrieve campaign setup and settings data for the specified company.\nThis endpoint provides configuration data needed for campaign creation and management,\nincluding license limits, training content vendors, default content templates, and company settings.\n<b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Get templates list.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/sat/:company_id/templates/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "created_by",
+                "value": "",
+                "type": "query",
+                "description": "Filter by template creator codes.\n- `1` = System - Templates provided by the system\n- `2` = Company - Templates owned by the current company\n- `3` = MSP - Templates provided by the MSP\n- `4` = Community - Community-contributed templates\n- Provide one or more codes"
+              },
+              {
+                "name": "locale_ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by locale IDs.\n- Use numeric identifiers from the locale catalog\n- If not provided, company's selected locales will be used"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by template type codes.\n- `0` = Drive-by (links)\n- `1` = Attachment\n- `2` = Call for Action"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "category_ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by template category (scenario group) IDs. - Use endpoint /appapi/sat/{company_id}/templates/categories/ to get the list of available categories"
+              },
+              {
+                "name": "level",
+                "value": "",
+                "type": "query",
+                "description": "Array of integers\nFilter by template level (difficulty) codes.\n- `0` = Beginner\n- `1` = Intermediate\n- `2` = Advanced"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort templates by:\n- `last_updated` - Sort by last updated date\n- `name` - Sort by template name\n- `avg_click_rate` - Sort by average click rate (per selected locales)\n- `avg_reported_rate` - Sort by average reported rate (per selected locales)"
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Sort order: `asc` for ascending, `desc` for descending"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of mail templates filtered by various criteria\nincluding locale, creator, type, level, category, and search term.<b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Get Template Categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/sat/:company_id/templates/categories/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get template categories.<b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Get training list.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/sat/:company_id/trainings/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "vendor",
+                "value": "",
+                "type": "query",
+                "description": "Filter by training vendor codes.\n- `1` = NINJIO\n- `3` = Habitu8\n- `4` = Cybermaniacs Videos\n- `5` = Wizer\n- `6` = Ironscales"
+              },
+              {
+                "name": "locale_ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by locale IDs.\n- Use numeric identifiers from the locale catalog\n- If not provided, company's selected locales will be used"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a list of training content items filtered by vendor and locale IDs.\nThe results are paginated and include information about training availability\nbased on company licensing.<b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Get training providers.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/sat/:company_id/trainings/providers/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns information about all available training content providers,\nincluding total count and available count of training items for each provider.\nThe available count is based on company licensing and free content availability.<b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Get Training Preview URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/sat/:company_id/trainings/:training_id/preview/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "training_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "locale_id",
+                "value": "",
+                "type": "query",
+                "description": "Locale ID to select the training content item for preview."
+              }
+            ]
+          },
+          "docs": "<b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

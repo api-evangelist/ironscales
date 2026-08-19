@@ -1,0 +1,41 @@
+{
+  "provider": "ironscales",
+  "sources": [
+    "ironscales-authorization-api-openapi.yml",
+    "ironscales-campaigns-api-openapi.yml",
+    "ironscales-deepfake-api-openapi.yml",
+    "ironscales-emails-api-openapi.yml",
+    "ironscales-incident-api-openapi.yml",
+    "ironscales-mailboxes-api-openapi.yml",
+    "ironscales-mitigation-api-openapi.yml",
+    "ironscales-sat-api-openapi.yml",
+    "ironscales-settings-api-openapi.yml"
+  ],
+  "outputs": [
+    "ironscales-authorization-api-openapi.yml",
+    "ironscales-campaigns-api-openapi.yml",
+    "ironscales-deepfake-api-openapi.yml",
+    "ironscales-emails-api-openapi.yml",
+    "ironscales-incident-api-openapi.yml",
+    "ironscales-mailboxes-api-openapi.yml",
+    "ironscales-mitigation-api-openapi.yml",
+    "ironscales-sat-api-openapi.yml",
+    "ironscales-settings-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "ironscales-authorization-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "ironscales-campaigns-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "ironscales-deepfake-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "ironscales-emails-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "ironscales-incident-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "ironscales-mailboxes-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "ironscales-mitigation-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "ironscales-sat-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "ironscales-settings-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": []
+}

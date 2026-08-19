@@ -1,0 +1,275 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "IRONSCALES Management Mitigation API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Mitigation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get details of mitigations per mailbox",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://appapi.ironscales.com/appapi/mitigation/:company_id/details/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get details of mitigations per mailbox<br />\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>partner.company.view</li>\n    <li>company.view</li>\n</ul>\n<b>Period values:</b>\n<ul>\n    <li>0 - Last 24 hours</li>\n    <li>1 - Last 7 days</li>\n    <li>2 - Last 90 days</li>\n    <li>3 - Last 180 days</li>\n    <li>4 - Last 360 days</li>\n    <li>5 - Current year to date</li>\n    <li>6 - All time (Default)</li>\n</ul>"
+        },
+        {
+          "info": {
+            "name": "Get the latest company impersonation incidents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/mitigation/:company_id/impersonation/details/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query",
+                "description": "period"
+              }
+            ]
+          },
+          "docs": "Get the latest company impersonation incidents<br/>\nResults are limited to the latest 1000 incidents, a message will appear\ndisplaying if the amount of incidents in the period is over this limit<br/>\n<b>\nPlease note that the IDs returned here are of impersonation attempts,\nnot incidents or reports, so searching these IDs in other endpoints\nwill not return the expected incidents\n</b>\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>partner.company.view</li>\n    <li>company.view</li>\n</ul"
+        },
+        {
+          "info": {
+            "name": "Get the latest company impersonation paginated incidents",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://appapi.ironscales.com/appapi/mitigation/:company_id/impersonation/details/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get the latest company impersonation paginated incidents<br/>\n<b>\nPlease note that the IDs returned here are of impersonation attempts,\nnot incidents or reports, so searching these IDs in other endpoints\nwill not return the expected incidents\n</b>\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>partner.company.view</li>\n    <li>company.view</li>\n</ul>\n<b>Period values:</b>\n<ul>\n    <li>0 - Last 24 hours</li>\n    <li>1 - Last 7 days</li>\n    <li>2 - Last 90 days</li>\n    <li>3 - Last 18"
+        },
+        {
+          "info": {
+            "name": "Get a company mitigation details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/mitigation/:company_id/incidents/details/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a company mitigation details<br />\n<br/><b>Scopes:</b>\n<ul>\n<li>partner.all</li>\n<li>partner.company.view</li>\n<li>company.view</li>\n</ul>\n<b>Period values:</b>\n<ul>\n    <li>0 - Last 24 hours</li>\n    <li>1 - Last 7 days</li>\n    <li>2 - Last 90 days</li>\n    <li>3 - Last 180 days</li>\n    <li>4 - Last 360 days</li>\n    <li>5 - Current year to date</li>\n    <li>6 - All time</li>\n</ul>"
+        },
+        {
+          "info": {
+            "name": "Get a company mitigation statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/mitigation/:company_id/stats/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query",
+                "description": "period"
+              }
+            ]
+          },
+          "docs": "Get a company mitigation statistics\n<br/><b>Scopes:</b>\n<ul>\n<li>partner.all</li>\n<li>partner.company.view</li>\n<li>company.view</li>\n</ul>\n<b>Period values:</b>\n<ul>\n<li>0 - Last 24 hours</li>\n<li>1 - Last 7 days</li>\n<li>2 - Last 90 days</li>\n<li>3 - Last 180 days</li>\n<li>4 - Last 360 days</li>\n<li>5 - Current year to date</li>\n<li>6 - All time</li>\n</ul>"
+        },
+        {
+          "info": {
+            "name": "Get emails stats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/mitigation/:company_id/stats/emails/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "iso-8601 format"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "iso-8601 format"
+              },
+              {
+                "name": "include_scanback",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "<b>Rate Limit</b>: 20 requests per second<br /><b>Scopes:</b><ul><li>company.view</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Most targeted departments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/mitigation/:company_id/stats/most-targeted-departments/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "iso-8601 format"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "iso-8601 format"
+              },
+              {
+                "name": "include_scanback",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns top 5 most targeted departments within requested timeframe<br/>\n<b>Rate Limit</b>: 20 requests per second<br /><b>Scopes:</b><ul><li>company.view</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Most targeted employees",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/mitigation/:company_id/stats/most-targeted-employees/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "iso-8601 format"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "iso-8601 format"
+              },
+              {
+                "name": "include_scanback",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns top 5 most targeted employees within requested timeframe<br/>\n<b>Rate Limit</b>: 20 requests per second<br /><b>Scopes:</b><ul><li>company.view</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Get a company mitigation statistics V2",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/mitigation/:company_id/stats/v2/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query",
+                "description": "period"
+              }
+            ]
+          },
+          "docs": "Get a company mitigation statistics V2\n<br/><b>Scopes:</b>\n<ul>\n<li>partner.all</li>\n<li>partner.company.view</li>\n<li>company.view</li>\n</ul>\n<b>Period values:</b>\n<ul>\n<li>0 - Last 24 hours</li>\n<li>1 - Last 7 days</li>\n<li>2 - Last 90 days</li>\n<li>3 - Last 180 days</li>\n<li>4 - Last 360 days</li>\n<li>5 - Current year to date</li>\n<li>6 - All time</li>\n</ul>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

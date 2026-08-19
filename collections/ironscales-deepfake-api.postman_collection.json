@@ -1,0 +1,370 @@
+{
+  "item": [
+    {
+      "id": "e3f9250b-1cd6-4c32-ac9c-0134bc648973",
+      "name": "Deepfake",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "562d60d3-a48e-4501-8fda-875b8b091c05",
+          "name": "Get list of Deepfake SIEM events",
+          "request": {
+            "name": "Get list of Deepfake SIEM events",
+            "description": {
+              "content": "Cursor-paged feed of deepfake lifecycle events\n(suspicious / mfa_started / mfa_succeeded / mfa_aborted / confirmed).\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>company.all</li>\n</ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deepfake",
+                ":company_id",
+                "events",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "since_id",
+                  "value": "<integer>",
+                  "description": "Return events with id strictly greater than this cursor."
+                },
+                {
+                  "disabled": false,
+                  "key": "created_after",
+                  "value": "<dateTime>",
+                  "description": "ISO8601 lower bound on the event time (bounds the first fetch)."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Max events to return (default 100, hard cap 500 on the service)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "company_id",
+                  "description": "(Required) company id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9176fd9d-26ce-451a-8a0e-1c3d24e2fb7a",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deepfake",
+                    ":company_id",
+                    "events",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "since_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"events\": [\n    {\n      \"event_uuid\": \"string\",\n      \"event_type\": \"string\",\n      \"occurred_at\": \"1973-09-13T01:38:37.397Z\",\n      \"name\": \"string\",\n      \"severity\": null,\n      \"deepfake_target_full_name\": \"string\",\n      \"deepfake_attacker_full_name\": null,\n      \"deepfake_attacker_email\": \"string\",\n      \"ms_meeting_name\": \"string\",\n      \"ms_meeting_id\": \"string\",\n      \"ms_meeting_url\": \"string\",\n      \"host_name\": \"string\",\n      \"participants_count\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"deepfake_type\": \"string\",\n      \"video_confidence\": 5917.446582023629,\n      \"audio_confidence\": null\n    },\n    {\n      \"event_uuid\": \"string\",\n      \"event_type\": \"string\",\n      \"occurred_at\": \"2017-06-19T18:30:20.964Z\",\n      \"name\": null,\n      \"severity\": null,\n      \"deepfake_target_full_name\": null,\n      \"deepfake_attacker_full_name\": null,\n      \"deepfake_attacker_email\": null,\n      \"ms_meeting_name\": \"string\",\n      \"ms_meeting_id\": null,\n      \"ms_meeting_url\": \"string\",\n      \"host_name\": \"string\",\n      \"participants_count\": {\n        \"key_0\": \"string\",\n        \"key_1\": null,\n        \"key_2\": null,\n        \"key_3\": null\n      },\n      \"deepfake_type\": \"string\",\n      \"video_confidence\": null,\n      \"audio_confidence\": null\n    }\n  ],\n  \"next_cursor\": 9140\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "808e1265-0b2b-4f2e-9934-091fd47986ac",
+              "name": "Error explanation in error_message",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deepfake",
+                    ":company_id",
+                    "events",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "since_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5ae9b7fa-25b9-446a-a7f7-dc0c34a6f19d",
+              "name": "No permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deepfake",
+                    ":company_id",
+                    "events",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "since_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "508e77f8-d667-41b9-a595-71e07cf52bc0",
+              "name": "Company not found or feature disabled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deepfake",
+                    ":company_id",
+                    "events",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "since_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "company_id",
+                      "description": "(Required) company id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://appapi.ironscales.com/appapi",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6608061d-efb1-4670-87d5-bdf802b450eb",
+    "name": "IRONSCALES Management Deepfake API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Deepfake operations of the IRONSCALES Management API, split by tag from the provider-published Swagger 2.0 document at https://appapi.ironscales.com/appapi/docs/?format=openapi. Operations, parameters, responses and definitions are carried verbatim from the source specification.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,187 @@
+openapi: 3.2.0
+info:
+  title: IRONSCALES Management Deepfake API
+  description: The Deepfake operations of the IRONSCALES Management API, split by tag from the provider-published Swagger 2.0 document at https://appapi.ironscales.com/appapi/docs/?format=openapi. Operations, parameters, responses and definitions are carried verbatim from the source specification.
+  version: v1
+servers:
+- url: https://appapi.ironscales.com/appapi
+security:
+- JWT: []
+tags:
+- name: Deepfake
+paths:
+  /deepfake/{company_id}/events/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: Get list of Deepfake SIEM events
+      description: "Cursor-paged feed of deepfake lifecycle events\n(suspicious / mfa_started / mfa_succeeded / mfa_aborted / confirmed).\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>company.all</li>\n</ul>"
+      parameters:
+      - name: since_id
+        in: query
+        description: Return events with id strictly greater than this cursor.
+        required: false
+        schema:
+          type: integer
+          minimum: 0
+      - name: created_after
+        in: query
+        description: ISO8601 lower bound on the event time (bounds the first fetch).
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: limit
+        in: query
+        description: Max events to return (default 100, hard cap 500 on the service).
+        required: false
+        schema:
+          type: integer
+          maximum: 500
+          minimum: 1
+      - name: company_id
+        in: path
+        description: company id
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeepfakeEventsPage'
+        '400':
+          description: Error explanation in error_message
+        '403':
+          description: No permissions
+        '404':
+          description: Company not found or feature disabled
+      tags:
+      - Deepfake
+components:
+  schemas:
+    DeepfakeEventsPage:
+      required:
+      - events
+      - next_cursor
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeepfakeEvent'
+        next_cursor:
+          title: Next cursor
+          type:
+          - integer
+          - 'null'
+    DeepfakeEvent:
+      required:
+      - event_uuid
+      - event_type
+      - occurred_at
+      type: object
+      properties:
+        event_uuid:
+          title: Event uuid
+          type: string
+          minLength: 1
+        event_type:
+          title: Event type
+          type: string
+          minLength: 1
+        occurred_at:
+          title: Occurred at
+          type:
+          - string
+          - 'null'
+          format: date-time
+        name:
+          title: Name
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        severity:
+          title: Severity
+          type:
+          - integer
+          - 'null'
+        deepfake_target_full_name:
+          title: Deepfake target full name
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        deepfake_attacker_full_name:
+          title: Deepfake attacker full name
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        deepfake_attacker_email:
+          title: Deepfake attacker email
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        ms_meeting_name:
+          title: Ms meeting name
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        ms_meeting_id:
+          title: Ms meeting id
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        ms_meeting_url:
+          title: Ms meeting url
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        host_name:
+          title: Host name
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        participants_count:
+          title: Participants count
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type:
+            - string
+            - 'null'
+        deepfake_type:
+          title: Deepfake type
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        video_confidence:
+          title: Video confidence
+          type:
+          - number
+          - 'null'
+        audio_confidence:
+          title: Audio confidence
+          type:
+          - number
+          - 'null'
+  securitySchemes:
+    JWT:
+      type: apiKey
+      name: Authorization
+      in: header

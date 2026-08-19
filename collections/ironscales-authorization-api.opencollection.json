@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "IRONSCALES Management Authorization API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authorization",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "get JWT token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://appapi.ironscales.com/appapi/get-token/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get JWT used for interacting with the other endpoints of the AppAPI <br />\nCompany Key can be found under Settings -> General -> \"Company Token\""
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

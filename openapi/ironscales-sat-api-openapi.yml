@@ -1,0 +1,3671 @@
+openapi: 3.2.0
+info:
+  title: IRONSCALES Management SAT API
+  description: The SAT operations of the IRONSCALES Management API, split by tag from the provider-published Swagger 2.0 document at https://appapi.ironscales.com/appapi/docs/?format=openapi. Operations, parameters, responses and definitions are carried verbatim from the source specification.
+  version: v1
+servers:
+- url: https://appapi.ironscales.com/appapi
+security:
+- JWT: []
+tags:
+- name: SAT
+paths:
+  /sat/{company_id}/campaigns/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: Get Campaigns List
+      description: <b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>
+      parameters:
+      - name: page
+        in: query
+        description: 'Page number (default: 1)'
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: page_size
+        in: query
+        description: 'Number of items per page (default: 25, max: 50)'
+        required: false
+        schema:
+          type: integer
+          default: 25
+          maximum: 50
+          minimum: 1
+      - name: search
+        in: query
+        description: 'Case-insensitive substring filter for campaign names.
+
+          - Example: ''training'' matches ''Security Training'''
+        required: false
+        schema:
+          type: string
+          minLength: 1
+      - name: flow_types
+        in: query
+        description: 'Filter by campaign flow type IDs.
+
+          - `1` = Training Only - Filter for campaigns that only include training content
+
+          - `2` = Simulation and Training - Filter for campaigns that include both phishing simulation and training
+
+          '
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+            enum:
+            - 1
+            - 2
+            - 3
+      - name: locale_ids
+        in: query
+        description: 'Filter by locale IDs.
+
+          - Use numeric identifiers from the locale catalog'
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: statuses
+        in: query
+        description: 'Filter by campaign status codes.
+
+          - `0` = Draft - Filter for campaigns in draft state
+
+          - `1` = Collecting (Active) - Filter for campaigns actively collecting participant data
+
+          - `2` = Completed - Filter for campaigns that have finished
+
+          - `3` = Pending - Filter for campaigns approved but waiting to start
+
+          - `4` = Active - Filter for campaigns currently running
+
+          - `5` = Inactive - Filter for inactive campaigns'
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+            enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+      - name: scheduled_date_from
+        in: query
+        description: 'Earliest campaign schedule date (inclusive).
+
+          - Format: MM-DD-YYYY
+
+          - Cannot be combined with `scheduled_time_from` / `scheduled_time_to`.'
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: scheduled_date_to
+        in: query
+        description: 'Latest campaign schedule date (inclusive).
+
+          - Format: MM-DD-YYYY
+
+          - Cannot be combined with `scheduled_time_from` / `scheduled_time_to`.'
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: scheduled_time_from
+        in: query
+        description: 'Earliest campaign schedule timestamp (inclusive).
+
+          - Format: ISO 8601 datetime (e.g., `2026-03-01T00:00:00Z`)
+
+          - Cannot be combined with `scheduled_date_from` / `scheduled_date_to`.'
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: scheduled_time_to
+        in: query
+        description: 'Latest campaign schedule timestamp (inclusive).
+
+          - Format: ISO 8601 datetime (e.g., `2026-03-31T23:59:59Z`)
+
+          - Cannot be combined with `scheduled_date_from` / `scheduled_date_to`.'
+        required: false
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignListResponse'
+        '400':
+          description: Bad Request - Invalid request parameters or validation error
+          content:
+            application/json:
+              example:
+                field_name:
+                - Field related error message.
+        '401':
+          description: Unauthorized - Authentication credentials were not provided or are invalid
+          content:
+            application/json:
+              example:
+                detail: Authentication credentials were not provided.
+        '403':
+          description: Forbidden - You do not have permission to perform this action
+          content:
+            application/json:
+              example:
+                detail: You do not have permission for company 123
+        '404':
+          description: Not Found - The requested resource was not found
+          content:
+            application/json:
+              example:
+                detail: Not found.
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          content:
+            application/json:
+              example:
+                detail: Request was throttled. Expected available in 60 seconds.
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              example:
+                detail: Internal server error.
+      tags:
+      - SAT
+    post:
+      operationId: Create Draft Campaign
+      summary: Create a new draft campaign.
+      description: 'Creates a new campaign in DRAFT status. The campaign can be configured
+
+        with various settings including participants, scenarios, trainings,
+
+        notifications, and campaign-specific data based on the flow type.<b>Scopes:</b><ul><li>company.edit</li><li>partner.company.edit</li></ul>'
+      responses:
+        '201':
+          description: Campaign successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignCreateResponse'
+              example:
+                id: 123
+        '400':
+          description: Bad Request - Invalid request parameters or validation error
+          content:
+            application/json:
+              example:
+                field_name:
+                - Field related error message.
+        '401':
+          description: Unauthorized - Authentication credentials were not provided or are invalid
+          content:
+            application/json:
+              example:
+                detail: Authentication credentials were not provided.
+        '403':
+          description: Forbidden - You do not have permission to perform this action
+          content:
+            application/json:
+              example:
+                detail: You do not have permission for company 123
+        '404':
+          description: Not Found - The requested resource was not found
+          content:
+            application/json:
+              example:
+                detail: Not found.
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          content:
+            application/json:
+              example:
+                detail: Request was throttled. Expected available in 60 seconds.
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              example:
+                detail: Internal server error.
+      tags:
+      - SAT
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CampaignCreateRequest'
+        required: true
+  /sat/{company_id}/campaigns/lookup/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: Get Campaigns Lookup
+      summary: Return a lightweight id/name list of campaigns.
+      description: 'Accepts the same filters and pagination as the campaigns list
+
+        endpoint but omits the per-campaign statistic annotations, making it
+
+        suitable for pickers and other lookups that only need identifiers and
+
+        names.<b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>'
+      parameters:
+      - name: page
+        in: query
+        description: 'Page number (default: 1)'
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: page_size
+        in: query
+        description: 'Number of items per page (default: 25, max: 50)'
+        required: false
+        schema:
+          type: integer
+          default: 25
+          maximum: 50
+          minimum: 1
+      - name: search
+        in: query
+        description: 'Case-insensitive substring filter for campaign names.
+
+          - Example: ''training'' matches ''Security Training'''
+        required: false
+        schema:
+          type: string
+          minLength: 1
+      - name: flow_types
+        in: query
+        description: 'Filter by campaign flow type IDs.
+
+          - `1` = Training Only - Filter for campaigns that only include training content
+
+          - `2` = Simulation and Training - Filter for campaigns that include both phishing simulation and training
+
+          '
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+            enum:
+            - 1
+            - 2
+            - 3
+      - name: locale_ids
+        in: query
+        description: 'Filter by locale IDs.
+
+          - Use numeric identifiers from the locale catalog'
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: statuses
+        in: query
+        description: 'Filter by campaign status codes.
+
+          - `0` = Draft - Filter for campaigns in draft state
+
+          - `1` = Collecting (Active) - Filter for campaigns actively collecting participant data
+
+          - `2` = Completed - Filter for campaigns that have finished
+
+          - `3` = Pending - Filter for campaigns approved but waiting to start
+
+          - `4` = Active - Filter for campaigns currently running
+
+          - `5` = Inactive - Filter for inactive campaigns'
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+            enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+      - name: scheduled_date_from
+        in: query
+        description: 'Earliest campaign schedule date (inclusive).
+
+          - Format: MM-DD-YYYY
+
+          - Cannot be combined with `scheduled_time_from` / `scheduled_time_to`.'
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: scheduled_date_to
+        in: query
+        description: 'Latest campaign schedule date (inclusive).
+
+          - Format: MM-DD-YYYY
+
+          - Cannot be combined with `scheduled_time_from` / `scheduled_time_to`.'
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: scheduled_time_from
+        in: query
+        description: 'Earliest campaign schedule timestamp (inclusive).
+
+          - Format: ISO 8601 datetime (e.g., `2026-03-01T00:00:00Z`)
+
+          - Cannot be combined with `scheduled_date_from` / `scheduled_date_to`.'
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: scheduled_time_to
+        in: query
+        description: 'Latest campaign schedule timestamp (inclusive).
+
+          - Format: ISO 8601 datetime (e.g., `2026-03-31T23:59:59Z`)
+
+          - Cannot be combined with `scheduled_date_from` / `scheduled_date_to`.'
+        required: false
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignLookupResponse'
+        '400':
+          description: Bad Request - Invalid request parameters or validation error
+          content:
+            application/json:
+              example:
+                field_name:
+                - Field related error message.
+        '401':
+          description: Unauthorized - Authentication credentials were not provided or are invalid
+          content:
+            application/json:
+              example:
+                detail: Authentication credentials were not provided.
+        '403':
+          description: Forbidden - You do not have permission to perform this action
+          content:
+            application/json:
+              example:
+                detail: You do not have permission for company 123
+        '404':
+          description: Not Found - The requested resource was not found
+          content:
+            application/json:
+              example:
+                detail: Not found.
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          content:
+            application/json:
+              example:
+                detail: Request was throttled. Expected available in 60 seconds.
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              example:
+                detail: Internal server error.
+      tags:
+      - SAT
+  /sat/{company_id}/campaigns/{campaign_id}/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: campaign_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: Get Campaign Details
+      description: <b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignDetailsResponse'
+        '401':
+          description: Unauthorized - Authentication credentials were not provided or are invalid
+          content:
+            application/json:
+              example:
+                detail: Authentication credentials were not provided.
+        '403':
+          description: Forbidden - You do not have permission to perform this action
+          content:
+            application/json:
+              example:
+                detail: You do not have permission for company 123
+        '404':
+          description: Not Found - The requested resource was not found
+          content:
+            application/json:
+              example:
+                detail: Not found.
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          content:
+            application/json:
+              example:
+                detail: Request was throttled. Expected available in 60 seconds.
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              example:
+                detail: Internal server error.
+      tags:
+      - SAT
+    delete:
+      operationId: Delete Campaign
+      description: Delete a campaign.<b>Scopes:</b><ul><li>company.edit</li><li>partner.company.edit</li></ul>
+      responses:
+        '204':
+          description: No Content - Campaign successfully deleted
+        '401':
+          description: Unauthorized - Authentication credentials were not provided or are invalid
+          content:
+            application/json:
+              example:
+                detail: Authentication credentials were not provided.
+        '403':
+          description: Forbidden - You do not have permission to perform this action
+          content:
+            application/json:
+              example:
+                detail: You do not have permission for company 123
+        '404':
+          description: Not Found - The requested resource was not found
+          content:
+            application/json:
+              example:
+                detail: Not found.
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          content:
+            application/json:
+              example:
+                detail: Request was throttled. Expected available in 60 seconds.
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              example:
+                detail: Internal server error.
+      tags:
+      - SAT
+  /sat/{company_id}/campaigns/{campaign_id}/approve/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: campaign_id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      operationId: Approve Campaign
+      summary: Approve a draft campaign.
+      description: 'Approves a campaign in DRAFT or PENDING status, making it ready for execution.
+
+        The campaign must pass various validation checks including license validation,
+
+        participant count validation, and scenario/training validation based on flow type.<b>Scopes:</b><ul><li>company.edit</li><li>partner.company.edit</li></ul>'
+      responses:
+        '200':
+          description: OK - Campaign successfully approved
+        '400':
+          description: Bad Request - Invalid request parameters or validation error
+          content:
+            application/json:
+              example:
+                field_name:
+                - Field related error message.
+        '401':
+          description: Unauthorized - Authentication credentials were not provided or are invalid
+          content:
+            application/json:
+              example:
+                detail: Authentication credentials were not provided.
+        '403':
+          description: Forbidden - You do not have permission to perform this action
+          content:
+            application/json:
+              example:
+                detail: You do not have permission for company 123
+        '404':
+          description: Not Found - The requested resource was not found
+          content:
+            application/json:
+              example:
+                detail: Not found.
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          content:
+            application/json:
+              example:
+                detail: Request was throttled. Expected available in 60 seconds.
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              example:
+                detail: Internal server error.
+      tags:
+      - SAT
+  /sat/{company_id}/campaigns/{campaign_id}/stop/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: campaign_id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      operationId: Stop Campaign
+      summary: Stop an active campaign.
+      description: Stops an active campaign by stopping email sending and event tracking.<b>Scopes:</b><ul><li>company.edit</li><li>partner.company.edit</li></ul>
+      responses:
+        '200':
+          description: OK - Campaign successfully stopped
+        '400':
+          description: Bad Request - Invalid request parameters or validation error
+          content:
+            application/json:
+              example:
+                field_name:
+                - Field related error message.
+        '401':
+          description: Unauthorized - Authentication credentials were not provided or are invalid
+          content:
+            application/json:
+              example:
+                detail: Authentication credentials were not provided.
+        '403':
+          description: Forbidden - You do not have permission to perform this action
+          content:
+            application/json:
+              example:
+                detail: You do not have permission for company 123
+        '404':
+          description: Not Found - The requested resource was not found
+          content:
+            application/json:
+              example:
+                detail: Not found.
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          content:
+            application/json:
+              example:
+                detail: Request was throttled. Expected available in 60 seconds.
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              example:
+                detail: Internal server error.
+      tags:
+      - SAT
+  /sat/{company_id}/cta/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: Get call for action pages
+      description: <p>Retrieve a paginated list of call for action pages available for the specified company. The endpoint returns system pages, public pages, company-owned pages, and brand owner pages (if the company is part of a brand). Results can be filtered by search term. </p><b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>
+      parameters:
+      - name: page
+        in: query
+        description: 'Page number for pagination (default: 1)'
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: page_size
+        in: query
+        description: 'Number of items per page (default: 25, max: 50)'
+        required: false
+        schema:
+          type: integer
+          default: 25
+          maximum: 50
+          minimum: 1
+      - name: search
+        in: query
+        description: Search term to filter call for action pages by name
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved call for action pages
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CallForAction'
+              example:
+                page: 1
+                total_pages: 2
+                total_count: 35
+                data:
+                - id: 1
+                  name: Example Call for Action
+                  page_title: Example Title
+                  content: <html><form>...</form></html>
+                  is_system: true
+                  is_public: true
+                  last_updated: '2023-01-16T09:45:32.051421Z'
+                  tags: System
+                  company_id: null
+        '400':
+          description: Bad Request - Invalid request parameters or validation error
+          content:
+            application/json:
+              example:
+                field_name:
+                - Field related error message.
+        '404':
+          description: Company was not found
+          content:
+            application/json:
+              example:
+              - message: Company not found
+        '403':
+          description: Permission Denied
+          content:
+            application/json:
+              example:
+              - detail: Missing JWT
+              - detail: You do not have permission to perform this action.
+              - message: You do not have permission for company <company_id>
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              example:
+              - detail: Request was throttled. Expected available in 60 seconds.
+      tags:
+      - SAT
+  /sat/{company_id}/landing-pages/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: Get landing pages
+      summary: Get landing pages for a company.
+      description: 'Returns a paginated list of landing pages that are available
+
+        for the specified company. This includes:
+
+        - System landing pages
+
+        - Company-owned landing pages
+
+        - Brand owner''s landing pages (if company is part of a brand)<b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>'
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: page_size
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 25
+          maximum: 50
+          minimum: 1
+      - name: locale_ids
+        in: query
+        description: 'Filter by locale IDs.
+
+          - Use numeric identifiers from the locale catalog
+
+          - If not provided, company''s selected locales will be used'
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: created_by
+        in: query
+        description: 'Filter by created by codes.
+
+          - `1` = System
+
+          - `2` = Company
+
+          - `3` = MSP
+
+          - Provide one or both codes'
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+            enum:
+            - 1
+            - 2
+            - 3
+      responses:
+        '200':
+          description: Successfully Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LandingPages'
+        '400':
+          description: Bad Request - Invalid request parameters or validation error
+          content:
+            application/json:
+              example:
+                field_name:
+                - Field related error message.
+        '404':
+          description: Company was not found
+          content:
+            application/json:
+              example:
+              - message: Company not found
+        '403':
+          description: Permission Denied
+          content:
+            application/json:
+              example:
+              - detail: Missing JWT
+              - detail: You do not have permission to perform this action.
+              - message: You do not have permission for company <company_id>
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              example:
+              - detail: Request was throttled. Expected available in 60 seconds.
+      tags:
+      - SAT
+  /sat/{company_id}/participants/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: Get Participants List
+      summary: Get list of campaign participants grouped by categories.
+      description: 'Returns participants data organized by departments, cities, countries,
+
+        titles, tags, featured groups, segments, and awareness levels.<b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>'
+      responses:
+        '200':
+          description: Successful response containing participants data organized by categories (departments, cities, countries, etc.) with participant counts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParticipantsListResponse'
+              example:
+                all_company: 150
+                names:
+                  john.doe@example.com:
+                    full_name: John Doe
+                    mail: john.doe@example.com
+                  jane.smith@example.com:
+                    full_name: Jane Smith
+                    mail: jane.smith@example.com
+                departments:
+                  Engineering: 45
+                  Sales: 30
+                  Marketing: 25
+                  HR: 20
+                  Finance: 15
+                  Operations: 15
+                cities:
+                  New York: 60
+                  San Francisco: 40
+                  London: 30
+                  Tel Aviv: 20
+                countries:
+                  United States: 100
+                  United Kingdom: 30
+                  Israel: 20
+                titles:
+                  Software Engineer: 25
+                  Sales Manager: 15
+                  Marketing Director: 10
+                  HR Manager: 8
+                tags:
+                  Executive: 5
+                  Remote: 50
+                  On-site: 100
+                featured_groups:
+                  All Executives: 5
+                  All Managers: 20
+                segments:
+                  High Risk Users: 10
+                  New Employees: 15
+                awareness_levels:
+                  Beginner Level: 30
+                  Mid Level: 80
+                  Expert Level: 40
+        '400':
+          description: Bad Request - Invalid request parameters or validation error
+          content:
+            application/json:
+              example:
+                field_name:
+                - Field related error message.
+        '401':
+          description: Unauthorized - Authentication credentials were not provided or are invalid
+          content:
+            application/json:
+              example:
+                detail: Authentication credentials were not provided.
+        '403':
+          description: Forbidden - You do not have permission to perform this action
+          content:
+            application/json:
+              example:
+                detail: You do not have permission for company 123
+        '404':
+          description: Company was not found
+          content:
+            application/json:
+              example:
+              - message: Company not found
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          content:
+            application/json:
+              example:
+                detail: Request was throttled. Expected available in 60 seconds.
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              example:
+                detail: Internal server error.
+      tags:
+      - SAT
+    post:
+      operationId: Calculate Participants
+      summary: Calculate participants based on include/exclude filters.
+      description: 'Returns a list of participant candidates matching the specified
+
+        include and exclude criteria, along with metadata including total count,
+
+        locale IDs, and awareness levels distribution.<b>Scopes:</b><ul><li>company.edit</li><li>partner.company.edit</li></ul>'
+      responses:
+        '200':
+          description: Successful response containing calculated participants with metadata.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParticipantsCalculateResponse'
+              example:
+                meta:
+                  count: 150
+                  locale_ids:
+                  - 1
+                  - 2
+                  - 3
+                  awareness_levels:
+                    beginner: 30
+                    mid: 80
+                    expert: 40
+                items:
+                - id: 1
+                  first_name: John
+                  last_name: Doe
+                  email: john.doe@example.com
+                - id: 2
+                  first_name: Jane
+                  last_name: Smith
+                  email: jane.smith@example.com
+        '400':
+          description: Bad Request - Invalid request parameters or validation error
+          content:
+            application/json:
+              example:
+                field_name:
+                - Field related error message.
+        '401':
+          description: Unauthorized - Authentication credentials were not provided or are invalid
+          content:
+            application/json:
+              example:
+                detail: Authentication credentials were not provided.
+        '403':
+          description: Forbidden - You do not have permission to perform this action
+          content:
+            application/json:
+              example:
+                detail: You do not have permission for company 123
+        '404':
+          description: Company was not found
+          content:
+            application/json:
+              example:
+              - message: Company not found
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          content:
+            application/json:
+              example:
+                detail: Request was throttled. Expected available in 60 seconds.
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              example:
+                detail: Internal server error.
+      tags:
+      - SAT
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParticipantsCalculateRequest'
+        required: true
+  /sat/{company_id}/participants/search/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      operationId: Search Participants
+      summary: Search for campaign participants.
+      description: Returns a flattened list of matching items based on the search query.<b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>
+      responses:
+        '200':
+          description: Successful response containing flattened list of matching participant items.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParticipantsSearchResponse'
+              example:
+                items:
+                - name: Engineering
+                  tag: Departments
+                - name: John Doe
+                  tag: Names
+                  mail: john.doe@example.com
+                - name: New York
+                  tag: Cities
+        '400':
+          description: Bad Request - Invalid request parameters or validation error
+          content:
+            application/json:
+              example:
+                field_name:
+                - Field related error message.
+        '401':
+          description: Unauthorized - Authentication credentials were not provided or are invalid
+          content:
+            application/json:
+              example:
+                detail: Authentication credentials were not provided.
+        '403':
+          description: Forbidden - You do not have permission to perform this action
+          content:
+            application/json:
+              example:
+                detail: You do not have permission for company 123
+        '404':
+          description: Company was not found
+          content:
+            application/json:
+              example:
+              - message: Company not found
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          content:
+            application/json:
+              example:
+                detail: Request was throttled. Expected available in 60 seconds.
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              example:
+                detail: Internal server error.
+      tags:
+      - SAT
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParticipantsSearchRequest'
+        required: true
+  /sat/{company_id}/setup/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: Get Campaign Setup
+      description: '
+
+        Retrieve campaign setup and settings data for the specified company.
+
+        This endpoint provides configuration data needed for campaign creation and management,
+
+        including license limits, training content vendors, default content templates, and company settings.
+
+        <b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>'
+      parameters:
+      - name: company_id
+        in: path
+        description: Company ID
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response containing campaign setup data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignSetup'
+              example:
+                languages:
+                - id: 1
+                  name: English
+                  short_name: En
+                  localized_name: English
+                  ltr: true
+                  enabled: true
+                  default: true
+                - id: 2
+                  name: Hebrew
+                  short_name: He
+                  localized_name: עברית
+                  ltr: false
+                  enabled: true
+                  default: false
+                timezone: Asia/Jerusalem
+                workdays: 1
+                campaigns_limit_for_year: null
+                campaign_mails_limit: null
+                allowed_senders_for_training_campaigns:
+                - ironscales Security Team (IRONSCALES) <training@ironscales.com>
+                manager_notification_state: 3
+                default_training_reminder_content_simulation:
+                  en:
+                    body: "\n<p>\n    Hi {first_name},\n</p>\n\n<p>\n    You recently fell for a simulated phishing attack. \n    To give you the tools to recognize malicious emails in the future, \n    please watch the Phishing Awareness Training video.\n<p/>\n\n<p>\n    Please click the link below to start the training. It will only take a few minutes.\n    <br/>\n    {training_page_url}\n<p/>\n\n<p>\n    Thank you,\n    <br/>\n    The {company_name} Security Team\n</p>\n"
+                    subject: Complete your anti-phishing training today
+                  he:
+                    body: "\n<div dir=\"rtl\">    \n<p>\n   שלום {first_name},\n</p>\n\n<p>\n    לאחרונה נפלת להתקפת דיוג (פישינג) מדומה. על מנת לתת לך את הכלים לזהות הודעות דו\"ל זדוניות בעתיד, אנא צפה בלומדת אבטחת המידע המצורפת.\n<p/>\n\n<p>\nאנא לחץ על הקישור להלן כדי להתחיל את הלימודה. זה ייקח רק מספר דקות.\n    <br/>\n    {training_page_url}\n<p/>\n\n<p>\n    בברכה,\n    <br/>\n   צוות אבטחת המידע {company_name}.\n</p>\n</div>\n"
+                    subject: השלם/י את לומדת אבטחת המידע היום
+                default_training_reminder_content_training:
+                  en:
+                    body: "\n<div style=\"font-size: 16px; margin-bottom: 25px;\">\n    Hi <b>{{ first_name }}</b>,\n</div>\n<div style=\"max-width: 445px; margin-bottom: 28px;\">\n    <div>\n        This is a friendly reminder that you haven't completed your Security Awareness Training yet.\n    </div>\n    <div>\n        Please complete the training by clicking the video below. It will only take a few minutes.\n    </div>\n</div>"
+                    subject: 'Security Awareness Training: {{ module_title }}'
+                  he:
+                    body: "\n<div style=\"font-size: 16px; margin-bottom: 25px;\">\n    ,<b>{{ first_name }}</b> שלום\n</div>\n<div style=\"max-width: 445px; margin-bottom: 28px;\">\n    <div>\n        .זוהי תזכורת על כך שעדיין לא השלמת הדרכה בנושא מודעות לאבטחה\n    </div>\n    <div>\n        .נא להשלים את ההדרכה על-ידי לחיצה על הסרטון למטה. זה ייקח רק מספר דקות\n    </div>\n</div>"
+                    subject: הדרכה בנושא מודעות לאבטחה {{ module_title }}
+                default_campaign_failed_alert_content:
+                  en:
+                    body: '<p>Dear {first_name}</p>
+
+
+                      <p>In our ongoing effort to prevent email phishing at {company_name}, we have launched an anti-phishing campaign.</p>
+
+
+                      <p>Unfortunately, you fell for a phishing attempt and did not pass the test. Please take a few minutes to watch the training video linked: {training_page_url}</p>
+
+
+                      <p>Thank you for your participation,<br />
+
+                      {company_name}</p>
+
+
+                      <p>Security Team</p>'
+                    subject: Action Required - Complete Your anti-phishing Training
+                  he:
+                    body: "\n<div dir=\"rtl\">\n<p>\n    שלום {first_name},\n</p>\n\n<p>\nבמאמץ המתמשך למנוע התקפות פישינג ב {company_name}, ביצענו תרגיל אבטחת מידע.\n</p>\n\n<p>\nלצערנו נפלת בתרגיל ולכן עליך לצפות בלומדה בנושא אבטחת מידע. אנא לחץ על הקישור:  {training_page_url}\n</p>\n\n<p>\nתודה על השתתפותך,\n<br />{company_name}\n</p>\n\n<p>\nצוות אבטחת המידע\n</p>\n</div>\n"
+                    subject: השלם את הלומדה בנושא אבטחת מידע
+                default_manager_notification_banner_content:
+                  en:
+                    text: '
+
+                      Your manager, {manager_full_name}, will be notified that you have not yet completed the mandatory training.
+
+                      Please complete it as soon as possible
+
+                      '
+                  he:
+                    text: '
+
+                      המנהל שלך,{manager_full_name}, יקבל התראה שעדיין לא השלמת את הציפייה בלומדת החובה. אנא השלם זאת בהקדם האפשרי.
+
+                      '
+                default_manager_report_email_content:
+                  en:
+                    body: '
+
+                      Dear {first_name},
+
+
+                      As part of the "{campaign_name}" campaign, we wanted to notify you that some employees on your team have not yet completed their mandatory training, despite receiving {reminders_count} or more automated reminders.
+
+                      These employees have been informed that their incomplete status has been shared with you.
+
+                      We have attached a file with the details of the employees who have not finished their assigned training.
+
+                      Please review the attached file for more information.
+
+
+                      Best regards,
+
+                      {company_name}
+
+                      '
+                    subject: Employees with Incomplete Training for "{campaign_name}"
+                  he:
+                    body: '
+
+                      שלום {first_name},
+
+
+                      כחלק מקמפיין "{campaign_name}", ברצוננו ליידע אותך כי יש עובדים בצוות שלך שעדיין לא השלימו את הציפייה בלומדת החובה, על אף שקיבלו {reminders_count} תזכורות אוטומטיות.
+
+                      עובדים אלה קיבלו הודעה כי הינך מיודע על כך שהם לא השלימו את הציפייה בלומדת.
+
+
+                      מצורף למייל זה קובץ המכיל את כל פרטי העובדים שטרם השלימו את הלומדת.
+
+
+                      בברכה,
+
+                      {company_name}
+
+                      '
+                    subject: עובדים שטרם השלימו את הציפייה בלומדת עבור קמפיין  -  "{campaign_name}"
+        '404':
+          description: Company was not found
+          content:
+            application/json:
+              example:
+              - message: Company not found
+        '403':
+          description: Permission Denied
+          content:
+            application/json:
+              example:
+              - detail: Missing JWT
+              - detail: You do not have permission to perform this action.
+              - message: You do not have permission for company <company_id>
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              example:
+              - detail: Request was throttled. Expected available in 60 seconds.
+      tags:
+      - SAT
+  /sat/{company_id}/templates/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: Get Templates List
+      summary: Get templates list.
+      description: 'Returns a paginated list of mail templates filtered by various criteria
+
+        including locale, creator, type, level, category, and search term.<b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>'
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: page_size
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 25
+          maximum: 50
+          minimum: 1
+      - name: created_by
+        in: query
+        description: 'Filter by template creator codes.
+
+          - `1` = System - Templates provided by the system
+
+          - `2` = Company - Templates owned by the current company
+
+          - `3` = MSP - Templates provided by the MSP
+
+          - `4` = Community - Community-contributed templates
+
+          - Provide one or more codes'
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+            enum:
+            - 1
+            - 2
+            - 3
+            - 4
+      - name: locale_ids
+        in: query
+        description: 'Filter by locale IDs.
+
+          - Use numeric identifiers from the locale catalog
+
+          - If not provided, company''s selected locales will be used'
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: type
+        in: query
+        description: 'Filter by template type codes.
+
+          - `0` = Drive-by (links)
+
+          - `1` = Attachment
+
+          - `2` = Call for Action'
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+            enum:
+            - 0
+            - 1
+            - 2
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: category_ids
+        in: query
+        description: Filter by template category (scenario group) IDs. - Use endpoint /appapi/sat/{company_id}/templates/categories/ to get the list of available categories
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: level
+        in: query
+        description: 'Array of integers
+
+          Filter by template level (difficulty) codes.
+
+          - `0` = Beginner
+
+          - `1` = Intermediate
+
+          - `2` = Advanced'
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+            enum:
+            - 0
+            - 1
+            - 2
+      - name: sort
+        in: query
+        description: 'Field to sort templates by:
+
+          - `last_updated` - Sort by last updated date
+
+          - `name` - Sort by template name
+
+          - `avg_click_rate` - Sort by average click rate (per selected locales)
+
+          - `avg_reported_rate` - Sort by average reported rate (per selected locales)'
+        required: false
+        schema:
+          type: string
+          enum:
+          - last_updated
+          - name
+          - avg_click_rate
+          - avg_reported_rate
+      - name: order
+        in: query
+        description: 'Sort order: `asc` for ascending, `desc` for descending'
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplatesListResponse'
+        '400':
+          description: Bad Request - Invalid request parameters or validation error
+          content:
+            application/json:
+              example:
+                field_name:
+                - Field related error message.
+        '401':
+          description: Unauthorized - Authentication credentials were not provided or are invalid
+          content:
+            application/json:
+              example:
+                detail: Authentication credentials were not provided.
+        '403':
+          description: Forbidden - You do not have permission to perform this action
+          content:
+            application/json:
+              example:
+                detail: You do not have permission for company 123
+        '404':
+          description: Not Found - The requested resource was not found
+          content:
+            application/json:
+              example:
+                detail: Not found.
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          content:
+            application/json:
+              example:
+                detail: Request was throttled. Expected available in 60 seconds.
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              example:
+                detail: Internal server error.
+      tags:
+      - SAT
+  /sat/{company_id}/templates/categories/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: Get Template Categories
+      description: Get template categories.<b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateCategoriesResponse'
+        '400':
+          description: Bad Request - Invalid request parameters or validation error
+          content:
+            application/json:
+              example:
+                field_name:
+                - Field related error message.
+        '401':
+          description: Unauthorized - Authentication credentials were not provided or are invalid
+          content:
+            application/json:
+              example:
+                detail: Authentication credentials were not provided.
+        '403':
+          description: Forbidden - You do not have permission to perform this action
+          content:
+            application/json:
+              example:
+                detail: You do not have permission for company 123
+        '404':
+          description: Not Found - The requested resource was not found
+          content:
+            application/json:
+              example:
+                detail: Not found.
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          content:
+            application/json:
+              example:
+                detail: Request was throttled. Expected available in 60 seconds.
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              example:
+                detail: Internal server error.
+      tags:
+      - SAT
+  /sat/{company_id}/trainings/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: Get Trainings List
+      summary: Get training list.
+      description: 'Returns a list of training content items filtered by vendor and locale IDs.
+
+        The results are paginated and include information about training availability
+
+        based on company licensing.<b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>'
+      parameters:
+      - name: vendor
+        in: query
+        description: 'Filter by training vendor codes.
+
+          - `1` = NINJIO
+
+          - `3` = Habitu8
+
+          - `4` = Cybermaniacs Videos
+
+          - `5` = Wizer
+
+          - `6` = Ironscales'
+        required: true
+        schema:
+          type: integer
+          enum:
+          - 6
+          - 5
+          - 1
+          - 3
+          - 4
+      - name: locale_ids
+        in: query
+        description: 'Filter by locale IDs.
+
+          - Use numeric identifiers from the locale catalog
+
+          - If not provided, company''s selected locales will be used'
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: page_size
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 25
+          maximum: 50
+          minimum: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrainingsListResponse'
+        '400':
+          description: Bad Request - Invalid request parameters or validation error
+          content:
+            application/json:
+              example:
+                field_name:
+                - Field related error message.
+        '401':
+          description: Unauthorized - Authentication credentials were not provided or are invalid
+          content:
+            application/json:
+              example:
+                detail: Authentication credentials were not provided.
+        '403':
+          description: Forbidden - You do not have permission to perform this action
+          content:
+            application/json:
+              example:
+                detail: You do not have permission for company 123
+        '404':
+          description: Not Found - The requested resource was not found
+          content:
+            application/json:
+              example:
+                detail: Not found.
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          content:
+            application/json:
+              example:
+                detail: Request was throttled. Expected available in 60 seconds.
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              example:
+                detail: Internal server error.
+      tags:
+      - SAT
+  /sat/{company_id}/trainings/providers/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: Get Training Providers
+      summary: Get training providers.
+      description: 'Returns information about all available training content providers,
+
+        including total count and available count of training items for each provider.
+
+        The available count is based on company licensing and free content availability.<b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrainingProvidersResponse'
+        '401':
+          description: Unauthorized - Authentication credentials were not provided or are invalid
+          content:
+            application/json:
+              example:
+                detail: Authentication credentials were not provided.
+        '403':
+          description: Forbidden - You do not have permission to perform this action
+          content:
+            application/json:
+              example:
+                detail: You do not have permission for company 123
+        '404':
+          description: Not Found - The requested resource was not found
+          content:
+            application/json:
+              example:
+                detail: Not found.
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          content:
+            application/json:
+              example:
+                detail: Request was throttled. Expected available in 60 seconds.
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              example:
+                detail: Internal server error.
+      tags:
+      - SAT
+  /sat/{company_id}/trainings/{training_id}/preview/:
+    parameters:
+    - name: company_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: training_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: Get Training Preview URL
+      description: <b>Scopes:</b><ul><li>company.view</li><li>partner.company.view</li></ul>
+      parameters:
+      - name: locale_id
+        in: query
+        description: Locale ID to select the training content item for preview.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Preview URL
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content_url:
+                    type:
+                    - string
+                    - 'null'
+                  content_type:
+                    type:
+                    - string
+                    - 'null'
+                  subtitles:
+                    type: array
+                    items:
+                      type: object
+        '401':
+          description: Unauthorized - Authentication credentials were not provided or are invalid
+          content:
+            application/json:
+              example:
+                detail: Authentication credentials were not provided.
+        '403':
+          description: Forbidden - You do not have permission to perform this action
+          content:
+            application/json:
+              example:
+                detail: You do not have permission for company 123
+        '404':
+          description: Not Found - The requested resource was not found
+          content:
+            application/json:
+              example:
+                detail: Not found.
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          content:
+            application/json:
+              example:
+                detail: Request was throttled. Expected available in 60 seconds.
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              example:
+                detail: Internal server error.
+      tags:
+      - SAT
+components:
+  schemas:
+    CampaignDetailsResponse:
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        name:
+          title: Name
+          type: string
+          readOnly: true
+          minLength: 1
+        flow_type:
+          title: Flow type
+          description: 'Campaign Flow Type:
+
+            - `1` = Training Only - Campaign that only includes training content
+
+            - `2` = Simulation and Training - Campaign that includes both phishing simulation and training'
+          type: string
+          enum:
+          - 1
+          - 2
+          readOnly: true
+        status:
+          title: Status
+          description: 'Campaign Status:
+
+            - `0` = Draft - Campaign is in draft state and not yet active
+
+            - `1` = Collecting (Active) - Campaign is actively collecting participant data
+
+            - `2` = Completed - Campaign has finished and is closed
+
+            - `3` = Pending - Campaign is approved but waiting to start
+
+            - `4` = Active - Campaign is currently running and sending emails
+
+            - `5` = Inactive - Campaign is inactive'
+          type: string
+          enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          readOnly: true
+        schedule_time:
+          title: Schedule time
+          type: string
+          format: date-time
+          readOnly: true
+        end_time:
+          title: End time
+          type: string
+          format: date-time
+          readOnly: true
+        close_time:
+          title: Close time
+          type: string
+          format: date-time
+          readOnly: true
+        default_locale_id:
+          title: Default locale id
+          type: integer
+          readOnly: true
+        timezone:
+          title: Timezone
+          type: string
+          readOnly: true
+          minLength: 1
+        participants_count:
+          title: Participants count
+          type: integer
+          readOnly: true
+        company_id:
+          title: Company id
+          type: string
+          readOnly: true
+        participants_choices:
+          title: Participants choices
+          type:
+          - object
+          - 'null'
+          readOnly: true
+        participants_exclude_choices:
+          title: Participants exclude choices
+          type:
+          - object
+          - 'null'
+          readOnly: true
+        delivery_type:
+          title: Delivery type
+          description: 'Campaign Delivery Type:
+
+            - `0` = Email - Campaign is delivered via email
+
+            - `1` = SMS - Campaign is delivered via SMS'
+          type: integer
+          readOnly: true
+        randomized:
+          title: Randomized
+          description: Send Emails to participants at random times
+          type: boolean
+          readOnly: true
+        randomized_scenarios:
+          title: Randomized scenarios
+          type: boolean
+          readOnly: true
+        max_email_per_day:
+          title: Max email per day
+          type: integer
+          readOnly: true
+          minimum: 1
+        send_all_week:
+          title: Send all week
+          type: boolean
+          readOnly: true
+        send_reminders_until:
+          title: Send reminders until
+          type:
+          - string
+          - 'null'
+          format: date-time
+          readOnly: true
+        send_reminder_every_x_business_days:
+          title: Send reminder every x business days
+          type:
+          - integer
+          - 'null'
+          readOnly: true
+          minimum: 1
+        max_reminders_per_participant:
+          title: Max reminders per participant
+          type:
+          - integer
+          - 'null'
+          readOnly: true
+          minimum: 1
+        locales_by_profiles:
+          title: Locales by profiles
+          type: boolean
+          readOnly: true
+        locale_ids:
+          type: array
+          items:
+            type: integer
+          readOnly: true
+          uniqueItems: true
+        send_campaign_summary_to_campaign_report_recipients:
+          title: Send campaign summary to campaign report recipients
+          type: boolean
+          readOnly: true
+        send_completion_email:
+          title: Send completion email
+          type: boolean
+          readOnly: true
+        send_campaign_failed_email:
+          title: Send campaign failed email
+          type:
+          - boolean
+          - 'null'
+          readOnly: true
+        landing_page:
+          $ref: '#/components/schemas/LandingPage'
+        segments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Segment'
+          readOnly: true
+        scenarios:
+          type: array
+          items:
+            $ref: '#/components/schemas/Scenario'
+          readOnly: true
+        training_campaign_data:
+          $ref: '#/components/schemas/TrainingCampaignData'
+        training_reminders:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrainingReminderContent'
+          readOnly: true
+        notifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/CampaignNotification'
+          readOnly: true
+        trainings:
+          type: array
+          items:
+            $ref: '#/components/schemas/CampaignTrainingContent'
+          readOnly: true
+        manager_notification_settings:
+          $ref: '#/components/schemas/CampaignManagerNotificationSettings'
+    ParticipantsCalculateResponseMeta:
+      description: "Get metadata for the response.\n\n        Args:\n            content: Dictionary containing participants data and queryset.\n\n        Returns:\n            Dictionary containing metadata (count, locale_ids, awareness_levels).\n"
+      required:
+      - count
+      type: object
+      properties:
+        count:
+          title: Count
+          type: integer
+        locale_ids:
+          description: "Get list of distinct locale IDs from participants.\n\n        Args:\n            content: Dictionary containing participants queryset.\n\n        Returns:\n            List of distinct locale IDs from participants.\n"
+          type: array
+          items:
+            type: integer
+          readOnly: true
+        awareness_levels:
+          $ref: '#/components/schemas/AwarenessLevelsDistribution'
+    TrainingItem:
+      required:
+      - locale_id
+      - embedded_subtitles
+      type: object
+      properties:
+        locale_id:
+          title: Locale id
+          type: integer
+        image_preview:
+          title: Image preview
+          type: string
+          readOnly: true
+          minLength: 1
+        duration:
+          title: Duration
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          minLength: 1
+        content:
+          title: Content
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          minLength: 1
+        embedded_subtitles:
+          title: Embedded subtitles
+          type: boolean
+    AwarenessLevelsDistribution:
+      description: "Get awareness levels distribution.\n\n        Args:\n            content: Dictionary containing participants queryset.\n\n        Returns:\n            Dictionary with awareness level distribution (beginner, mid, expert).\n"
+      type: object
+      properties:
+        beginner:
+          title: Beginner
+          type: integer
+          readOnly: true
+        mid:
+          title: Mid
+          type: integer
+          readOnly: true
+        expert:
+          title: Expert
+          type: integer
+          readOnly: true
+    ManagerNotificationSettingsCreate:
+      description: Manager notification settings. If enabled is False or missing, manager notifications will not be configured.
+      type:
+      - object
+      - 'null'
+      properties:
+        enabled:
+          title: Enabled
+          description: Whether manager notifications are enabled for this campaign
+          type: boolean
+          default: false
+        banner:
+          $ref: '#/components/schemas/ManagerNotificationBanner'
+        report_email:
+          $ref: '#/components/schemas/ManagerReportEmail'
+        reminders_threshold:
+          title: Reminders threshold
+          description: Minimum number of reminders before sending manager report
+          type:
+          - integer
+          - 'null'
+          minimum: 1
+        send_report_every_x_days:
+          title: Send report every x days
+          description: 'Send manager report every X days. Allowed values: 7 or 14 days'
+          type:
+          - integer
+          - 'null'
+          enum:
+          - 7
+          - 14
+        report_day_of_week:
+          title: Report day of week
+          description: Day of week to send manager report (0=Monday, 6=Sunday)
+          type:
+          - integer
+          - 'null'
+          maximum: 6
+          minimum: 0
+    LandingPageContent:
+      type: object
+      properties:
+        content:
+          title: Content
+          type:
+          - string
+          - 'null'
+        page_title:
+          title: Page title
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+        locale_id:
+          title: Locale id
+          type: string
+          readOnly: true
+    CampaignLookupResponseItem:
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        name:
+          title: Name
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          minLength: 1
+    CampaignListResponseItem:
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        name:
+          title: Name
+          type: string
+          readOnly: true
+          minLength: 1
+        flow_type:
+          title: Flow type
+          description: 'Campaign Flow Type:
+
+            - `1` = Training Only - Campaign that only includes training content
+
+            - `2` = Simulation and Training - Campaign that includes both phishing simulation and training'
+          type: string
+          enum:
+          - 1
+          - 2
+          readOnly: true
+        status:
+          title: Status
+          description: 'Campaign Status:
+
+            - `0` = Draft - Campaign is in draft state and not yet active
+
+            - `1` = Collecting (Active) - Campaign is actively collecting participant data
+
+            - `2` = Completed - Campaign has finished and is closed
+
+            - `3` = Pending - Campaign is approved but waiting to start
+
+            - `4` = Active - Campaign is currently running and sending emails
+
+            - `5` = Inactive - Campaign is inactive'
+          type: string
+          enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          readOnly: true
+        schedule_time:
+          title: Schedule time
+          type: string
+          format: date-time
+          readOnly: true
+        end_time:
+          title: End time
+          type: string
+          format: date-time
+          readOnly: true
+        close_time:
+          title: Close time
+          type: string
+          format: date-time
+          readOnly: true
+        default_locale_id:
+          title: Default locale id
+          type: integer
+          readOnly: true
+        timezone:
+          title: Timezone
+          type: string
+          readOnly: true
+          minLength: 1
+        participants_count:
+          title: Participants count
+          type: integer
+          readOnly: true
+        statistic:
+          $ref: '#/components/schemas/CampaignStatistic'
+    ParticipantsCalculateBase:
+      description: Participant exclusion criteria
+      type:
+      - object
+      - 'null'
+      properties:
+        emails:
+          type: array
+          items:
+            type: string
+            format: email
+            minLength: 1
+          minItems: 1
+        departments:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+        tags:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+        titles:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+        cities:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+        countries:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+        featured_groups:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+        segments:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+        awareness_levels:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+    ParticipantsCalculateInclude:
+      description: Participant selection criteria
+      required:
+      - all_company
+      type: object
+      properties:
+        emails:
+          type: array
+          items:
+            type: string
+            format: email
+            minLength: 1
+          minItems: 1
+        departments:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+        tags:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+        titles:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+        cities:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+        countries:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+        featured_groups:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+        segments:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+        awareness_levels:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+        all_company:
+          title: All company
+          type: boolean
+    TrainingsListResponse:
+      required:
+      - page
+      - total_pages
+      - total_count
+      - data
+      type: object
+      properties:
+        page:
+          title: Page
+          type: integer
+        total_pages:
+          title: Total pages
+          type: integer
+        total_count:
+          title: Total count
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Training'
+    CampaignTrainingContent:
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        vendor:
+          title: Vendor
+          type:
+          - integer
+          - 'null'
+          enum:
+          - 6
+          - 5
+          - 1
+          - 3
+          - 4
+          readOnly: true
+        name:
+          title: Name
+          type: string
+          readOnly: true
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CampaignTrainingContentItem'
+          readOnly: true
+        type:
+          title: Type
+          type: string
+          enum:
+          - VIDEO
+          - COURSE
+          - QUIZ_HTML5
+          - CUSTOM_CONTENT
+          readOnly: true
+        subtitles:
+          type: array
+          items:
+            $ref: '#/components/schemas/BaseTrainingSubtitle'
+          readOnly: true
+    TrainingCampaignData:
+      description: Training-specific campaign data
+      type:
+      - object
+      - 'null'
+      properties:
+        subject:
+          title: Subject
+          type:
+          - string
+          - 'null'
+          maxLength: 300
+        message:
+          title: Message
+          type:
+          - string
+          - 'null'
+        mail_signature:
+          title: Mail signature
+          type:
+          - string
+          - 'null'
+        include_logo:
+          title: Include logo
+          type:
+          - boolean
+          - 'null'
+        use_designed_image:
+          title: Use designed image
+          type:
+          - boolean
+          - 'null'
+        from_email:
+          title: From email
+          type:
+          - string
+          - 'null'
+          maxLength: 512
+    CampaignSetup:
+      type: object
+      properties:
+        languages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Language'
+          readOnly: true
+        timezone:
+          title: Timezone
+          type: string
+          readOnly: true
+          minLength: 1
+        workdays:
+          title: Workdays
+          description: 'Workdays configuration: 1 - Monday-Friday, 2 - Sunday-Thursday, 3 - All Week'
+          type: integer
+          enum:
+          - 1
+          - 2
+          - 3
+          readOnly: true
+        campaigns_limit_for_year:
+          title: Campaigns limit for year
+          type:
+          - integer
+          - 'null'
+          readOnly: true
+        campaign_mails_limit:
+          title: Campaign mails limit
+          type:
+          - integer
+          - 'null'
+          readOnly: true
+        allowed_senders_for_training_campaigns:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          readOnly: true
+        manager_notification_state:
+          title: Manager notification state
+          description: 'Manager notification state: 1 - enabled, 2 - disabled, 3 - hidden'
+          type: integer
+          enum:
+          - 1
+          - 2
+          - 3
+          readOnly: true
+        default_training_reminder_content_simulation:
+          title: Default training reminder content simulation
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/LocaleContent'
+          readOnly: true
+        default_training_reminder_content_training:
+          title: Default training reminder content training
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/LocaleContent'
+          readOnly: true
+        default_campaign_failed_alert_content:
+          title: Default campaign failed alert content
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/LocaleContent'
+          readOnly: true
+        default_manager_notification_banner_content:
+          title: Default manager notification banner content
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/LocaleBannerContent'
+          readOnly: true
+        default_manager_report_email_content:
+          title: Default manager report email content
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/LocaleContent'
+          readOnly: true
+    CampaignNotification:
+      description: List of campaign notifications
+      required:
+      - type
+      type:
+      - object
+      - 'null'
+      properties:
+        subject:
+          title: Subject
+          type: string
+        body:
+          title: Body
+          type: string
+        type:
+          title: Type
+          type: integer
+          enum:
+          - 1
+    TrainingProvidersResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrainingProvider'
+    TemplateCategoriesResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateCategory'
+    CampaignManagerNotificationSettings:
+      type: object
+      properties:
+        enabled:
+          title: Enabled
+          description: "Get enabled status for manager notifications.\n\n        Args:\n            obj: ManagerNotificationSettings instance.\n\n        Returns:\n            True if send_report_every_x_days is not 0 or None, False otherwise.\n"
+          type: boolean
+          readOnly: true
+        reminders_threshold:
+          title: Reminders threshold
+          type:
+          - integer
+          - 'null'
+          readOnly: true
+          minimum: 1
+        send_report_every_x_days:
+          title: Send report every x days
+          type:
+          - integer
+          - 'null'
+          enum:
+          - 7
+          - 14
+          readOnly: true
+        report_day_of_week:
+          title: Report day of week
+          type:
+          - integer
+          - 'null'
+          enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          readOnly: true
+        banner:
+          $ref: '#/components/schemas/ManagerNotificationBanner'
+        report_email:
+          $ref: '#/components/schemas/ManagerReportEmail'
+    TrainingReminderContent:
+      description: List of training reminder content
+      required:
+      - body
+      - subject
+      type:
+      - object
+      - 'null'
+      properties:
+        body:
+          title: Body
+          type: string
+          minLength: 1
+        subject:
+          title: Subject
+          type: string
+          minLength: 1
+    CampaignCreateRequest:
+      required:
+      - name
+      - flow_type
+      - schedule_time
+      - close_time
+      - default_locale_id
+      - participants_choices
+      type: object
+      properties:
+        name:
+          title: Name
+          description: Campaign name
+          type: string
+          maxLength: 250
+          minLength: 1
+        flow_type:
+          title: Flow type
+          description: 'Campaign Flow Type:
+
+            - `1` = Training Only - Campaign that only includes training content
+
+            - `2` = Simulation and Training - Campaign that includes both phishing simulation and training'
+          type: integer
+          enum:
+          - 1
+          - 2
+        schedule_time:
+          title: Schedule time
+          description: Campaign start time in ISO 8601 format
+          type: string
+          format: date-time
+        close_time:
+          title: Close time
+          description: Campaign close time in ISO 8601 format
+          type: string
+          format: date-time
+        default_locale_id:
+          title: Default locale id
+          description: Default locale ID for the campaign
+          type: integer
+        participants_choices:
+          $ref: '#/components/schemas/ParticipantsCalculateInclude'
+        end_date:
+          title: End date
+          description: Campaign end date (for simulation campaigns)
+          type:
+          - string
+          - 'null'
+          format: date
+        timezone:
+          title: Timezone
+          description: Timezone string (e.g., 'America/New_York'). Defaults to company timezone if not provided
+          type: string
+        selected_locale_ids:
+          description: List of additional locale IDs for the campaign
+          type: array
+          items:
+            type: integer
+          default: []
+        email_limit:
+          title: Email limit
+          description: Maximum number of emails to send per day. Maximum allowed value is 20000. Use 0 for no limit.
+          type: integer
+          default: 0
+          maximum: 20000
+          minimum: 0
+        randomized:
+          title: Randomized
+          description: Send emails to participants at random times
+          type: boolean
+          default: false
+        randomized_scenarios:
+          title: Randomized scenarios
+          description: Randomize scenario selection for participants
+          type: boolean
+          default: false
+        send_all_week:
+          title: Send all week
+          description: Send emails throughout the week (including weekends)
+          type: boolean
+          default: false
+        locales_by_profiles:
+          title: Locales by profiles
+          description: Use locale settings from individual profiles
+          type: boolean
+          default: false
+        participants_exclude_choices:
+          $ref: '#/components/schemas/ParticipantsCalculateBase'
+        participants_exclude_choices_auto_fill:
+          title: Participants exclude choices auto fill
+          description: Automatically exclude shared mailboxes if they exist
+          type: boolean
+          default: false
+        scenario_ids:
+          description: List of scenario (mail template) IDs to use
+          type: array
+          items:
+            type: integer
+        landing_page_id:
+          title: Landing page id
+          description: Landing page ID for the campaign
+          type:
+          - integer
+          - 'null'
+        training_ids:
+          description: List of training content IDs to include
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+        send_reminder_every_x_business_days:
+          title: Send reminder every x business days
+          description: Send reminder every X business days
+          type:
+          - integer
+          - 'null'
+          default: 2
+          minimum: 1
+        send_reminders_until:
+          title: Send reminders until
+          description: Stop sending reminders after this date/time
+          type:
+          - string
+          - 'null'
+          format: date-time
+        max_reminders_per_participant:
+          title: Max reminders per participant
+          description: Maximum number of reminders per participant
+          type:
+          - integer
+          - 'null'
+          minimum: 1
+        training_reminders:
+          description: List of training reminder content
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/TrainingReminderContent'
+        notifications:
+          description: List of campaign notifications
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/CampaignNotification'
+        send_campaign_summary_to_campaign_report_recipients:
+          title: Send campaign summary to campaign report recipients
+          description: Send campaign summary to report recipients
+          type: boolean
+          default: true
+        send_completion_email:
+          title: Send completion email
+          description: Send completion email to participants
+          type: boolean
+          default: false
+        send_campaign_failed_email:
+          title: Send campaign failed email
+          description: Send email notification if campaign fails
+          type: boolean
+          default: false
+        training_campaign_data:
+          $ref: '#/components/schemas/TrainingCampaignData'
+        manager_notification_settings:
+          $ref: '#/components/schemas/ManagerNotificationSettingsCreate'
+    ParticipantCandidate:
+      required:
+      - id
+      - first_name
+      - last_name
+      - email
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        first_name:
+          title: First name
+          type: string
+          minLength: 1
+        last_name:
+          title: Last name
+          type: string
+          minLength: 1
+        email:
+          title: Email
+          type: string
+          format: email
+          minLength: 1
+    ParticipantsCalculateResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/ParticipantsCalculateResponseMeta'
+        items:
+          description: Get list of participant candidates.
+          type: array
+          items:
+            $ref: '#/components/schemas/ParticipantCandidate'
+          readOnly: true
+    CampaignTrainingContentItem:
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        locale_id:
+          title: Locale id
+          type: string
+          readOnly: true
+        image_preview:
+          title: Image preview
+          type: string
+          readOnly: true
+          minLength: 1
+        content:
+          title: Content
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          minLength: 1
+        embedded_subtitles:
+          title: Embedded subtitles
+          type: boolean
+          readOnly: true
+        custom_type:
+          title: Custom type
+          type: string
+          enum:
+          - CUSTOM_VIDEO
+          - CUSTOM_URL
+          readOnly: true
+    ManagerReportEmail:
+      description: Manager report email settings
+      required:
+      - body
+      - subject
+      type:
+      - object
+      - 'null'
+      properties:
+        body:
+          title: Body
+          type: string
+          minLength: 1
+        subject:
+          title: Subject
+          type: string
+          minLength: 1
+    BaseTrainingSubtitle:
+      type: object
+      properties:
+        locale_id:
+          title: Locale id
+          type: integer
+          readOnly: true
+        url:
+          title: Url
+          type: string
+          readOnly: true
+          minLength: 1
+    Segment:
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        name:
+          title: Name
+          type: string
+          readOnly: true
+          maxLength: 120
+          minLength: 1
+    LandingPage:
+      type:
+      - object
+      - 'null'
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        name:
+          title: Name
+          type: string
+          readOnly: true
+          minLength: 1
+        is_system:
+          title: Is system
+          type: boolean
+          readOnly: true
+    Scenario:
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        name:
+          title: Name
+          type: string
+          readOnly: true
+          minLength: 1
+        category:
+          $ref: '#/components/schemas/Category'
+        level:
+          title: Level
+          type: integer
+          enum:
+          - 0
+          - 1
+          - 2
+          readOnly: true
+        is_system:
+          title: Is system
+          type: boolean
+          readOnly: true
+    LocaleContent:
+      required:
+      - body
+      - subject
+      type: object
+      properties:
+        body:
+          title: Body
+          description: Content body
+          type: string
+          minLength: 1
+        subject:
+          title: Subject
+          description: Content subject
+          type: string
+          minLength: 1
+    LocaleBannerContent:
+      required:
+      - text
+      type: object
+      properties:
+        text:
+          title: Text
+          description: Banner text content
+          type: string
+          minLength: 1
+    Template:
+      required:
+      - is_communityCandidate
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        name:
+          title: Name
+          type: string
+          readOnly: true
+          minLength: 1
+        last_updated:
+          title: Last updated
+          type: string
+          format: date-time
+          readOnly: true
+        same_company:
+          title: Same company
+          type: boolean
+          readOnly: true
+        is_system:
+          title: Is system
+          type: boolean
+          readOnly: true
+        is_community:
+          title: Is community
+          type: boolean
+          readOnly: true
+        is_communityCandidate:
+          title: Is communitycandidate
+          type: boolean
+        type:
+          title: Type
+          type: integer
+          enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 5
+          readOnly: true
+        level:
+          title: Level
+          type: integer
+          enum:
+          - 0
+          - 1
+          - 2
+          readOnly: true
+        category:
+          title: Category
+          type: integer
+          readOnly: true
+        created_by:
+          title: Created by
+          type: integer
+          readOnly: true
+        name_for_partners:
+          title: Name for partners
+          type: string
+          readOnly: true
+        company_id:
+          title: Company id
+          type: string
+          readOnly: true
+        last_used:
+          title: Last used
+          type: string
+          readOnly: true
+        is_new:
+          title: Is new
+          type: boolean
+          readOnly: true
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateContent'
+          readOnly: true
+    CampaignListResponse:
+      type: object
+      properties:
+        page:
+          title: Page
+          type: integer
+          readOnly: true
+        total_pages:
+          title: Total pages
+          type: integer
+          readOnly: true
+        total_count:
+          title: Total count
+          type: integer
+          readOnly: true
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CampaignListResponseItem'
+          readOnly: true
+    LandingPagesData:
+      required:
+      - id
+      - name
+      - is_system
+      - last_updated
+      - training_type
+      - contents
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+          minLength: 1
+        tags:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          readOnly: true
+        is_system:
+          title: Is system
+          type: boolean
+        last_updated:
+          title: Last updated
+          type: string
+          format: date-time
+        training_type:
+          title: Training type
+          type: integer
+        contents:
+          type: array
+          items:
+            $ref: '#/components/schemas/LandingPageContent'
+        company_id:
+          title: Company id
+          type: string
+          readOnly: true
+    TrainingProvider:
+      required:
+      - id
+      - name
+      - total_count
+      - available_count
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+          minLength: 1
+        total_count:
+          title: Total count
+          type: integer
+        available_count:
+          title: Available count
+          type: integer
+    TemplatesListResponse:
+      required:
+      - page
+      - total_pages
+      - total_count
+      - data
+      type: object
+      properties:
+        page:
+          title: Page
+          type: integer
+        total_pages:
+          title: Total pages
+          type: integer
+        total_count:
+          title: Total count
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Template'
+    CampaignCreateResponse:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          title: Id
+          description: Created campaign ID
+          type: integer
+    ParticipantsSearchRequest:
+      required:
+      - search
+      type: object
+      properties:
+        search:
+          title: Search
+          description: 'Search string to filter participants.
+
+            - Minimum 2 characters required for filtering
+
+            - Case-insensitive substring match on names and emails'
+          type: string
+          minLength: 1
+    Language:
+      required:
+      - id
+      - name
+      - short_name
+      - localized_name
+      - ltr
+      - enabled
+      - default
+      type: object
+      properties:
+        id:
+          title: Id
+          description: Locale ID
+          type: integer
+        name:
+          title: Name
+          description: Locale name
+          type: string
+          minLength: 1
+        short_name:
+          title: Short name
+          description: Locale short name
+          type: string
+          minLength: 1
+        localized_name:
+          title: Localized name
+          description: Localized locale name
+          type: string
+          minLength: 1
+        ltr:
+          title: Ltr
+          description: Left-to-right text direction
+          type: boolean
+        enabled:
+          title: Enabled
+          description: Whether this locale is enabled for the company
+          type: boolean
+        default:
+          title: Default
+          description: Whether this is the default locale for the company
+          type: boolean
+    CampaignStatistic:
+      required:
+      - emails
+      - reported
+      - lured
+      - trained
+      type: object
+      properties:
+        emails:
+          title: Emails
+          type:
+          - integer
+          - 'null'
+        reported:
+          title: Reported
+          type:
+          - integer
+          - 'null'
+        lured:
+          title: Lured
+          type:
+          - integer
+          - 'null'
+        trained:
+          title: Trained
+          type:
+          - integer
+          - 'null'
+    TemplateCategory:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+          minLength: 1
+    TemplateContent:
+      required:
+      - locale
+      - body
+      - landing_domain_id
+      type: object
+      properties:
+        locale:
+          title: Locale
+          type: integer
+        body_hint:
+          title: Body hint
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          minLength: 1
+        body_link_hint:
+          title: Body link hint
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          minLength: 1
+        body:
+          title: Body
+          type: string
+          minLength: 1
+        from_email:
+          title: From email
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          minLength: 1
+        from_number:
+          title: From number
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          minLength: 1
+        from_address_hint:
+          title: From address hint
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          minLength: 1
+        subject:
+          title: Subject
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          minLength: 1
+        subject_hint:
+          title: Subject hint
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          minLength: 1
+        call_for_action_page_id:
+          title: Call for action page id
+          type: string
+          readOnly: true
+        landing_domain_id:
+          title: Landing domain id
+          type:
+          - integer
+          - 'null'
+        landing_subdomain:
+          title: Landing subdomain
+          type:
+          - string
+          - 'null'
+          format: slug
+          pattern: ^[-a-zA-Z0-9_]+$
+          readOnly: true
+          minLength: 1
+        folder_name:
+          title: Folder name
+          type:
+          - string
+          - 'null'
+          format: slug
+          pattern: ^[-a-zA-Z0-9_]+$
+          readOnly: true
+          minLength: 1
+        filename:
+          title: Filename
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          minLength: 1
+        filetype:
+          title: Filetype
+          type:
+          - integer
+          - 'null'
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          readOnly: true
+        attachment_hint:
+          title: Attachment hint
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          minLength: 1
+        average_click_rate:
+          title: Average click rate
+          type: number
+          readOnly: true
+        average_reported_rate:
+          title: Average reported rate
+          type: number
+          readOnly: true
+        total_number_of_emails_sent:
+          title: Total number of emails sent
+          type:
+          - integer
+          - 'null'
+          readOnly: true
+    CampaignLookupResponse:
+      type: object
+      properties:
+        page:
+          title: Page
+          type: integer
+          readOnly: true
+        total_pages:
+          title: Total pages
+          type: integer
+          readOnly: true
+        total_count:
+          title: Total count
+          type: integer
+          readOnly: true
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CampaignLookupResponseItem'
+          readOnly: true
+    Category:
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        name:
+          title: Name
+          type: string
+          readOnly: true
+          maxLength: 50
+          minLength: 1
+    Training:
+      required:
+      - is_free
+      - is_new
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        is_free:
+          title: Is free
+          type: boolean
+        is_new:
+          title: Is new
+          type: boolean
+        vendor:
+          title: Vendor
+          type:
+          - integer
+          - 'null'
+          enum:
+          - 6
+          - 5
+          - 1
+          - 3
+          - 4
+        name:
+          title: Name
+          type: string
+          readOnly: true
+        categories:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          readOnly: true
+        has_permissions:
+          title: Has permissions
+          type: boolean
+          readOnly: true
+        season_info:
+          title: Season info
+          type: string
+          readOnly: true
+          minLength: 1
+        type:
+          title: Type
+          type: string
+          readOnly: true
+          minLength: 1
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrainingItem'
+          readOnly: true
+        subtitles:
+          type: array
+          items:
+            $ref: '#/components/schemas/BaseTrainingSubtitle'
+          readOnly: true
+    ParticipantItem:
+      required:
+      - name
+      - tag
+      type: object
+      properties:
+        name:
+          title: Name
+          description: Display name of the participant or category item
+          type: string
+          minLength: 1
+        tag:
+          title: Tag
+          description: Category tag (e.g., 'Departments', 'Cities', 'Names')
+          type: string
+          minLength: 1
+        mail:
+          title: Mail
+          description: Email address (only present for 'Names' tag items)
+          type:
+          - string
+          - 'null'
+          format: email
+          minLength: 1
+    ParticipantsSearchResponse:
+      type: object
+      properties:
+        items:
+          description: Flattened list of matching participant items
+          type: array
+          items:
+            $ref: '#/components/schemas/ParticipantItem'
+          readOnly: true
+    ManagerNotificationBanner:
+      description: Manager notification banner settings
+      required:
+      - text
+      type:
+      - object
+      - 'null'
+      properties:
+        text:
+          title: Text
+          type: string
+          minLength: 1
+    CallForAction:
+      required:
+      - page
+      - total_pages
+      - total_count
+      - data
+      type: object
+      properties:
+        page:
+          title: Page
+          description: Current page number
+          type: integer
+        total_pages:
+          title: Total pages
+          description: Total number of pages
+          type: integer
+        total_count:
+          title: Total count
+          description: Total number of call for action pages matching the query
+          type: integer
+        data:
+          description: List of call for action pages for the current page
+          type: array
+          items:
+            $ref: '#/components/schemas/CallForActionData'
+    ParticipantsListResponse:
+      type: object
+      properties:
+        all_company:
+          title: All company
+          description: Total count of all company participants
+          type: integer
+          readOnly: true
+        names:
+          title: Names
+          description: Dictionary of individual users with email and full name
+          type: object
+          additionalProperties:
+            description: full_name and mail
+            type: object
+            additionalProperties:
+              type: string
+              minLength: 1
+          readOnly: true
+        departments:
+          title: Departments
+          description: Dictionary of departments with participant counts
+          type: object
+          additionalProperties:
+            type: integer
+          readOnly: true
+        cities:
+          title: Cities
+          description: Dictionary of cities with participant counts
+          type: object
+          additionalProperties:
+            type: integer
+          readOnly: true
+        countries:
+          title: Countries
+          description: Dictionary of countries with participant counts
+          type: object
+          additionalProperties:
+            type: integer
+          readOnly: true
+        titles:
+          title: Titles
+          description: Dictionary of job titles with participant counts
+          type: object
+          additionalProperties:
+            type: integer
+          readOnly: true
+        tags:
+          title: Tags
+          description: Dictionary of tags with participant counts
+          type: object
+          additionalProperties:
+            type: integer
+          readOnly: true
+        featured_groups:
+          title: Featured groups
+          description: Dictionary of featured groups with participant counts
+          type: object
+          additionalProperties:
+            type: integer
+          readOnly: true
+        segments:
+          title: Segments
+          description: Dictionary of segments with participant counts
+          type: object
+          additionalProperties:
+            type: integer
+          readOnly: true
+        awareness_levels:
+          title: Awareness levels
+          description: Dictionary of awareness levels with participant counts
+          type: object
+          additionalProperties:
+            type: integer
+          readOnly: true
+    CallForActionData:
+      description: List of call for action pages for the current page
+      required:
+      - id
+      - name
+      - page_title
+      - content
+      - is_system
+      - is_public
+      - last_updated
+      - company_id
+      type: object
+      properties:
+        id:
+          title: Id
+          description: Unique identifier for the call for action page
+          type: integer
+        name:
+          title: Name
+          description: Name of the call for action page
+          type: string
+          minLength: 1
+        page_title:
+          title: Page title
+          description: Title of the call for action page
+          type:
+          - string
+          - 'null'
+        content:
+          title: Content
+          description: HTML content of the call for action page
+          type:
+          - string
+          - 'null'
+        is_system:
+          title: Is system
+          description: Whether the call for action page is a system page
+          type: boolean
+        is_public:
+          title: Is public
+          description: Whether the call for action page is public
+          type: boolean
+        last_updated:
+          title: Last updated
+          description: Date and time when the call for action page was last updated
+          type: string
+          format: date-time
+        tags:
+          title: Tags
+          description: Tags indicating the origin of the call for action page (System, Company, or Partner)
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          minLength: 1
+        company_id:
+          title: Company id
+          description: ID of the company that owns this call for action page (null for system pages)
+          type:
+          - integer
+          - 'null'
+    LandingPages:
+      required:
+      - page
+      - total_pages
+      - total_count
+      - data
+      type: object
+      properties:
+        page:
+          title: Page
+          type: integer
+        total_pages:
+          title: Total pages
+          type: integer
+        total_count:
+          title: Total count
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/LandingPagesData'
+    ParticipantsCalculateRequest:
+      required:
+      - include
+      type: object
+      properties:
+        include:
+          $ref: '#/components/schemas/ParticipantsCalculateInclude'
+        exclude:
+          $ref: '#/components/schemas/ParticipantsCalculateBase'
+  securitySchemes:
+    JWT:
+      type: apiKey
+      name: Authorization
+      in: header

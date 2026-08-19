@@ -32,23 +32,19 @@ authorization:
   - RFC 8414
   - RFC 9728
 tools: []
-tools_note: >-
-  The live tool manifest is auth-gated. An anonymous POST of
-  {"jsonrpc":"2.0","id":1,"method":"tools/list"} to https://mcp.ironscales.com/mcp/ returns HTTP 401
-  {"error":"invalid_token","error_description":"Authentication required"} with a WWW-Authenticate
-  challenge naming the RFC 9728 resource metadata document. IRONSCALES publishes no anonymous tool
-  list — not in llms.txt, not in the public docs — so no tool names are recorded here. Enumerating
-  them requires an authenticated introspection with an IRONSCALES tenant account. NOTHING IS
-  INFERRED: no candidate tool list has been derived from the OpenAPI, because this server is real and
-  published and a derived list would misrepresent what it actually exposes.
+tools_note: 'The live tool manifest is auth-gated. An anonymous POST of {"jsonrpc":"2.0","id":1,"method":"tools/list"}
+  to https://mcp.ironscales.com/mcp/ returns HTTP 401 {"error":"invalid_token","error_description":"Authentication
+  required"} with a WWW-Authenticate challenge naming the RFC 9728 resource metadata document. IRONSCALES
+  publishes no anonymous tool list — not in llms.txt, not in the public docs — so no tool names are recorded
+  here. Enumerating them requires an authenticated introspection with an IRONSCALES tenant account. NOTHING
+  IS INFERRED: no candidate tool list has been derived from the OpenAPI, because this server is real and
+  published and a derived list would misrepresent what it actually exposes.'
 x-evidence:
 - fetched: '2026-08-04'
   url: https://mcp.ironscales.com/mcp/
   method: POST tools/list
   http_status: 401
-  www_authenticate: >-
-    Bearer error="invalid_token", error_description="Authentication required",
-    resource_metadata="https://mcp.ironscales.com/.well-known/oauth-protected-resource"
+  www_authenticate: Bearer error="invalid_token", error_description="Authentication required", resource_metadata="https://mcp.ironscales.com/.well-known/oauth-protected-resource"
 - fetched: '2026-08-04'
   url: https://mcp.ironscales.com/.well-known/oauth-protected-resource
   http_status: 200
@@ -63,3 +59,10 @@ x-evidence:
   url: https://mcp.ironscales.com/mcp
   http_status: 307
   note: bare /mcp redirects to /mcp/
+deployment:
+  mode: remote
+  endpoint: https://mcp.ironscales.com/mcp/
+  verified: probed
+  probe: gated
+  checked: '2026-08-12'
+  source: catalog MCP census

@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "IRONSCALES Management Deepfake API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Deepfake",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get list of Deepfake SIEM events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/deepfake/:company_id/events/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "since_id",
+                "value": "",
+                "type": "query",
+                "description": "Return events with id strictly greater than this cursor."
+              },
+              {
+                "name": "created_after",
+                "value": "",
+                "type": "query",
+                "description": "ISO8601 lower bound on the event time (bounds the first fetch)."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max events to return (default 100, hard cap 500 on the service)."
+              }
+            ]
+          },
+          "docs": "Cursor-paged feed of deepfake lifecycle events\n(suspicious / mfa_started / mfa_succeeded / mfa_aborted / confirmed).\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>company.all</li>\n</ul>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

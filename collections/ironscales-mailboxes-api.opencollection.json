@@ -1,0 +1,261 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "IRONSCALES Management Mailboxes API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Mailboxes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get compliance report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/mailboxes/:company_id/compliance-report/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query",
+                "description": "\nPeriod to filter the campaigns by:\n<ul>\n    <li>1 - Last 7 days</li>\n    <li>2 - Last year</li>\n    <li>3 - Last 3 month</li>\n    <li>4 - Last 6 month</li>\n    <li>5 - Custom range (up to 180d) - MM-DD-YYYY - MM-DD-YYYY</li>\n</ul>\n"
+              },
+              {
+                "name": "customPeriodFrom",
+                "value": "",
+                "type": "query",
+                "description": "Start date of the custom period in MM-DD-YYYY format"
+              },
+              {
+                "name": "customPeriodTo",
+                "value": "",
+                "type": "query",
+                "description": "End date of the custom period in MM-DD-YYYY format"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ]
+          },
+          "docs": "Compliance report for a company per user\n<br/><b>Scopes:</b>\n<ul>\n<li>partner.all</li>\n<li>company.all</li>\n<li>partner.company.view</li>\n<li>company.view</li>\n</ul>"
+        },
+        {
+          "info": {
+            "name": "List of a company mailboxes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/mailboxes/:company_id/list/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "List of mailbox ids"
+              },
+              {
+                "name": "exclude_ids",
+                "value": "",
+                "type": "query",
+                "description": "List of mailbox ids to exclude"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to look for in first_name, last_name, title, department, email or phone_number fields"
+              },
+              {
+                "name": "is_enabled",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "Array of tag names"
+              },
+              {
+                "name": "first_name",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "last_name",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "department",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "title",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "is_protected",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query",
+                "description": "Language full name"
+              },
+              {
+                "name": "awareness",
+                "value": "",
+                "type": "query",
+                "description": "0 - Beginner Level, 1 - Mid Level, 2 - Expert Level"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page Number"
+              },
+              {
+                "name": "items_per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (optional, overrides default)"
+              }
+            ]
+          },
+          "docs": "List of a company mailboxes\n<br/><b>Scopes:</b>\n<ul>\n<li>partner.all</li>\n<li>company.all</li>\n<li>partner.company.view</li>\n<li>company.view</li>\n</ul>\n\nAll filters with string values are case-insensitive"
+        },
+        {
+          "info": {
+            "name": "Bulk edit of a company mailboxes",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://appapi.ironscales.com/appapi/mailboxes/:company_id/list/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List of a company mailboxes\n<br/><b>Scopes:</b>\n<ul>\n<li>partner.all</li>\n<li>company.all</li>\n<li>partner.company.edit</li>\n<li>company.edit</li>\n</ul>\n\nTags manipulation - both adding and deletion - is performed asynchronously by background task.\nThe result of these operations may be not available immediately after getting a response."
+        },
+        {
+          "info": {
+            "name": "Get user campaign performance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/mailboxes/:company_id/user-campaigns-performance/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query",
+                "description": "\nPeriod to filter the campaigns by:\n<ul>\n    <li>1 - Last 7 days</li>\n    <li>2 - Last year</li>\n    <li>3 - Last 3 month</li>\n    <li>4 - Last 6 month</li>\n    <li>5 - Custom range (up to 180d) - MM-DD-YYYY - MM-DD-YYYY</li>\n</ul>\n"
+              },
+              {
+                "name": "customPeriodFrom",
+                "value": "",
+                "type": "query",
+                "description": "Start date of the custom period in MM-DD-YYYY format"
+              },
+              {
+                "name": "customPeriodTo",
+                "value": "",
+                "type": "query",
+                "description": "End date of the custom period in MM-DD-YYYY format"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "Country name to filter the users by"
+              },
+              {
+                "name": "department",
+                "value": "",
+                "type": "query",
+                "description": "Department name to filter the users by"
+              },
+              {
+                "name": "campaignType",
+                "value": "",
+                "type": "query",
+                "description": "\nType of the campaign:\n<ul>\n    <li>1 - Simulation</li>\n    <li>2 - Training</li>\n    <li>3 - Spear Phishing</li>\n</ul>\n"
+              }
+            ]
+          },
+          "docs": "\nList of a company users performances per campaign\n<br/><b>Scopes:</b>\n<ul>\n<li>partner.all</li>\n<li>company.all</li>\n<li>partner.company.view</li>\n<li>company.view</li>\n</ul>\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

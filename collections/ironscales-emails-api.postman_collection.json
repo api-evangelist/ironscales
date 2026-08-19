@@ -1,0 +1,570 @@
+{
+  "item": [
+    {
+      "id": "1743fa91-2829-401d-baa7-8803e884db85",
+      "name": "Emails",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7242b333-dd54-4dbd-a40e-97cdcd4cc5e9",
+          "name": "List of escalated emails",
+          "request": {
+            "name": "List of escalated emails",
+            "description": {
+              "content": "<b>Rate Limit</b>: 20 requests per minute<br /><b>Scopes:</b><ul><li>company.view</li></ul>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "emails",
+                ":company_id",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_time",
+                  "value": "<dateTime>",
+                  "description": "iso-8601 format"
+                },
+                {
+                  "disabled": false,
+                  "key": "end_time",
+                  "value": "<dateTime>",
+                  "description": "iso-8601 format"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "50"
+                },
+                {
+                  "disabled": false,
+                  "key": "recipient",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "threat_type",
+                  "value": "<integer>",
+                  "description": "0 - VIP Impersonation, 1 - Business Email Compromise, 2 - Financial Fraud, 3 - Gift Card Request, 4 - Fraudulent Request, 5 - Credential Theft, 6 - Advance-fee Scam, 7 - Lottery Scam, 8 - Extortion, 9 - Sextortion, 10 - Vishing Attack, 11 - Vendor Scam, 12 - Invoice Phishing, 13 - Vendor Email Compromise, 14 - Suspected Malicious Content, 15 - Polymorphic Phishing, 16 - Bulk Phishing, 17 - Image-Based Attack, 18 - QR Code Attack, 19 - Vendor Scam"
+                },
+                {
+                  "disabled": false,
+                  "key": "threat_type",
+                  "value": "<integer>",
+                  "description": "0 - VIP Impersonation, 1 - Business Email Compromise, 2 - Financial Fraud, 3 - Gift Card Request, 4 - Fraudulent Request, 5 - Credential Theft, 6 - Advance-fee Scam, 7 - Lottery Scam, 8 - Extortion, 9 - Sextortion, 10 - Vishing Attack, 11 - Vendor Scam, 12 - Invoice Phishing, 13 - Vendor Email Compromise, 14 - Suspected Malicious Content, 15 - Polymorphic Phishing, 16 - Bulk Phishing, 17 - Image-Based Attack, 18 - QR Code Attack, 19 - Vendor Scam"
+                },
+                {
+                  "disabled": false,
+                  "key": "classification",
+                  "value": "<integer>",
+                  "description": "0 - Phishing, 1 - Spam, 2 - Safe, 3 - Unclassified, 4 - Microsoft quarantine, 5 - Released from Microsoft"
+                },
+                {
+                  "disabled": false,
+                  "key": "classification",
+                  "value": "<integer>",
+                  "description": "0 - Phishing, 1 - Spam, 2 - Safe, 3 - Unclassified, 4 - Microsoft quarantine, 5 - Released from Microsoft"
+                },
+                {
+                  "disabled": false,
+                  "key": "is_scanback_report",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "incident_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "challenged_type",
+                  "value": "<string>",
+                  "description": "Filter by challenge type. Options: release_request, end_user_report"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "company_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cddec37d-b0fe-4647-b03d-49cfd1a2684d",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "emails",
+                    ":company_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "threat_type",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "threat_type",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "classification",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "classification",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "is_scanback_report",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "incident_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "challenged_type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"emails\": [\n    {\n      \"arrival_date\": \"1974-04-08T01:01:20.487Z\",\n      \"incident_id\": 8661,\n      \"subject\": \"string\",\n      \"sender_email\": \"string\",\n      \"recipient_name\": \"string\",\n      \"recipient_email\": \"string\",\n      \"primary_threat_type\": \"string\",\n      \"is_scanback\": true,\n      \"classification\": \"string\",\n      \"incident_state\": \"string\",\n      \"resolution\": \"string\",\n      \"sender_ip\": \"string\",\n      \"reported_by\": \"string\",\n      \"mailbox_id\": 9377,\n      \"department\": \"string\",\n      \"remediated_time\": \"1988-11-30T12:07:30.725Z\",\n      \"mitigation_id\": 7286,\n      \"challenged_type\": \"string\",\n      \"challenged_date\": \"2025-10-20T00:55:35.452Z\",\n      \"challenged_by\": \"string\",\n      \"challenged_reason\": null,\n      \"challenged_comment\": null,\n      \"opened_on\": \"1999-08-03T09:15:49.413Z\"\n    },\n    {\n      \"arrival_date\": \"2000-03-21T13:10:30.793Z\",\n      \"incident_id\": 9839,\n      \"subject\": \"string\",\n      \"sender_email\": \"string\",\n      \"recipient_name\": \"string\",\n      \"recipient_email\": \"string\",\n      \"primary_threat_type\": \"string\",\n      \"is_scanback\": false,\n      \"classification\": \"string\",\n      \"incident_state\": \"string\",\n      \"resolution\": \"st\",\n      \"sender_ip\": \"string\",\n      \"reported_by\": \"string\",\n      \"mailbox_id\": 1447,\n      \"department\": \"string\",\n      \"remediated_time\": \"2016-09-22T17:27:06.685Z\",\n      \"mitigation_id\": 4402,\n      \"challenged_type\": \"string\",\n      \"challenged_date\": null,\n      \"challenged_by\": null,\n      \"challenged_reason\": \"string\",\n      \"challenged_comment\": null,\n      \"opened_on\": null\n    }\n  ],\n  \"page\": 8795,\n  \"total_pages\": 5797,\n  \"total_count\": 5597\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "17a15db9-c28f-4313-a62e-4bf135ca8c7f",
+              "name": "Validation Errors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "emails",
+                    ":company_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "threat_type",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "threat_type",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "classification",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "classification",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "is_scanback_report",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "incident_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "challenged_type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"non_field_errors\": [\n    \"Provide incident_id or both start_time and end_time\"\n  ],\n  \"threat_type\": {\n    \"0\": \"\\\"99\\\" is not a valid choice.\"\n  },\n  \"classification\": {\n    \"0\": \"\\\"99\\\" is not a valid choice.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e116506a-c778-448c-9750-47abc9a942da",
+              "name": "Permission Denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "emails",
+                    ":company_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "threat_type",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "threat_type",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "classification",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "classification",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "is_scanback_report",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "incident_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "challenged_type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"detail\": \"Missing JWT\"\n  },\n  {\n    \"detail\": \"You do not have permission to perform this action.\"\n  },\n  {\n    \"message\": \"You do not have permission for company <company_id>\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0efb79fa-1d96-4b4f-8f99-47de2eff9910",
+              "name": "Company was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "emails",
+                    ":company_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "threat_type",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "threat_type",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "classification",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "classification",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "is_scanback_report",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "incident_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "challenged_type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"message\": \"Company not found\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://appapi.ironscales.com/appapi",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "340b9529-a5a0-413c-8367-b747d0fe1363",
+    "name": "IRONSCALES Management Emails API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Emails operations of the IRONSCALES Management API, split by tag from the provider-published Swagger 2.0 document at https://appapi.ironscales.com/appapi/docs/?format=openapi. Operations, parameters, responses and definitions are carried verbatim from the source specification.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "IRONSCALES Management Campaigns API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Campaigns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get campaigns details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/campaigns/:company_id/details",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query",
+                "description": "<p>Applied over campaign creation date</p>\n                                <ul>\n                                <li>0 - Last 24 hours</li>\n                                <li>1 - Last 7 days</li>\n                                <li>2 - Last 90 days</li>\n                                <li>3 - Last 180 days</li>\n                                <li>4 - Last 360 days</li>\n                                <li>5 - Current year to date</li>\n                                <li>6 - All time</li>\n                                </ul>\n"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "<ul>\n                                <li>0 - Draft</li>\n                                <li>1 - Collecting</li>\n                                <li>2 - Closed</li>\n                                <li>3 - Approved</li>\n                                <li>4 - Sending</li>\n                                </ul>\n                                <p>Can be multiple statuses: status=0&status=2&status=3...</p>\n"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Optional, search by partial campaign name"
+              }
+            ]
+          },
+          "docs": "Get campaigns details <br/>\nEach page contains 25 campaigns results<br/>\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>partner.company.view</li>\n    <li>company.view</li>\n</ul>\n\nStatuses mapping to UI values:\n<ul>\n    <li>Draft (0) -> Draft</li>\n    <li>Collecting (1) -> Active</li>\n    <li>Closed (2) -> Completed</li>\n    <li>Approved by User (3) -> Pending</li>\n    <li>Sending (4) -> Active</li>\n    <li>Inactive (5) -> Inactive</li>\n</ul>"
+        },
+        {
+          "info": {
+            "name": "Perform participants action",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://appapi.ironscales.com/appapi/campaigns/:company_id/participants-actions/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "query",
+                "description": "Campaign ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Perform action on campaign participants.<br/><b>Scopes:</b><ul><li>partner.company.edit</li><li>company.edit</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Get campaign participants details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/campaigns/:company_id/participants-details",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "query",
+                "description": "Campaign ID"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              }
+            ]
+          },
+          "docs": "Get campaign participants details <br/>\nEach page contains 100 participants<br/>\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>partner.company.view</li>\n    <li>company.view</li>\n</ul>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

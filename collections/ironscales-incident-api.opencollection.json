@@ -1,0 +1,530 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "IRONSCALES Management Incident API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Incident",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Account Takeover incident details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/incident/:company_id/account-takeover/:incident_id/details/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "incident_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination results. Starts at 1."
+              },
+              {
+                "name": "items_per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page. Min: 1, Max: 500, Default: 50."
+              },
+              {
+                "name": "title",
+                "value": "",
+                "type": "query",
+                "description": "List of alert titles to filter by."
+              },
+              {
+                "name": "location",
+                "value": "",
+                "type": "query",
+                "description": "List of locations to filter by."
+              },
+              {
+                "name": "ip",
+                "value": "",
+                "type": "query",
+                "description": "List of IPv4 or IPv6 addresses to filter by."
+              }
+            ]
+          },
+          "docs": "\nRetrieve detailed information about a specific Account Takeover incident.\n<br/><br/>\n<b>Query Parameters:</b>\n<ul>\n    <li><b>page:</b> Page number for pagination (default: 1)</li>\n    <li><b>items_per_page:</b> Number of items per page (min: 1, max: 500, default: 50)</li>\n    <li><b>title:</b> Filter by alert titles (can specify multiple)</li>\n    <li><b>location:</b> Filter by locations (can specify multiple)</li>\n    <li><b>ip:</b> Filter by IP addresses with validation (can specify multiple"
+        },
+        {
+          "info": {
+            "name": "Create Account Takeover remediation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://appapi.ironscales.com/appapi/incident/:company_id/account-takeover/:incident_id/remediation/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "incident_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\nCreate remediation for the specified Account Takeover incident.\n<br/><br/>\n<b>State Options:</b>\n<ul>\n    <li><b>2 (Safe):</b> Mark the incident as safe/false positive</li>\n    <li><b>3 (Compromised):</b> Mark the incident as compromised and apply remediation actions</li>\n</ul>\n<br/><b>Remediation Actions:</b>\n<ul>\n    <li><b>3 (SIGN_OUT):</b> Revoke user's Microsoft 365 sessions - only allowed for state 3 (Compromised)</li>\n    <li><b>4 (DISABLE_ACCOUNT):</b> Disable user's Microsoft 365 accou"
+        },
+        {
+          "info": {
+            "name": "Classify specific incident",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://appapi.ironscales.com/appapi/incident/:company_id/classify/:incident_id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "incident_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Classify specific incident<br/><b>Scopes:</b><ul><li>partner.company.classify</li><li>company.classify</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Get details of specific incident",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/incident/:company_id/details/:incident_id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "incident_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get details of specific incident<br/>\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>partner.company.view</li>\n    <li>company.view</li>\n</ul>"
+        },
+        {
+          "info": {
+            "name": "Get list of Incidents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/incident/:company_id/list/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "items_per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (optional, overrides default)"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Options: created | latestEmailDate | incidentID | emailSubject | senderName | senderEmail | recipientName | recipientEmail | classification | firstChallengedDate | noSorting"
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Options: desc | asc"
+              },
+              {
+                "name": "created_start_time",
+                "value": "",
+                "type": "query",
+                "description": "Start of created date range, ISO Date with percent encoding. For example 2025-03-18T13:45:30.635993%2B00:00"
+              },
+              {
+                "name": "created_end_time",
+                "value": "",
+                "type": "query",
+                "description": "End of created date range, ISO Date with percent encoding. For example 2025-03-18T13:45:30.635993%2B00:00"
+              },
+              {
+                "name": "incidentID",
+                "value": "",
+                "type": "query",
+                "description": "The incident ID"
+              },
+              {
+                "name": "search_email_subject",
+                "value": "",
+                "type": "query",
+                "description": "Search Email Subject"
+              },
+              {
+                "name": "search_sender_name",
+                "value": "",
+                "type": "query",
+                "description": "Search Sender Name"
+              },
+              {
+                "name": "search_sender_email",
+                "value": "",
+                "type": "query",
+                "description": "Search Sender Email"
+              },
+              {
+                "name": "search_recipient_name",
+                "value": "",
+                "type": "query",
+                "description": "Search Recipient Name"
+              },
+              {
+                "name": "search_recipient_email",
+                "value": "",
+                "type": "query",
+                "description": "Search Recipient Email"
+              },
+              {
+                "name": "classification",
+                "value": "",
+                "type": "query",
+                "description": "Options: all | phishing | spam | compromised | safe | open | silent(can select multiple by repeating fields (field1=value1&field1=value2&field1=value3...))"
+              },
+              {
+                "name": "challenged_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by challenge type. Options: release_request, end_user_report"
+              },
+              {
+                "name": "challenged_start_date",
+                "value": "",
+                "type": "query",
+                "description": "Start of challenged date range, ISO Date with percent encoding. For example 2025-03-18T13:45:30.635993%2B00:00"
+              },
+              {
+                "name": "challenged_end_date",
+                "value": "",
+                "type": "query",
+                "description": "End of challenged date range, ISO Date with percent encoding. For example 2025-03-18T13:45:30.635993%2B00:00"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Options: all | classified | unclassified | challenged(can select multiple by repeating fields (field1=value1&field1=value2&field1=value3...))"
+              },
+              {
+                "name": "reportType",
+                "value": "",
+                "type": "query",
+                "description": "Options: all | email | ato | teams | msft_quarantine"
+              },
+              {
+                "name": "last_update_start_time",
+                "value": "",
+                "type": "query",
+                "description": "Start of last update date range, ISO Date with percent encoding. For example 2025-03-18T13:45:30.635993%2B00:00"
+              },
+              {
+                "name": "last_update_end_time",
+                "value": "",
+                "type": "query",
+                "description": "End of last update date range, ISO Date with percent encoding. For example 2025-03-18T13:45:30.635993%2B00:00"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query",
+                "description": "The period to show. Deprecated in favor of created_start_time/created_end_time. Options: <br />0: Last 24 hours<br />1: Last 7 days<br />2: Last 90 days<br />3: Last 180 days<br />4: Last 360 days<br />5: Current year to date<br />6: All time"
+              }
+            ]
+          },
+          "docs": "List of Incidents\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>company.all</li>\n    <li>partner.company.view</li>\n    <li>company.view</li>\n</ul>"
+        },
+        {
+          "info": {
+            "name": "Recluster incident",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://appapi.ironscales.com/appapi/incident/:company_id/recluster/:incident_id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "incident_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Recluster (revert) mitigations back to the original incident they were unclustered from.<br/>\nThis reverses a previous uncluster operation by moving mitigations back to their original incident.<br/>\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.company.classify</li>\n    <li>company.classify</li>\n</ul>"
+        },
+        {
+          "info": {
+            "name": "Get list of Scanback Incidents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/incident/:company_id/scanback-list/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "items_per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (optional, overrides default)"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Options: created | incidentID | emailSubject | senderName | senderEmail | recipientName | recipientEmail | classification | noSorting"
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Options: desc | asc"
+              },
+              {
+                "name": "created_start_time",
+                "value": "",
+                "type": "query",
+                "description": "Start of created date range, ISO Date with percent encoding. For example 2025-03-18T13:45:30.635993%2B00:00"
+              },
+              {
+                "name": "created_end_time",
+                "value": "",
+                "type": "query",
+                "description": "End of created date range, ISO Date with percent encoding. For example 2025-03-18T13:45:30.635993%2B00:00"
+              },
+              {
+                "name": "incidentID",
+                "value": "",
+                "type": "query",
+                "description": "The incident ID"
+              },
+              {
+                "name": "search_email_subject",
+                "value": "",
+                "type": "query",
+                "description": "Search Email Subject"
+              },
+              {
+                "name": "search_sender_name",
+                "value": "",
+                "type": "query",
+                "description": "Search Sender Name"
+              },
+              {
+                "name": "search_sender_email",
+                "value": "",
+                "type": "query",
+                "description": "Search Sender Email"
+              },
+              {
+                "name": "search_recipient_name",
+                "value": "",
+                "type": "query",
+                "description": "Search Recipient Name"
+              },
+              {
+                "name": "search_recipient_email",
+                "value": "",
+                "type": "query",
+                "description": "Search Recipient Email"
+              },
+              {
+                "name": "classification",
+                "value": "",
+                "type": "query",
+                "description": "Options: all | phishing | spam | compromised | safe | open | silent(can select multiple by repeating fields (field1=value1&field1=value2&field1=value3...))"
+              },
+              {
+                "name": "challenged_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by challenge type. Options: release_request, end_user_report"
+              },
+              {
+                "name": "challenged_start_date",
+                "value": "",
+                "type": "query",
+                "description": "Start of challenged date range, ISO Date with percent encoding. For example 2025-03-18T13:45:30.635993%2B00:00"
+              },
+              {
+                "name": "challenged_end_date",
+                "value": "",
+                "type": "query",
+                "description": "End of challenged date range, ISO Date with percent encoding. For example 2025-03-18T13:45:30.635993%2B00:00"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Options: all | classified | unclassified(can select multiple by repeating fields (field1=value1&field1=value2&field1=value3...))"
+              }
+            ]
+          },
+          "docs": "List of Incidents\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>company.all</li>\n    <li>partner.company.view</li>\n    <li>company.view</li>\n</ul>"
+        },
+        {
+          "info": {
+            "name": "Remediation statuses stats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/incident/:company_id/stats/remediation-statuses/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "iso-8601 format"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "iso-8601 format"
+              },
+              {
+                "name": "include_scanback",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "<b>Rate Limit</b>: 20 requests per second<br /><b>Scopes:</b><ul><li>company.view</li></ul>"
+        },
+        {
+          "info": {
+            "name": "Uncluster incident",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://appapi.ironscales.com/appapi/incident/:company_id/uncluster/:incident_id",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "incident_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Uncluster mitigations from an incident to create a new incident with a different classification.<br/>\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.company.classify</li>\n    <li>company.classify</li>\n</ul>"
+        },
+        {
+          "info": {
+            "name": "Get IDs list of unclassified incidents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/incident/:company_id/:status/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get ids of open incidents<br/>\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>partner.company.view</li>\n    <li>company.view</li>\n</ul>\n<br/><b>Status:</b>\n<ul><li>open</li></ul>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

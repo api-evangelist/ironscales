@@ -1,0 +1,99 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "IRONSCALES Management Emails API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Emails",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List of escalated emails",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://appapi.ironscales.com/appapi/emails/:company_id/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "iso-8601 format"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "iso-8601 format"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "recipient",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "threat_type",
+                "value": "",
+                "type": "query",
+                "description": "0 - VIP Impersonation, 1 - Business Email Compromise, 2 - Financial Fraud, 3 - Gift Card Request, 4 - Fraudulent Request, 5 - Credential Theft, 6 - Advance-fee Scam, 7 - Lottery Scam, 8 - Extortion, 9 - Sextortion, 10 - Vishing Attack, 11 - Vendor Scam, 12 - Invoice Phishing, 13 - Vendor Email Compromise, 14 - Suspected Malicious Content, 15 - Polymorphic Phishing, 16 - Bulk Phishing, 17 - Image-Based Attack, 18 - QR Code Attack, 19 - Vendor Scam"
+              },
+              {
+                "name": "classification",
+                "value": "",
+                "type": "query",
+                "description": "0 - Phishing, 1 - Spam, 2 - Safe, 3 - Unclassified, 4 - Microsoft quarantine, 5 - Released from Microsoft"
+              },
+              {
+                "name": "is_scanback_report",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "incident_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "challenged_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by challenge type. Options: release_request, end_user_report"
+              }
+            ]
+          },
+          "docs": "<b>Rate Limit</b>: 20 requests per minute<br /><b>Scopes:</b><ul><li>company.view</li></ul>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
