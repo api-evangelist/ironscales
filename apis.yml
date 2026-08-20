@@ -20,6 +20,22 @@ specificationVersion: '0.23'
 created: '2026-08-04'
 modified: '2026-08-04'
 tags:
+- Email Security
+- Cybersecurity
+- Phishing
+- Anti-Phishing
+- Business Email Compromise
+- Account Takeover
+- Threat Intelligence
+- Incident Response
+- Security Awareness Training
+- Phishing Simulation
+- Microsoft-365
+- Google Workspace
+- SOC Automation
+- Deepfake Detection
+- MCP
+tags_raw:
 - email-security
 - cybersecurity
 - phishing
@@ -46,6 +62,11 @@ apis:
   humanURL: https://ironscales.com/platform/agents
   baseURL: https://mcp.ironscales.com/mcp/
   tags:
+  - MCP
+  - agent-native
+  - Email Security
+  - Incident Response
+  tags_raw:
   - mcp
   - agent-native
   - email-security
