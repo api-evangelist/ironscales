@@ -12,6 +12,18 @@ description: >-
   phishing-simulation campaigns, SAT training campaigns, and tenant security settings, and is the surface
   behind the company's SIEM/SOAR/XDR integrations. IRONSCALES also operates an OAuth-protected remote MCP
   server for agent-based access.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://ironscales.com/hubfs/Icons%20and%20Logos/ironscales_icon_only_dark_blue-01.svg
 url: https://raw.githubusercontent.com/api-evangelist/ironscales/refs/heads/main/apis.yml
 x-type: company
