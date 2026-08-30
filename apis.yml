@@ -32,20 +32,20 @@ specificationVersion: '0.23'
 created: '2026-08-04'
 modified: '2026-08-04'
 tags:
-- Email Security
+- email-security
 - Cybersecurity
-- Phishing
-- Anti-Phishing
-- Business Email Compromise
-- Account Takeover
+- phishing
+- anti-phishing
+- business-email-compromise
+- account-takeover
 - Threat Intelligence
-- Incident Response
-- Security Awareness Training
-- Phishing Simulation
-- Microsoft-365
-- Google Workspace
-- SOC Automation
-- Deepfake Detection
+- incident-response
+- security-awareness-training
+- phishing-simulation
+- microsoft-365
+- google-workspace
+- soc-automation
+- deepfake-detection
 - MCP
 tags_raw:
 - email-security
@@ -76,8 +76,8 @@ apis:
   tags:
   - MCP
   - agent-native
-  - Email Security
-  - Incident Response
+  - email-security
+  - incident-response
   tags_raw:
   - mcp
   - agent-native
