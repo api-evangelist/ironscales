@@ -192,6 +192,8 @@ apis:
   humanURL: https://appapi.ironscales.com/appapi/docs/
   baseURL: https://appapi.ironscales.com/appapi
   tags:
+  - Email
+  tags_raw:
   - Emails
   properties:
   - type: OpenAPI
