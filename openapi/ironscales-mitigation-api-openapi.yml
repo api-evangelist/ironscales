@@ -1,7 +1,35 @@
 openapi: 3.2.0
 info:
   title: IRONSCALES Management Mitigation API
-  description: The Mitigation operations of the IRONSCALES Management API, split by tag from the provider-published Swagger 2.0 document at https://appapi.ironscales.com/appapi/docs/?format=openapi. Operations, parameters, responses and definitions are carried verbatim from the source specification.
+  description: 'General Error Responses:
+
+
+    HTTP Status Codes
+
+    Reason
+
+
+    400
+
+    Not authenticated
+
+
+    403
+
+    Insufficient rights to call this procedure
+
+
+    429
+
+    Too many requests (Throttling) the limit is 120 API calls per minute per company'
+  termsOfService: https://staticmediafiles.s3.amazonaws.com/static/webapp/docs/IronScalesTermsnService.pdf
+  contact:
+    email: support@ironscales.com
+  securityDefinitions:
+    Bearer:
+      type: JWT
+      name: Authorization
+      in: header
   version: v1
 servers:
 - url: https://appapi.ironscales.com/appapi
@@ -19,7 +47,43 @@ paths:
         type: string
     post:
       operationId: Get details of mitigations per mailbox
-      description: "Get details of mitigations per mailbox<br />\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>partner.company.view</li>\n    <li>company.view</li>\n</ul>\n<b>Period values:</b>\n<ul>\n    <li>0 - Last 24 hours</li>\n    <li>1 - Last 7 days</li>\n    <li>2 - Last 90 days</li>\n    <li>3 - Last 180 days</li>\n    <li>4 - Last 360 days</li>\n    <li>5 - Current year to date</li>\n    <li>6 - All time (Default)</li>\n</ul>"
+      description: 'Get details of mitigations per mailbox
+
+
+        Scopes:
+
+
+        partner.all
+
+
+        partner.company.view
+
+
+        company.view
+
+
+        Period values:
+
+
+        0 - Last 24 hours
+
+
+        1 - Last 7 days
+
+
+        2 - Last 90 days
+
+
+        3 - Last 180 days
+
+
+        4 - Last 360 days
+
+
+        5 - Current year to date
+
+
+        6 - All time (Default)'
       parameters:
       - name: company_id
         in: path
@@ -52,6 +116,8 @@ paths:
             schema:
               $ref: '#/components/schemas/IncidentDetailsRequest'
         required: true
+      summary: Get details of mitigations per mailbox
+      x-summary-source: derived
   /mitigation/{company_id}/impersonation/details/:
     parameters:
     - name: company_id
@@ -61,7 +127,55 @@ paths:
         type: string
     get:
       operationId: Get the latest company impersonation incidents
-      description: "Get the latest company impersonation incidents<br/>\nResults are limited to the latest 1000 incidents, a message will appear\ndisplaying if the amount of incidents in the period is over this limit<br/>\n<b>\nPlease note that the IDs returned here are of impersonation attempts,\nnot incidents or reports, so searching these IDs in other endpoints\nwill not return the expected incidents\n</b>\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>partner.company.view</li>\n    <li>company.view</li>\n</ul>\n<br/><b>Period values:</b>\n<ul>\n    <li>0 - Last 24 hours</li>\n    <li>1 - Last 7 days</li>\n    <li>2 - Last 90 days</li>\n    <li>3 - Last 180 days</li>\n    <li>4 - Last 360 days</li>\n    <li>5 - Current year to date</li>\n    <li>6 - All time</li>\n</ul>"
+      description: 'Get the latest company impersonation incidents
+
+
+        Results are limited to the latest 1000 incidents, a message will appear
+
+        displaying if the amount of incidents in the period is over this limit
+
+
+        Please note that the IDs returned here are of impersonation attempts,
+
+        not incidents or reports, so searching these IDs in other endpoints
+
+        will not return the expected incidents
+
+
+        Scopes:
+
+
+        partner.all
+
+
+        partner.company.view
+
+
+        company.view
+
+
+        Period values:
+
+
+        0 - Last 24 hours
+
+
+        1 - Last 7 days
+
+
+        2 - Last 90 days
+
+
+        3 - Last 180 days
+
+
+        4 - Last 360 days
+
+
+        5 - Current year to date
+
+
+        6 - All time'
       parameters:
       - name: company_id
         in: path
@@ -94,9 +208,54 @@ paths:
           description: No permissions
       tags:
       - Mitigation
+      summary: Get the latest company impersonation incidents
+      x-summary-source: derived
     post:
       operationId: Get the latest company impersonation paginated incidents
-      description: "Get the latest company impersonation paginated incidents<br/>\n<b>\nPlease note that the IDs returned here are of impersonation attempts,\nnot incidents or reports, so searching these IDs in other endpoints\nwill not return the expected incidents\n</b>\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>partner.company.view</li>\n    <li>company.view</li>\n</ul>\n<b>Period values:</b>\n<ul>\n    <li>0 - Last 24 hours</li>\n    <li>1 - Last 7 days</li>\n    <li>2 - Last 90 days</li>\n    <li>3 - Last 180 days</li>\n    <li>4 - Last 360 days</li>\n    <li>5 - Current year to date</li>\n    <li>6 - All time</li>\n</ul>"
+      description: 'Get the latest company impersonation paginated incidents
+
+
+        Please note that the IDs returned here are of impersonation attempts,
+
+        not incidents or reports, so searching these IDs in other endpoints
+
+        will not return the expected incidents
+
+
+        Scopes:
+
+
+        partner.all
+
+
+        partner.company.view
+
+
+        company.view
+
+
+        Period values:
+
+
+        0 - Last 24 hours
+
+
+        1 - Last 7 days
+
+
+        2 - Last 90 days
+
+
+        3 - Last 180 days
+
+
+        4 - Last 360 days
+
+
+        5 - Current year to date
+
+
+        6 - All time'
       parameters:
       - name: company_id
         in: path
@@ -129,6 +288,8 @@ paths:
             schema:
               $ref: '#/components/schemas/ImpersonationDetailsRequest'
         required: true
+      summary: Get the latest company impersonation paginated incidents
+      x-summary-source: derived
   /mitigation/{company_id}/incidents/details/:
     parameters:
     - name: company_id
@@ -138,7 +299,43 @@ paths:
         type: string
     get:
       operationId: Get a company mitigation details
-      description: "Get a company mitigation details<br />\n<br/><b>Scopes:</b>\n<ul>\n<li>partner.all</li>\n<li>partner.company.view</li>\n<li>company.view</li>\n</ul>\n<b>Period values:</b>\n<ul>\n    <li>0 - Last 24 hours</li>\n    <li>1 - Last 7 days</li>\n    <li>2 - Last 90 days</li>\n    <li>3 - Last 180 days</li>\n    <li>4 - Last 360 days</li>\n    <li>5 - Current year to date</li>\n    <li>6 - All time</li>\n</ul>"
+      description: 'Get a company mitigation details
+
+
+        Scopes:
+
+
+        partner.all
+
+
+        partner.company.view
+
+
+        company.view
+
+
+        Period values:
+
+
+        0 - Last 24 hours
+
+
+        1 - Last 7 days
+
+
+        2 - Last 90 days
+
+
+        3 - Last 180 days
+
+
+        4 - Last 360 days
+
+
+        5 - Current year to date
+
+
+        6 - All time'
       parameters:
       - name: page
         in: query
@@ -178,6 +375,8 @@ paths:
           description: No permissions
       tags:
       - Mitigation
+      summary: Get a company mitigation details
+      x-summary-source: derived
   /mitigation/{company_id}/stats/:
     parameters:
     - name: company_id
@@ -189,37 +388,41 @@ paths:
       operationId: Get a company mitigation statistics
       description: 'Get a company mitigation statistics
 
-        <br/><b>Scopes:</b>
 
-        <ul>
+        Scopes:
 
-        <li>partner.all</li>
 
-        <li>partner.company.view</li>
+        partner.all
 
-        <li>company.view</li>
 
-        </ul>
+        partner.company.view
 
-        <b>Period values:</b>
 
-        <ul>
+        company.view
 
-        <li>0 - Last 24 hours</li>
 
-        <li>1 - Last 7 days</li>
+        Period values:
 
-        <li>2 - Last 90 days</li>
 
-        <li>3 - Last 180 days</li>
+        0 - Last 24 hours
 
-        <li>4 - Last 360 days</li>
 
-        <li>5 - Current year to date</li>
+        1 - Last 7 days
 
-        <li>6 - All time</li>
 
-        </ul>'
+        2 - Last 90 days
+
+
+        3 - Last 180 days
+
+
+        4 - Last 360 days
+
+
+        5 - Current year to date
+
+
+        6 - All time'
       parameters:
       - name: company_id
         in: path
@@ -252,6 +455,8 @@ paths:
           description: No permissions
       tags:
       - Mitigation
+      summary: Get a company mitigation statistics
+      x-summary-source: derived
   /mitigation/{company_id}/stats/emails/:
     parameters:
     - name: company_id
@@ -261,7 +466,12 @@ paths:
         type: string
     get:
       operationId: Get emails stats
-      description: '<b>Rate Limit</b>: 20 requests per second<br /><b>Scopes:</b><ul><li>company.view</li></ul>'
+      description: 'Rate Limit: 20 requests per second
+
+        Scopes:
+
+
+        company.view'
       parameters:
       - name: start_time
         in: query
@@ -331,6 +541,8 @@ paths:
               - detail: Request was throttled. Expected available in 60 seconds.
       tags:
       - Mitigation
+      summary: Get emails stats
+      x-summary-source: derived
   /mitigation/{company_id}/stats/most-targeted-departments/:
     parameters:
     - name: company_id
@@ -340,9 +552,15 @@ paths:
         type: string
     get:
       operationId: Most targeted departments
-      description: 'Returns top 5 most targeted departments within requested timeframe<br/>
+      description: 'Returns top 5 most targeted departments within requested timeframe
 
-        <b>Rate Limit</b>: 20 requests per second<br /><b>Scopes:</b><ul><li>company.view</li></ul>'
+
+        Rate Limit: 20 requests per second
+
+        Scopes:
+
+
+        company.view'
       parameters:
       - name: start_time
         in: query
@@ -412,6 +630,8 @@ paths:
               - detail: Request was throttled. Expected available in 60 seconds.
       tags:
       - Mitigation
+      summary: Most targeted departments
+      x-summary-source: derived
   /mitigation/{company_id}/stats/most-targeted-employees/:
     parameters:
     - name: company_id
@@ -421,9 +641,15 @@ paths:
         type: string
     get:
       operationId: Most targeted employees
-      description: 'Returns top 5 most targeted employees within requested timeframe<br/>
+      description: 'Returns top 5 most targeted employees within requested timeframe
 
-        <b>Rate Limit</b>: 20 requests per second<br /><b>Scopes:</b><ul><li>company.view</li></ul>'
+
+        Rate Limit: 20 requests per second
+
+        Scopes:
+
+
+        company.view'
       parameters:
       - name: start_time
         in: query
@@ -493,6 +719,8 @@ paths:
               - detail: Request was throttled. Expected available in 60 seconds.
       tags:
       - Mitigation
+      summary: Most targeted employees
+      x-summary-source: derived
   /mitigation/{company_id}/stats/v2/:
     parameters:
     - name: company_id
@@ -504,37 +732,41 @@ paths:
       operationId: Get a company mitigation statistics V2
       description: 'Get a company mitigation statistics V2
 
-        <br/><b>Scopes:</b>
 
-        <ul>
+        Scopes:
 
-        <li>partner.all</li>
 
-        <li>partner.company.view</li>
+        partner.all
 
-        <li>company.view</li>
 
-        </ul>
+        partner.company.view
 
-        <b>Period values:</b>
 
-        <ul>
+        company.view
 
-        <li>0 - Last 24 hours</li>
 
-        <li>1 - Last 7 days</li>
+        Period values:
 
-        <li>2 - Last 90 days</li>
 
-        <li>3 - Last 180 days</li>
+        0 - Last 24 hours
 
-        <li>4 - Last 360 days</li>
 
-        <li>5 - Current year to date</li>
+        1 - Last 7 days
 
-        <li>6 - All time</li>
 
-        </ul>'
+        2 - Last 90 days
+
+
+        3 - Last 180 days
+
+
+        4 - Last 360 days
+
+
+        5 - Current year to date
+
+
+        6 - All time'
       parameters:
       - name: company_id
         in: path
@@ -567,52 +799,11 @@ paths:
           description: No permissions
       tags:
       - Mitigation
+      summary: Get a company mitigation statistics V2
+      x-summary-source: derived
 components:
   schemas:
-    MitigationStatsV2View:
-      type: object
-      properties:
-        resolved_by_analyst:
-          $ref: '#/components/schemas/ResolvedByAnalyst'
-        inspected_emails:
-          $ref: '#/components/schemas/InspectedEmails'
-        resolved_automatically:
-          $ref: '#/components/schemas/ResolvedAutomatically'
-        malicious_content_incidents:
-          $ref: '#/components/schemas/MaliciousContentIncidents'
-    IncidentPageDetails:
-      required:
-      - page
-      - total_pages
-      - incidents
-      - messages
-      type: object
-      properties:
-        page:
-          title: Page
-          type: integer
-        total_pages:
-          title: Total pages
-          type: integer
-        incidents:
-          type: array
-          items:
-            $ref: '#/components/schemas/MitigationIncidentDetails'
-        messages:
-          type: array
-          items:
-            type: string
-            minLength: 1
-    ResolvedAutomatically:
-      required:
-      - time_saved
-      - from_users
-      - from_community
-      - from_mailbox_anomaly
-      - by_visual_scanner
-      - total
-      - by_malware_and_url_scanners
-      - by_themis
+    ResolvedByAnalyst:
       type: object
       properties:
         time_saved:
@@ -635,197 +826,77 @@ components:
           type:
           - integer
           - 'null'
-        by_visual_scanner:
-          title: By visual scanner
+        avg_resolution_time:
+          title: Avg resolution time
           type:
-          - integer
+          - number
           - 'null'
         total:
           title: Total
           type:
           - integer
           - 'null'
-        by_malware_and_url_scanners:
-          title: By malware and url scanners
-          type:
-          - integer
-          - 'null'
-        by_themis:
-          title: By themis
-          type:
-          - integer
-          - 'null'
-    MostTargetedDepartments:
-      required:
-      - items
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/MostTargetedDepartment'
-    ImpersonationDetails:
+    MitigationDetails:
       required:
       - incidentID
-      - mailboxId
+      - mitigationID
+      - incidentState
       - remediatedTime
+      - mailboxId
       - mailboxEmail
-      - senderEmail
       - subject
+      - senderEmail
+      - senderIP
       - reportedBy
-      - incidentType
       - resolution
-      - remediations
+      - spfResult
       type: object
       properties:
         incidentID:
           title: Incidentid
           type: integer
-        mailboxId:
-          title: Mailboxid
+        mitigationID:
+          title: Mitigationid
           type: integer
+        incidentState:
+          title: Incidentstate
+          type: string
+          minLength: 1
         remediatedTime:
           title: Remediatedtime
           type: string
           format: date-time
+        mailboxId:
+          title: Mailboxid
+          type: integer
         mailboxEmail:
           title: Mailboxemail
           type: string
-          format: email
-          minLength: 1
-        senderEmail:
-          title: Senderemail
-          type: string
-          format: email
           minLength: 1
         subject:
           title: Subject
           type: string
           minLength: 1
+        senderEmail:
+          title: Senderemail
+          type: string
+          minLength: 1
+        senderIP:
+          title: Senderip
+          type: string
+          minLength: 1
         reportedBy:
           title: Reportedby
-          type: string
-          format: email
-          minLength: 1
-        incidentType:
-          title: Incidenttype
           type: string
           minLength: 1
         resolution:
           title: Resolution
           type: string
           minLength: 1
-        remediations:
-          title: Remediations
-          type: integer
-    MitigationIncidentDetails:
-      required:
-      - incidentID
-      - incidentState
-      - remediatedTime
-      - affectedMailboxCount
-      - mailboxId
-      - mailboxEmail
-      - senderEmail
-      - subject
-      - threatType
-      - detectionType
-      - reportedBy
-      type: object
-      properties:
-        incidentID:
-          title: Incidentid
-          type: integer
-        incidentState:
-          title: Incidentstate
-          type: integer
-        remediatedTime:
-          title: Remediatedtime
-          type: string
-          format: date-time
-        affectedMailboxCount:
-          title: Affectedmailboxcount
-          type: integer
-        mailboxId:
-          title: Mailboxid
-          type: integer
-        mailboxEmail:
-          title: Mailboxemail
-          type: string
-          format: email
-          minLength: 1
-        senderEmail:
-          title: Senderemail
-          type: string
-          format: email
-          minLength: 1
-        subject:
-          title: Subject
+        spfResult:
+          title: Spfresult
           type: string
           minLength: 1
-        threatType:
-          title: Threattype
-          type: string
-          minLength: 1
-        detectionType:
-          title: Detectiontype
-          type: string
-          minLength: 1
-        reportedBy:
-          title: Reportedby
-          type: string
-          format: email
-          minLength: 1
-    MitigationPageDetails:
-      required:
-      - page
-      - total_pages
-      - mitigations
-      - messages
-      type: object
-      properties:
-        page:
-          title: Page
-          type: integer
-        total_pages:
-          title: Total pages
-          type: integer
-        mitigations:
-          type: array
-          items:
-            $ref: '#/components/schemas/MitigationDetails'
-        messages:
-          type: array
-          items:
-            type: string
-            minLength: 1
-    IncidentDetailsRequest:
-      required:
-      - incidents
-      type: object
-      properties:
-        incidents:
-          type: array
-          items:
-            type: integer
-        page:
-          title: Page
-          type: integer
-          default: 1
-        period:
-          title: Period
-          type: string
-          default: '6'
-          minLength: 1
-    MostTargetedEmployee:
-      type: object
-      properties:
-        mailbox:
-          $ref: '#/components/schemas/MailboxesDetails'
-        emails_count:
-          title: Emails count
-          type: integer
-          readOnly: true
     MailboxesDetails:
       required:
       - id
@@ -919,6 +990,15 @@ components:
           - string
           - 'null'
           minLength: 1
+    MostTargetedDepartments:
+      required:
+      - items
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/MostTargetedDepartment'
     MostTargetedDepartment:
       required:
       - name
@@ -932,6 +1012,58 @@ components:
         emails_count:
           title: Emails count
           type: integer
+    EmailsStats:
+      required:
+      - inspected_count
+      - phishing_count
+      - spam_count
+      - impersonations_count
+      - phishing_threat_types
+      type: object
+      properties:
+        inspected_count:
+          title: Inspected count
+          type: integer
+        phishing_count:
+          title: Phishing count
+          type: integer
+        spam_count:
+          title: Spam count
+          type: integer
+        impersonations_count:
+          title: Impersonations count
+          type: integer
+        phishing_threat_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmailPhishingThreatTypeStats'
+    MostTargetedEmployees:
+      required:
+      - items
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/MostTargetedEmployee'
+    IncidentDetailsRequest:
+      required:
+      - incidents
+      type: object
+      properties:
+        incidents:
+          type: array
+          items:
+            type: integer
+        page:
+          title: Page
+          type: integer
+          default: 1
+        period:
+          title: Period
+          type: string
+          default: '6'
+          minLength: 1
     ImpersonationDetailsRequest:
       type: object
       properties:
@@ -944,39 +1076,6 @@ components:
           type: string
           default: '6'
           minLength: 1
-    ResolvedByAnalyst:
-      type: object
-      properties:
-        time_saved:
-          title: Time saved
-          type:
-          - number
-          - 'null'
-        from_users:
-          title: From users
-          type:
-          - integer
-          - 'null'
-        from_community:
-          title: From community
-          type:
-          - integer
-          - 'null'
-        from_mailbox_anomaly:
-          title: From mailbox anomaly
-          type:
-          - integer
-          - 'null'
-        avg_resolution_time:
-          title: Avg resolution time
-          type:
-          - number
-          - 'null'
-        total:
-          title: Total
-          type:
-          - integer
-          - 'null'
     InspectedEmails:
       required:
       - phishing
@@ -1011,6 +1110,53 @@ components:
           type:
           - integer
           - 'null'
+    MitigationStats:
+      required:
+      - openIncidentCount
+      - resolvedIncidentCount
+      - phishingCount
+      - remediationCount
+      - maliciousAttachmentsCount
+      - maliciousLinksCount
+      - impersonationCount
+      - reportedByEmployeesCount
+      type: object
+      properties:
+        openIncidentCount:
+          title: Openincidentcount
+          type: integer
+        resolvedIncidentCount:
+          title: Resolvedincidentcount
+          type: integer
+        phishingCount:
+          title: Phishingcount
+          type: integer
+        remediationCount:
+          title: Remediationcount
+          type: integer
+        maliciousAttachmentsCount:
+          title: Maliciousattachmentscount
+          type: integer
+        maliciousLinksCount:
+          title: Maliciouslinkscount
+          type: integer
+        impersonationCount:
+          title: Impersonationcount
+          type: integer
+        reportedByEmployeesCount:
+          title: Reportedbyemployeescount
+          type: integer
+    MitigationStatsV2View:
+      type: object
+      properties:
+        resolved_by_analyst:
+          $ref: '#/components/schemas/ResolvedByAnalyst'
+        inspected_emails:
+          $ref: '#/components/schemas/InspectedEmails'
+        resolved_automatically:
+          $ref: '#/components/schemas/ResolvedAutomatically'
+        malicious_content_incidents:
+          $ref: '#/components/schemas/MaliciousContentIncidents'
     MaliciousContentIncidents:
       required:
       - computer_vision
@@ -1052,15 +1198,148 @@ components:
         emails_count:
           title: Emails count
           type: integer
-    MostTargetedEmployees:
+    MitigationPageDetails:
       required:
-      - items
+      - page
+      - total_pages
+      - mitigations
+      - messages
       type: object
       properties:
-        items:
+        page:
+          title: Page
+          type: integer
+        total_pages:
+          title: Total pages
+          type: integer
+        mitigations:
           type: array
           items:
-            $ref: '#/components/schemas/MostTargetedEmployee'
+            $ref: '#/components/schemas/MitigationDetails'
+        messages:
+          type: array
+          items:
+            type: string
+            minLength: 1
+    MitigationIncidentDetails:
+      required:
+      - incidentID
+      - incidentState
+      - remediatedTime
+      - affectedMailboxCount
+      - mailboxId
+      - mailboxEmail
+      - senderEmail
+      - subject
+      - threatType
+      - detectionType
+      - reportedBy
+      type: object
+      properties:
+        incidentID:
+          title: Incidentid
+          type: integer
+        incidentState:
+          title: Incidentstate
+          type: integer
+        remediatedTime:
+          title: Remediatedtime
+          type: string
+          format: date-time
+        affectedMailboxCount:
+          title: Affectedmailboxcount
+          type: integer
+        mailboxId:
+          title: Mailboxid
+          type: integer
+        mailboxEmail:
+          title: Mailboxemail
+          type: string
+          format: email
+          minLength: 1
+        senderEmail:
+          title: Senderemail
+          type: string
+          format: email
+          minLength: 1
+        subject:
+          title: Subject
+          type: string
+          minLength: 1
+        threatType:
+          title: Threattype
+          type: string
+          minLength: 1
+        detectionType:
+          title: Detectiontype
+          type: string
+          minLength: 1
+        reportedBy:
+          title: Reportedby
+          type: string
+          format: email
+          minLength: 1
+    MostTargetedEmployee:
+      type: object
+      properties:
+        mailbox:
+          $ref: '#/components/schemas/MailboxesDetails'
+        emails_count:
+          title: Emails count
+          type: integer
+          readOnly: true
+    ResolvedAutomatically:
+      required:
+      - time_saved
+      - from_users
+      - from_community
+      - from_mailbox_anomaly
+      - by_visual_scanner
+      - total
+      - by_malware_and_url_scanners
+      - by_themis
+      type: object
+      properties:
+        time_saved:
+          title: Time saved
+          type:
+          - number
+          - 'null'
+        from_users:
+          title: From users
+          type:
+          - integer
+          - 'null'
+        from_community:
+          title: From community
+          type:
+          - integer
+          - 'null'
+        from_mailbox_anomaly:
+          title: From mailbox anomaly
+          type:
+          - integer
+          - 'null'
+        by_visual_scanner:
+          title: By visual scanner
+          type:
+          - integer
+          - 'null'
+        total:
+          title: Total
+          type:
+          - integer
+          - 'null'
+        by_malware_and_url_scanners:
+          title: By malware and url scanners
+          type:
+          - integer
+          - 'null'
+        by_themis:
+          title: By themis
+          type:
+          - integer
+          - 'null'
     ImpersonationDetailsPage:
       required:
       - incidents
@@ -1086,128 +1365,83 @@ components:
           items:
             type: string
             minLength: 1
-    MitigationStats:
-      required:
-      - openIncidentCount
-      - resolvedIncidentCount
-      - phishingCount
-      - remediationCount
-      - maliciousAttachmentsCount
-      - maliciousLinksCount
-      - impersonationCount
-      - reportedByEmployeesCount
-      type: object
-      properties:
-        openIncidentCount:
-          title: Openincidentcount
-          type: integer
-        resolvedIncidentCount:
-          title: Resolvedincidentcount
-          type: integer
-        phishingCount:
-          title: Phishingcount
-          type: integer
-        remediationCount:
-          title: Remediationcount
-          type: integer
-        maliciousAttachmentsCount:
-          title: Maliciousattachmentscount
-          type: integer
-        maliciousLinksCount:
-          title: Maliciouslinkscount
-          type: integer
-        impersonationCount:
-          title: Impersonationcount
-          type: integer
-        reportedByEmployeesCount:
-          title: Reportedbyemployeescount
-          type: integer
-    EmailsStats:
-      required:
-      - inspected_count
-      - phishing_count
-      - spam_count
-      - impersonations_count
-      - phishing_threat_types
-      type: object
-      properties:
-        inspected_count:
-          title: Inspected count
-          type: integer
-        phishing_count:
-          title: Phishing count
-          type: integer
-        spam_count:
-          title: Spam count
-          type: integer
-        impersonations_count:
-          title: Impersonations count
-          type: integer
-        phishing_threat_types:
-          type: array
-          items:
-            $ref: '#/components/schemas/EmailPhishingThreatTypeStats'
-    MitigationDetails:
+    ImpersonationDetails:
       required:
       - incidentID
-      - mitigationID
-      - incidentState
-      - remediatedTime
       - mailboxId
+      - remediatedTime
       - mailboxEmail
-      - subject
       - senderEmail
-      - senderIP
+      - subject
       - reportedBy
+      - incidentType
       - resolution
-      - spfResult
+      - remediations
       type: object
       properties:
         incidentID:
           title: Incidentid
           type: integer
-        mitigationID:
-          title: Mitigationid
+        mailboxId:
+          title: Mailboxid
           type: integer
-        incidentState:
-          title: Incidentstate
-          type: string
-          minLength: 1
         remediatedTime:
           title: Remediatedtime
           type: string
           format: date-time
-        mailboxId:
-          title: Mailboxid
-          type: integer
         mailboxEmail:
           title: Mailboxemail
           type: string
+          format: email
+          minLength: 1
+        senderEmail:
+          title: Senderemail
+          type: string
+          format: email
           minLength: 1
         subject:
           title: Subject
           type: string
           minLength: 1
-        senderEmail:
-          title: Senderemail
-          type: string
-          minLength: 1
-        senderIP:
-          title: Senderip
-          type: string
-          minLength: 1
         reportedBy:
           title: Reportedby
+          type: string
+          format: email
+          minLength: 1
+        incidentType:
+          title: Incidenttype
           type: string
           minLength: 1
         resolution:
           title: Resolution
           type: string
           minLength: 1
-        spfResult:
-          title: Spfresult
-          type: string
-          minLength: 1
+        remediations:
+          title: Remediations
+          type: integer
+    IncidentPageDetails:
+      required:
+      - page
+      - total_pages
+      - incidents
+      - messages
+      type: object
+      properties:
+        page:
+          title: Page
+          type: integer
+        total_pages:
+          title: Total pages
+          type: integer
+        incidents:
+          type: array
+          items:
+            $ref: '#/components/schemas/MitigationIncidentDetails'
+        messages:
+          type: array
+          items:
+            type: string
+            minLength: 1
   securitySchemes:
     JWT:
       type: apiKey

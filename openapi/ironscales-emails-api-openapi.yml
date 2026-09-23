@@ -1,7 +1,35 @@
 openapi: 3.2.0
 info:
   title: IRONSCALES Management Emails API
-  description: The Emails operations of the IRONSCALES Management API, split by tag from the provider-published Swagger 2.0 document at https://appapi.ironscales.com/appapi/docs/?format=openapi. Operations, parameters, responses and definitions are carried verbatim from the source specification.
+  description: 'General Error Responses:
+
+
+    HTTP Status Codes
+
+    Reason
+
+
+    400
+
+    Not authenticated
+
+
+    403
+
+    Insufficient rights to call this procedure
+
+
+    429
+
+    Too many requests (Throttling) the limit is 120 API calls per minute per company'
+  termsOfService: https://staticmediafiles.s3.amazonaws.com/static/webapp/docs/IronScalesTermsnService.pdf
+  contact:
+    email: support@ironscales.com
+  securityDefinitions:
+    Bearer:
+      type: JWT
+      name: Authorization
+      in: header
   version: v1
 servers:
 - url: https://appapi.ironscales.com/appapi
@@ -19,7 +47,12 @@ paths:
         type: string
     get:
       operationId: List of escalated emails
-      description: '<b>Rate Limit</b>: 20 requests per minute<br /><b>Scopes:</b><ul><li>company.view</li></ul>'
+      description: 'Rate Limit: 20 requests per minute
+
+        Scopes:
+
+
+        company.view'
       parameters:
       - name: start_time
         in: query
@@ -152,8 +185,31 @@ paths:
               - message: You do not have permission for company <company_id>
       tags:
       - Emails
+      summary: List of escalated emails
+      x-summary-source: derived
 components:
   schemas:
+    EmailsResponse:
+      required:
+      - emails
+      - page
+      - total_pages
+      - total_count
+      type: object
+      properties:
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmailsDetailFromElastic'
+        page:
+          title: Page
+          type: integer
+        total_pages:
+          title: Total pages
+          type: integer
+        total_count:
+          title: Total count
+          type: integer
     EmailsDetailFromElastic:
       type: object
       properties:
@@ -281,27 +337,6 @@ components:
           - 'null'
           format: date-time
           readOnly: true
-    EmailsResponse:
-      required:
-      - emails
-      - page
-      - total_pages
-      - total_count
-      type: object
-      properties:
-        emails:
-          type: array
-          items:
-            $ref: '#/components/schemas/EmailsDetailFromElastic'
-        page:
-          title: Page
-          type: integer
-        total_pages:
-          title: Total pages
-          type: integer
-        total_count:
-          title: Total count
-          type: integer
   securitySchemes:
     JWT:
       type: apiKey

@@ -1,7 +1,35 @@
 openapi: 3.2.0
 info:
   title: IRONSCALES Management Campaigns API
-  description: The Campaigns operations of the IRONSCALES Management API, split by tag from the provider-published Swagger 2.0 document at https://appapi.ironscales.com/appapi/docs/?format=openapi. Operations, parameters, responses and definitions are carried verbatim from the source specification.
+  description: 'General Error Responses:
+
+
+    HTTP Status Codes
+
+    Reason
+
+
+    400
+
+    Not authenticated
+
+
+    403
+
+    Insufficient rights to call this procedure
+
+
+    429
+
+    Too many requests (Throttling) the limit is 120 API calls per minute per company'
+  termsOfService: https://staticmediafiles.s3.amazonaws.com/static/webapp/docs/IronScalesTermsnService.pdf
+  contact:
+    email: support@ironscales.com
+  securityDefinitions:
+    Bearer:
+      type: JWT
+      name: Authorization
+      in: header
   version: v1
 servers:
 - url: https://appapi.ironscales.com/appapi
@@ -19,7 +47,43 @@ paths:
         type: string
     get:
       operationId: Get campaigns details
-      description: "Get campaigns details <br/>\nEach page contains 25 campaigns results<br/>\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>partner.company.view</li>\n    <li>company.view</li>\n</ul>\n\nStatuses mapping to UI values:\n<ul>\n    <li>Draft (0) -> Draft</li>\n    <li>Collecting (1) -> Active</li>\n    <li>Closed (2) -> Completed</li>\n    <li>Approved by User (3) -> Pending</li>\n    <li>Sending (4) -> Active</li>\n    <li>Inactive (5) -> Inactive</li>\n</ul>"
+      description: 'Get campaigns details
+
+
+        Each page contains 25 campaigns results
+
+
+        Scopes:
+
+
+        partner.all
+
+
+        partner.company.view
+
+
+        company.view
+
+
+        Statuses mapping to UI values:
+
+
+        Draft (0) -> Draft
+
+
+        Collecting (1) -> Active
+
+
+        Closed (2) -> Completed
+
+
+        Approved by User (3) -> Pending
+
+
+        Sending (4) -> Active
+
+
+        Inactive (5) -> Inactive'
       parameters:
       - name: company_id
         in: path
@@ -75,6 +139,8 @@ paths:
           description: No permissions
       tags:
       - Campaigns
+      summary: Get campaigns details
+      x-summary-source: derived
   /campaigns/{company_id}/participants-actions/:
     parameters:
     - name: company_id
@@ -84,7 +150,15 @@ paths:
         type: string
     put:
       operationId: Perform participants action
-      description: Perform action on campaign participants.<br/><b>Scopes:</b><ul><li>partner.company.edit</li><li>company.edit</li></ul>
+      description: 'Perform action on campaign participants.
+
+        Scopes:
+
+
+        partner.company.edit
+
+
+        company.edit'
       parameters:
       - name: campaign_id
         in: query
@@ -125,6 +199,8 @@ paths:
             schema:
               $ref: '#/components/schemas/ParticipantsActionsRequest'
         required: true
+      summary: Perform participants action
+      x-summary-source: derived
   /campaigns/{company_id}/participants-details:
     parameters:
     - name: company_id
@@ -134,7 +210,22 @@ paths:
         type: string
     get:
       operationId: Get campaign participants details
-      description: "Get campaign participants details <br/>\nEach page contains 100 participants<br/>\n<br/><b>Scopes:</b>\n<ul>\n    <li>partner.all</li>\n    <li>partner.company.view</li>\n    <li>company.view</li>\n</ul>"
+      description: 'Get campaign participants details
+
+
+        Each page contains 100 participants
+
+
+        Scopes:
+
+
+        partner.all
+
+
+        partner.company.view
+
+
+        company.view'
       parameters:
       - name: company_id
         in: path
@@ -174,8 +265,155 @@ paths:
           description: No permissions
       tags:
       - Campaigns
+      summary: Get campaign participants details
+      x-summary-source: derived
 components:
   schemas:
+    CampaignDetailsPage:
+      required:
+      - page
+      - total_pages
+      - campaigns
+      type: object
+      properties:
+        page:
+          title: Page
+          type: integer
+        total_pages:
+          title: Total pages
+          type: integer
+        campaigns:
+          type: array
+          items:
+            $ref: '#/components/schemas/CampaignDetails'
+    CampaignParticipantsDetailsPage:
+      required:
+      - page
+      - total_pages
+      - campaign_id
+      - participants
+      type: object
+      properties:
+        page:
+          title: Page
+          type: integer
+        total_pages:
+          title: Total pages
+          type: integer
+        campaign_id:
+          title: Campaign id
+          type: integer
+        participants:
+          type: array
+          items:
+            $ref: '#/components/schemas/CampaignParticipantsDetails'
+    CampaignDetails:
+      required:
+      - campaignID
+      - campaignName
+      - language
+      - companyId
+      type: object
+      properties:
+        campaignID:
+          title: Campaignid
+          type: integer
+        campaignName:
+          title: Campaignname
+          type: string
+          minLength: 1
+        campaignStatus:
+          title: Campaignstatus
+          type: string
+          readOnly: true
+          minLength: 1
+        flowType:
+          title: Flowtype
+          type: string
+          readOnly: true
+          minLength: 1
+        language:
+          title: Language
+          type: string
+          minLength: 1
+        maxEmailPerDay:
+          title: Maxemailperday
+          description: 0 - Unlimited
+          type: integer
+          readOnly: true
+        endDate:
+          title: Enddate
+          type: string
+          format: date-time
+          readOnly: true
+        launchDate:
+          title: Launchdate
+          type: string
+          format: date-time
+          readOnly: true
+        emailsSent:
+          title: Emailssent
+          type: integer
+          readOnly: true
+        participants:
+          title: Participants
+          type: integer
+          readOnly: true
+        emailsBounced:
+          title: Emailsbounced
+          type: integer
+          readOnly: true
+        numberOfClickedParticipants:
+          title: Numberofclickedparticipants
+          type: integer
+          readOnly: true
+        numberOfTrainedParticipants:
+          title: Numberoftrainedparticipants
+          type: integer
+          readOnly: true
+        numberOfTrainedParticipatns:
+          title: Numberoftrainedparticipatns
+          type: integer
+          readOnly: true
+        numberOfReportedParticipants:
+          title: Numberofreportedparticipants
+          type: integer
+          readOnly: true
+        numberOfReadParticipants:
+          title: Numberofreadparticipants
+          type: integer
+          readOnly: true
+        numberOfDeleted:
+          title: Numberofdeleted
+          type: integer
+          readOnly: true
+        attackReadinessFirstReport:
+          title: Attackreadinessfirstreport
+          type: string
+          readOnly: true
+          minLength: 1
+        attackReadinessMitigationTime:
+          title: Attackreadinessmitigationtime
+          type: string
+          readOnly: true
+          minLength: 1
+        attackReadinessLuredBeforeMitigation:
+          title: Attackreadinessluredbeforemitigation
+          type: string
+          readOnly: true
+          minLength: 1
+        attackReadinessReportsToMitigate:
+          title: Attackreadinessreportstomitigate
+          type: string
+          readOnly: true
+          minLength: 1
+        companyId:
+          title: Companyid
+          type: integer
+        randomized:
+          title: Randomized
+          type: boolean
+          readOnly: true
     CampaignParticipantsDetails:
       type: object
       properties:
@@ -416,151 +654,6 @@ components:
           - string
           - 'null'
           format: date
-    CampaignParticipantsDetailsPage:
-      required:
-      - page
-      - total_pages
-      - campaign_id
-      - participants
-      type: object
-      properties:
-        page:
-          title: Page
-          type: integer
-        total_pages:
-          title: Total pages
-          type: integer
-        campaign_id:
-          title: Campaign id
-          type: integer
-        participants:
-          type: array
-          items:
-            $ref: '#/components/schemas/CampaignParticipantsDetails'
-    CampaignDetails:
-      required:
-      - campaignID
-      - campaignName
-      - language
-      - companyId
-      type: object
-      properties:
-        campaignID:
-          title: Campaignid
-          type: integer
-        campaignName:
-          title: Campaignname
-          type: string
-          minLength: 1
-        campaignStatus:
-          title: Campaignstatus
-          type: string
-          readOnly: true
-          minLength: 1
-        flowType:
-          title: Flowtype
-          type: string
-          readOnly: true
-          minLength: 1
-        language:
-          title: Language
-          type: string
-          minLength: 1
-        maxEmailPerDay:
-          title: Maxemailperday
-          description: 0 - Unlimited
-          type: integer
-          readOnly: true
-        endDate:
-          title: Enddate
-          type: string
-          format: date-time
-          readOnly: true
-        launchDate:
-          title: Launchdate
-          type: string
-          format: date-time
-          readOnly: true
-        emailsSent:
-          title: Emailssent
-          type: integer
-          readOnly: true
-        participants:
-          title: Participants
-          type: integer
-          readOnly: true
-        emailsBounced:
-          title: Emailsbounced
-          type: integer
-          readOnly: true
-        numberOfClickedParticipants:
-          title: Numberofclickedparticipants
-          type: integer
-          readOnly: true
-        numberOfTrainedParticipants:
-          title: Numberoftrainedparticipants
-          type: integer
-          readOnly: true
-        numberOfTrainedParticipatns:
-          title: Numberoftrainedparticipatns
-          type: integer
-          readOnly: true
-        numberOfReportedParticipants:
-          title: Numberofreportedparticipants
-          type: integer
-          readOnly: true
-        numberOfReadParticipants:
-          title: Numberofreadparticipants
-          type: integer
-          readOnly: true
-        numberOfDeleted:
-          title: Numberofdeleted
-          type: integer
-          readOnly: true
-        attackReadinessFirstReport:
-          title: Attackreadinessfirstreport
-          type: string
-          readOnly: true
-          minLength: 1
-        attackReadinessMitigationTime:
-          title: Attackreadinessmitigationtime
-          type: string
-          readOnly: true
-          minLength: 1
-        attackReadinessLuredBeforeMitigation:
-          title: Attackreadinessluredbeforemitigation
-          type: string
-          readOnly: true
-          minLength: 1
-        attackReadinessReportsToMitigate:
-          title: Attackreadinessreportstomitigate
-          type: string
-          readOnly: true
-          minLength: 1
-        companyId:
-          title: Companyid
-          type: integer
-        randomized:
-          title: Randomized
-          type: boolean
-          readOnly: true
-    CampaignDetailsPage:
-      required:
-      - page
-      - total_pages
-      - campaigns
-      type: object
-      properties:
-        page:
-          title: Page
-          type: integer
-        total_pages:
-          title: Total pages
-          type: integer
-        campaigns:
-          type: array
-          items:
-            $ref: '#/components/schemas/CampaignDetails'
   securitySchemes:
     JWT:
       type: apiKey

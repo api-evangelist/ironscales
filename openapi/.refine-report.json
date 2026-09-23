@@ -1,15 +1,7 @@
 {
   "provider": "ironscales",
   "sources": [
-    "ironscales-authorization-api-openapi.yml",
-    "ironscales-campaigns-api-openapi.yml",
-    "ironscales-deepfake-api-openapi.yml",
-    "ironscales-emails-api-openapi.yml",
-    "ironscales-incident-api-openapi.yml",
-    "ironscales-mailboxes-api-openapi.yml",
-    "ironscales-mitigation-api-openapi.yml",
-    "ironscales-sat-api-openapi.yml",
-    "ironscales-settings-api-openapi.yml"
+    "_original/ironscales-management-api-openapi.json"
   ],
   "outputs": [
     "ironscales-authorization-api-openapi.yml",
@@ -26,16 +18,38 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "ironscales-authorization-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
-    "ironscales-campaigns-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
-    "ironscales-deepfake-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
-    "ironscales-emails-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
-    "ironscales-incident-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
-    "ironscales-mailboxes-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
-    "ironscales-mitigation-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
-    "ironscales-sat-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
-    "ironscales-settings-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "9 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "ironscales-management-api-openapi.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "ironscales-management-api-openapi.json: declared missing tag: Authorization",
+    "ironscales-management-api-openapi.json: declared missing tag: Campaigns",
+    "ironscales-management-api-openapi.json: declared missing tag: Deepfake",
+    "ironscales-management-api-openapi.json: declared missing tag: Emails",
+    "ironscales-management-api-openapi.json: declared missing tag: Incident",
+    "ironscales-management-api-openapi.json: declared missing tag: Mailboxes",
+    "ironscales-management-api-openapi.json: declared missing tag: Mitigation",
+    "ironscales-management-api-openapi.json: declared missing tag: SAT",
+    "ironscales-management-api-openapi.json: declared missing tag: Settings",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "_original/ironscales-settings-openapi.yml: archived document superseded by a larger archived document",
+    "_original/ironscales-sat-openapi.yml: archived document superseded by a larger archived document",
+    "_original/ironscales-mitigation-openapi.yml: archived document superseded by a larger archived document",
+    "_original/ironscales-mailboxes-openapi.yml: archived document superseded by a larger archived document",
+    "_original/ironscales-incident-openapi.yml: archived document superseded by a larger archived document",
+    "_original/ironscales-emails-openapi.yml: archived document superseded by a larger archived document",
+    "_original/ironscales-deepfake-openapi.yml: archived document superseded by a larger archived document",
+    "_original/ironscales-campaigns-openapi.yml: archived document superseded by a larger archived document",
+    "_original/ironscales-authorization-openapi.yml: archived document superseded by a larger archived document",
+    "ironscales-authorization-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ironscales-campaigns-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ironscales-deepfake-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ironscales-emails-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ironscales-incident-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ironscales-mailboxes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ironscales-mitigation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ironscales-sat-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ironscales-settings-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

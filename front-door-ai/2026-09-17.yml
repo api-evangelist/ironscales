@@ -1,0 +1,35 @@
+# Front Door AI Index — ironscales — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: ironscales
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: ironscales.com
+  final_host: ironscales.com
+  ownership: own
+  owner: ironscales
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 24
+  host_score: 24
+  density: 16.32
+  words: 1471
+  tiers:
+    agentic: 5
+    core: 18
+    model: 1
+  ambiguous: 24
+  top_terms:
+    AI: 13
+    automation: 12
+    agent: 8
+    agentic: 4
+    intelligence: 4
+    artificial intelligence: 2
+    GPT: 1
+    copilot: 1
+    gen ai: 1
+    generative ai: 1
+    machine learning: 1
