@@ -46,7 +46,7 @@ paths:
       schema:
         type: string
     get:
-      operationId: Get campaigns details
+      operationId: GetCampaignsDetails
       description: 'Get campaigns details
 
 
@@ -141,6 +141,8 @@ paths:
       - Campaigns
       summary: Get campaigns details
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: Get campaigns details
   /campaigns/{company_id}/participants-actions/:
     parameters:
     - name: company_id
@@ -149,7 +151,7 @@ paths:
       schema:
         type: string
     put:
-      operationId: Perform participants action
+      operationId: PerformParticipantsAction
       description: 'Perform action on campaign participants.
 
         Scopes:
@@ -201,6 +203,8 @@ paths:
         required: true
       summary: Perform participants action
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: Perform participants action
   /campaigns/{company_id}/participants-details:
     parameters:
     - name: company_id
@@ -209,7 +213,7 @@ paths:
       schema:
         type: string
     get:
-      operationId: Get campaign participants details
+      operationId: GetCampaignParticipantsDetails
       description: 'Get campaign participants details
 
 
@@ -267,46 +271,35 @@ paths:
       - Campaigns
       summary: Get campaign participants details
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: Get campaign participants details
 components:
   schemas:
-    CampaignDetailsPage:
+    ParticipantsActionsRequest:
       required:
-      - page
-      - total_pages
-      - campaigns
+      - filters
+      - action
       type: object
       properties:
-        page:
-          title: Page
+        filters:
+          $ref: '#/components/schemas/ParticipantsActionsFilters'
+        action:
+          title: Action
+          description: 'The action to perform on participants:<br/>1 - Reported: Mark as reported<br/>2 - Manually Trained: Set training status to manually trained<br/>3 - Postponed: Set training status to postponed (requires expiration_date)<br/>4 - Revert Training: Revert Postponed and Manually Trained statuses only<br/>5 - Revert Reported: Revert Reported status set via appapi only'
           type: integer
-        total_pages:
-          title: Total pages
-          type: integer
-        campaigns:
-          type: array
-          items:
-            $ref: '#/components/schemas/CampaignDetails'
-    CampaignParticipantsDetailsPage:
-      required:
-      - page
-      - total_pages
-      - campaign_id
-      - participants
-      type: object
-      properties:
-        page:
-          title: Page
-          type: integer
-        total_pages:
-          title: Total pages
-          type: integer
-        campaign_id:
-          title: Campaign id
-          type: integer
-        participants:
-          type: array
-          items:
-            $ref: '#/components/schemas/CampaignParticipantsDetails'
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+        expiration_date:
+          title: Expiration date
+          description: The expiration date of the Postponed Training status (ISO 8601 format, e.g. '2024-01-15'). Only valid when action is 3 (Postponed).
+          type:
+          - string
+          - 'null'
+          format: date
     CampaignDetails:
       required:
       - campaignID
@@ -414,6 +407,17 @@ components:
           title: Randomized
           type: boolean
           readOnly: true
+    ParticipantsActionsFilters:
+      type: object
+      properties:
+        emails:
+          description: A list of recipient emails to filter by. Limited to 300 items.
+          type: array
+          items:
+            type: string
+            format: email
+            minLength: 1
+          maxItems: 300
     CampaignParticipantsDetails:
       type: object
       properties:
@@ -618,42 +622,44 @@ components:
           title: Userip
           type: string
           minLength: 1
-    ParticipantsActionsFilters:
+    CampaignParticipantsDetailsPage:
+      required:
+      - page
+      - total_pages
+      - campaign_id
+      - participants
       type: object
       properties:
-        emails:
-          description: A list of recipient emails to filter by. Limited to 300 items.
+        page:
+          title: Page
+          type: integer
+        total_pages:
+          title: Total pages
+          type: integer
+        campaign_id:
+          title: Campaign id
+          type: integer
+        participants:
           type: array
           items:
-            type: string
-            format: email
-            minLength: 1
-          maxItems: 300
-    ParticipantsActionsRequest:
+            $ref: '#/components/schemas/CampaignParticipantsDetails'
+    CampaignDetailsPage:
       required:
-      - filters
-      - action
+      - page
+      - total_pages
+      - campaigns
       type: object
       properties:
-        filters:
-          $ref: '#/components/schemas/ParticipantsActionsFilters'
-        action:
-          title: Action
-          description: 'The action to perform on participants:<br/>1 - Reported: Mark as reported<br/>2 - Manually Trained: Set training status to manually trained<br/>3 - Postponed: Set training status to postponed (requires expiration_date)<br/>4 - Revert Training: Revert Postponed and Manually Trained statuses only<br/>5 - Revert Reported: Revert Reported status set via appapi only'
+        page:
+          title: Page
           type: integer
-          enum:
-          - 1
-          - 2
-          - 3
-          - 4
-          - 5
-        expiration_date:
-          title: Expiration date
-          description: The expiration date of the Postponed Training status (ISO 8601 format, e.g. '2024-01-15'). Only valid when action is 3 (Postponed).
-          type:
-          - string
-          - 'null'
-          format: date
+        total_pages:
+          title: Total pages
+          type: integer
+        campaigns:
+          type: array
+          items:
+            $ref: '#/components/schemas/CampaignDetails'
   securitySchemes:
     JWT:
       type: apiKey

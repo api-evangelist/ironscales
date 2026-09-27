@@ -41,7 +41,7 @@ paths:
   /get-token/:
     parameters: []
     post:
-      operationId: get JWT token
+      operationId: getJWTToken
       description: 'Get JWT used for interacting with the other endpoints of the AppAPI
 
 
@@ -75,6 +75,8 @@ paths:
         required: true
       summary: Get JWT token
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: get JWT token
 components:
   schemas:
     JwtRequest:

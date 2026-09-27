@@ -46,7 +46,7 @@ paths:
       schema:
         type: string
     get:
-      operationId: Get list of Deepfake SIEM events
+      operationId: GetListOfDeepfakeSIEMEvents
       description: 'Cursor-paged feed of deepfake lifecycle events
 
         (suspicious / mfa_started / mfa_succeeded / mfa_aborted / confirmed).
@@ -105,6 +105,8 @@ paths:
       - Deepfake
       summary: Get list of deepfake SIEM events
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: Get list of Deepfake SIEM events
 components:
   schemas:
     DeepfakeEventsPage:

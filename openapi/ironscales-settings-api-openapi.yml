@@ -46,7 +46,7 @@ paths:
       schema:
         type: string
     get:
-      operationId: Get account takeover sensitivity settings
+      operationId: GetAccountTakeoverSensitivitySettings
       description: 'Retrieve the account takeover sensitivity settings for the specified company.
 
 
@@ -102,8 +102,10 @@ paths:
       - Settings
       summary: Get account takeover sensitivity settings
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: Get account takeover sensitivity settings
     put:
-      operationId: Update account takeover sensitivity settings
+      operationId: UpdateAccountTakeoverSensitivitySettings
       description: 'Update account takeover sensitivity settings for the specified company.
 
 
@@ -180,6 +182,8 @@ paths:
         required: true
       summary: Update account takeover sensitivity settings
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: Update account takeover sensitivity settings
   /settings/{company_id}/allow-list/:
     parameters:
     - name: company_id
@@ -188,7 +192,7 @@ paths:
       schema:
         type: string
     get:
-      operationId: Get allow list settings
+      operationId: GetAllowListSettings
       description: 'Retrieve the list of allow list settings for the specified company.
 
         Scopes:
@@ -299,8 +303,10 @@ paths:
       - Settings
       summary: Get allow list settings
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: Get allow list settings
     post:
-      operationId: Create allow list settings
+      operationId: CreateAllowListSettings
       description: 'Add a new entry to the allow list for the specified company.
 
         Scopes:
@@ -356,8 +362,10 @@ paths:
         required: true
       summary: Create allow list settings
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: Create allow list settings
     put:
-      operationId: Update allow list entry
+      operationId: UpdateAllowListEntry
       description: 'Update an existing allow list entry for the specified company.
 
         Scopes:
@@ -413,8 +421,10 @@ paths:
         required: true
       summary: Update allow list entry
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: Update allow list entry
     delete:
-      operationId: Delete allow list entries
+      operationId: DeleteAllowListEntries
       description: 'Delete selected entries from the allow list for the specified company.
 
         Scopes:
@@ -470,6 +480,8 @@ paths:
         required: true
       summary: Delete allow list entries
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: Delete allow list entries
   /settings/{company_id}/challenged-alerts/:
     parameters:
     - name: company_id
@@ -478,7 +490,7 @@ paths:
       schema:
         type: string
     get:
-      operationId: Get challenged notification settings
+      operationId: GetChallengedNotificationSettings
       description: 'Retrieve the list of email recipients configured for challenged alert notifications for the specified company.
 
 
@@ -524,8 +536,10 @@ paths:
       - Settings
       summary: Get challenged notification settings
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: Get challenged notification settings
     post:
-      operationId: Create challenged notification settings
+      operationId: CreateChallengedNotificationSettings
       description: 'Set the list of email recipients configured for challenged alert notifications for the specified company.
 
 
@@ -589,8 +603,10 @@ paths:
         required: true
       summary: Create challenged notification settings
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: Create challenged notification settings
     put:
-      operationId: Append challenged notification settings
+      operationId: AppendChallengedNotificationSettings
       description: 'Append email recipients to existing challenged alert notifications, removing duplicates, returning the updated list.
 
 
@@ -655,8 +671,10 @@ paths:
         required: true
       summary: Append challenged notification settings
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: Append challenged notification settings
     delete:
-      operationId: Delete challenged notification settings
+      operationId: DeleteChallengedNotificationSettings
       description: 'Remove all configured email recipients for challenged alert notifications. After deletion, the recipients list will be empty.
 
 
@@ -697,6 +715,8 @@ paths:
       - Settings
       summary: Delete challenged notification settings
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: Delete challenged notification settings
   /settings/{company_id}/incident-alerts/:
     parameters:
     - name: company_id
@@ -705,7 +725,7 @@ paths:
       schema:
         type: string
     get:
-      operationId: Get company notification settings
+      operationId: GetCompanyNotificationSettings
       description: 'Retrieve the list of email recipients configured for incident alert notifications for the specified company.
 
 
@@ -751,8 +771,10 @@ paths:
       - Settings
       summary: Get company notification settings
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: Get company notification settings
     post:
-      operationId: Create company notification settings
+      operationId: CreateCompanyNotificationSettings
       description: 'Set the list of email recipients for incident alert notifications, replacing any existing recipients.
 
 
@@ -810,8 +832,10 @@ paths:
         required: true
       summary: Create company notification settings
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: Create company notification settings
     put:
-      operationId: Append to company notification settings
+      operationId: AppendToCompanyNotificationSettings
       description: 'Append email recipients to the existing notification settings list, removing duplicates, returning the updated list.
 
 
@@ -870,8 +894,10 @@ paths:
         required: true
       summary: Append to company notification settings
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: Append to company notification settings
     delete:
-      operationId: Delete company notification settings
+      operationId: DeleteCompanyNotificationSettings
       description: 'Remove all configured email recipients for incident alert notifications. After deletion, the recipients list will be empty.
 
 
@@ -912,8 +938,81 @@ paths:
       - Settings
       summary: Delete company notification settings
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: Delete company notification settings
 components:
   schemas:
+    ChallengedSettings:
+      required:
+      - recipients
+      type: object
+      properties:
+        recipients:
+          type: array
+          items:
+            type: string
+            format: email
+            minLength: 1
+    WhiteListDelete:
+      required:
+      - selected_ids
+      type: object
+      properties:
+        selected_ids:
+          description: List of allow list entry IDs to delete
+          type: array
+          items:
+            type: integer
+            minimum: 1
+          minItems: 1
+    WhiteListResponse:
+      required:
+      - allow_list
+      - internal_active
+      - external_active
+      - pages_count
+      - page
+      - items_per_page
+      type: object
+      properties:
+        allow_list:
+          description: List of allowed entries
+          type: array
+          items:
+            $ref: '#/components/schemas/WhiteListEntry'
+        internal_active:
+          title: Internal active
+          description: Whether internal whitelist is active
+          type: boolean
+        external_active:
+          title: External active
+          description: Whether external whitelist is active
+          type: boolean
+        pages_count:
+          title: Pages count
+          description: Total number of pages
+          type: integer
+        page:
+          title: Page
+          description: Current page number
+          type: integer
+        items_per_page:
+          title: Items per page
+          description: Number of items per page
+          type: integer
+    AccountTakeoverSettings:
+      required:
+      - sensitivity
+      type: object
+      properties:
+        sensitivity:
+          title: Sensitivity
+          description: 'ATO sensitivity level: 1 (Aggressive), 2 (Balanced), 3 (Relaxed)'
+          type: integer
+          enum:
+          - 1
+          - 2
+          - 3
     WhiteListEntry:
       description: List of allowed entries
       required:
@@ -984,119 +1083,7 @@ components:
           title: Ignore auth
           description: Whether authentication should be ignored for this entry
           type: boolean
-    WhitelistAddRow:
-      required:
-      - type
-      - value
-      type: object
-      properties:
-        type:
-          title: Type
-          description: 'Type of whitelist entry. Choices: 1=IP Network (for IP addresses or CIDR notation), 2=Domain (for domain names), 3=Sender Address (for email addresses), 4=Unscanned Domain Link (for domain names in links)'
-          type: string
-          enum:
-          - 1
-          - 2
-          - 3
-          - 4
-        scope:
-          title: Scope
-          description: 'Scope of the whitelist entry: 1=Skip All Inspections, 2=Bypass Impersonation Banners, 3=Bypass link clicking by IRONSCALES, 4=Spam Filter, 6=Bypass all scanning for links'
-          type: integer
-          default: 1
-        value:
-          title: Value
-          description: 'Value to whitelist. For type=1: provide IP address or CIDR notation (e.g., 192.168.1.1 or 10.0.0.0/24). For type=2: provide domain name (e.g., example.com). For type=3: provide email address (e.g., user@example.com). For type=4: provide domain name for unscanned links.'
-          type: string
-          minLength: 1
-        comment:
-          title: Comment
-          description: Optional comment or description for this whitelist entry
-          type:
-          - string
-          - 'null'
-        external_campaigns:
-          title: External campaigns
-          description: When true, this whitelist entry will also apply to external campaigns
-          type: boolean
-          default: false
-        ignore_auth:
-          title: Ignore auth
-          description: When true, authentication will be ignored for this whitelist entry
-          type: boolean
-          default: false
-    WhiteListResponse:
-      required:
-      - allow_list
-      - internal_active
-      - external_active
-      - pages_count
-      - page
-      - items_per_page
-      type: object
-      properties:
-        allow_list:
-          description: List of allowed entries
-          type: array
-          items:
-            $ref: '#/components/schemas/WhiteListEntry'
-        internal_active:
-          title: Internal active
-          description: Whether internal whitelist is active
-          type: boolean
-        external_active:
-          title: External active
-          description: Whether external whitelist is active
-          type: boolean
-        pages_count:
-          title: Pages count
-          description: Total number of pages
-          type: integer
-        page:
-          title: Page
-          description: Current page number
-          type: integer
-        items_per_page:
-          title: Items per page
-          description: Number of items per page
-          type: integer
-    AccountTakeoverSettings:
-      required:
-      - sensitivity
-      type: object
-      properties:
-        sensitivity:
-          title: Sensitivity
-          description: 'ATO sensitivity level: 1 (Aggressive), 2 (Balanced), 3 (Relaxed)'
-          type: integer
-          enum:
-          - 1
-          - 2
-          - 3
-    WhiteListDelete:
-      required:
-      - selected_ids
-      type: object
-      properties:
-        selected_ids:
-          description: List of allow list entry IDs to delete
-          type: array
-          items:
-            type: integer
-            minimum: 1
-          minItems: 1
     NotificationSettings:
-      required:
-      - recipients
-      type: object
-      properties:
-        recipients:
-          type: array
-          items:
-            type: string
-            format: email
-            minLength: 1
-    ChallengedSettings:
       required:
       - recipients
       type: object
@@ -1154,6 +1141,47 @@ components:
           description: ID of the existing allow list entry to update.
           type: integer
           minimum: 1
+    WhitelistAddRow:
+      required:
+      - type
+      - value
+      type: object
+      properties:
+        type:
+          title: Type
+          description: 'Type of whitelist entry. Choices: 1=IP Network (for IP addresses or CIDR notation), 2=Domain (for domain names), 3=Sender Address (for email addresses), 4=Unscanned Domain Link (for domain names in links)'
+          type: string
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+        scope:
+          title: Scope
+          description: 'Scope of the whitelist entry: 1=Skip All Inspections, 2=Bypass Impersonation Banners, 3=Bypass link clicking by IRONSCALES, 4=Spam Filter, 6=Bypass all scanning for links'
+          type: integer
+          default: 1
+        value:
+          title: Value
+          description: 'Value to whitelist. For type=1: provide IP address or CIDR notation (e.g., 192.168.1.1 or 10.0.0.0/24). For type=2: provide domain name (e.g., example.com). For type=3: provide email address (e.g., user@example.com). For type=4: provide domain name for unscanned links.'
+          type: string
+          minLength: 1
+        comment:
+          title: Comment
+          description: Optional comment or description for this whitelist entry
+          type:
+          - string
+          - 'null'
+        external_campaigns:
+          title: External campaigns
+          description: When true, this whitelist entry will also apply to external campaigns
+          type: boolean
+          default: false
+        ignore_auth:
+          title: Ignore auth
+          description: When true, authentication will be ignored for this whitelist entry
+          type: boolean
+          default: false
   securitySchemes:
     JWT:
       type: apiKey

@@ -46,7 +46,7 @@ paths:
       schema:
         type: string
     get:
-      operationId: List of escalated emails
+      operationId: ListOfEscalatedEmails
       description: 'Rate Limit: 20 requests per minute
 
         Scopes:
@@ -187,6 +187,8 @@ paths:
       - Emails
       summary: List of escalated emails
       x-summary-source: derived
+      x-operation-id-source: normalized
+      x-operation-id-original: List of escalated emails
 components:
   schemas:
     EmailsResponse:

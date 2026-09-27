@@ -56,7 +56,7 @@ tags:
 - Incident Response
 - Security Awareness Training
 - Phishing Simulation
-- Microsoft-365
+- Microsoft 365
 - Google Workspace
 - SOC Automation
 - Deepfake Detection
@@ -77,6 +77,7 @@ tags_raw:
 - soc-automation
 - deepfake-detection
 - mcp
+- Microsoft-365
 apis:
 - name: IRONSCALES MCP Server
   description: >-
@@ -89,7 +90,7 @@ apis:
   baseURL: https://mcp.ironscales.com/mcp/
   tags:
   - MCP
-  - agent-native
+  - Agent-Native
   - Email Security
   - Incident Response
   tags_raw:
