@@ -449,6 +449,44 @@ paths:
       x-operation-id-original: Get user campaign performance
 components:
   schemas:
+    MailboxesPageDetails:
+      required:
+      - page
+      - total_pages
+      - total_count
+      - mailboxes
+      type: object
+      properties:
+        page:
+          title: Page
+          type: integer
+        total_pages:
+          title: Total pages
+          type: integer
+        total_count:
+          title: Total count
+          type: integer
+        mailboxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/MailboxesDetails'
+    MailboxesUserPerformanceResponse:
+      required:
+      - page
+      - total_pages
+      - data
+      type: object
+      properties:
+        page:
+          title: Page
+          type: integer
+        total_pages:
+          title: Total pages
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MailboxesUserPerformance'
     MailboxFilter:
       type: object
       properties:
@@ -474,116 +512,6 @@ components:
           items:
             type: string
             minLength: 1
-    MailboxesUserComplianceReport:
-      required:
-      - firstName
-      - email
-      type: object
-      properties:
-        id:
-          title: ID
-          type: integer
-          readOnly: true
-        firstName:
-          title: First name
-          type: string
-          maxLength: 40
-          minLength: 1
-        lastName:
-          title: Last name
-          type:
-          - string
-          - 'null'
-          maxLength: 40
-        country:
-          title: Country
-          type:
-          - string
-          - 'null'
-          maxLength: 100
-        department:
-          title: Department
-          type:
-          - string
-          - 'null'
-          maxLength: 100
-        title:
-          title: Title
-          type:
-          - string
-          - 'null'
-          maxLength: 250
-        email:
-          title: Email
-          type: string
-          format: email
-          maxLength: 254
-          minLength: 1
-        language:
-          title: Language
-          type: string
-          readOnly: true
-        simulationCampaignsCompletionsCount:
-          title: Simulation campaigns completions count
-          type: integer
-          readOnly: true
-        lastSimulationCampaignDate:
-          title: Last simulation campaign date
-          description: date-time format %b %d, %Y %H:%M
-          type:
-          - string
-          - 'null'
-          format: date-time
-          readOnly: true
-        trainingCampaignsCompletionsCount:
-          title: Training campaigns completions count
-          type: integer
-          readOnly: true
-        lastTrainingCampaignDate:
-          title: Last training campaign date
-          description: date-time format %b %d, %Y %H:%M
-          type:
-          - string
-          - 'null'
-          format: date-time
-          readOnly: true
-        riskLevel:
-          title: Risk level
-          type: string
-          enum:
-          - Low
-          - Medium
-          - High
-          readOnly: true
-        awarenessLevel:
-          title: Awareness level
-          type: string
-          enum:
-          - Beginner Level
-          - Mid Level
-          - Expert Level
-          readOnly: true
-    MailboxesPageDetails:
-      required:
-      - page
-      - total_pages
-      - total_count
-      - mailboxes
-      type: object
-      properties:
-        page:
-          title: Page
-          type: integer
-        total_pages:
-          title: Total pages
-          type: integer
-        total_count:
-          title: Total count
-          type: integer
-        mailboxes:
-          type: array
-          items:
-            $ref: '#/components/schemas/MailboxesDetails'
     MailboxesDetails:
       required:
       - id
@@ -686,39 +614,6 @@ components:
           $ref: '#/components/schemas/MailboxFilter'
         params:
           $ref: '#/components/schemas/MailboxUpdateParams'
-    MailboxesUpdateResponse:
-      required:
-      - mailbox_ids
-      - error_message
-      type: object
-      properties:
-        mailbox_ids:
-          description: IDs of mailboxes that matched the filters
-          type: array
-          items:
-            type: integer
-        error_message:
-          title: Error message
-          description: Error description if any of mailboxes wasn't updated
-          type: string
-          minLength: 1
-    MailboxesUserComplianceReportResponse:
-      required:
-      - page
-      - total_pages
-      - data
-      type: object
-      properties:
-        page:
-          title: Page
-          type: integer
-        total_pages:
-          title: Total pages
-          type: integer
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/MailboxesUserComplianceReport'
     MailboxesUserPerformance:
       required:
       - userId
@@ -840,7 +735,96 @@ components:
           - 'null'
           readOnly: true
           minLength: 1
-    MailboxesUserPerformanceResponse:
+    MailboxesUserComplianceReport:
+      required:
+      - firstName
+      - email
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        firstName:
+          title: First name
+          type: string
+          maxLength: 40
+          minLength: 1
+        lastName:
+          title: Last name
+          type:
+          - string
+          - 'null'
+          maxLength: 40
+        country:
+          title: Country
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+        department:
+          title: Department
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+        title:
+          title: Title
+          type:
+          - string
+          - 'null'
+          maxLength: 250
+        email:
+          title: Email
+          type: string
+          format: email
+          maxLength: 254
+          minLength: 1
+        language:
+          title: Language
+          type: string
+          readOnly: true
+        simulationCampaignsCompletionsCount:
+          title: Simulation campaigns completions count
+          type: integer
+          readOnly: true
+        lastSimulationCampaignDate:
+          title: Last simulation campaign date
+          description: date-time format %b %d, %Y %H:%M
+          type:
+          - string
+          - 'null'
+          format: date-time
+          readOnly: true
+        trainingCampaignsCompletionsCount:
+          title: Training campaigns completions count
+          type: integer
+          readOnly: true
+        lastTrainingCampaignDate:
+          title: Last training campaign date
+          description: date-time format %b %d, %Y %H:%M
+          type:
+          - string
+          - 'null'
+          format: date-time
+          readOnly: true
+        riskLevel:
+          title: Risk level
+          type: string
+          enum:
+          - Low
+          - Medium
+          - High
+          readOnly: true
+        awarenessLevel:
+          title: Awareness level
+          type: string
+          enum:
+          - Beginner Level
+          - Mid Level
+          - Expert Level
+          readOnly: true
+    MailboxesUserComplianceReportResponse:
       required:
       - page
       - total_pages
@@ -856,7 +840,23 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/MailboxesUserPerformance'
+            $ref: '#/components/schemas/MailboxesUserComplianceReport'
+    MailboxesUpdateResponse:
+      required:
+      - mailbox_ids
+      - error_message
+      type: object
+      properties:
+        mailbox_ids:
+          description: IDs of mailboxes that matched the filters
+          type: array
+          items:
+            type: integer
+        error_message:
+          title: Error message
+          description: Error description if any of mailboxes wasn't updated
+          type: string
+          minLength: 1
     MailboxUpdateParams:
       type: object
       properties:

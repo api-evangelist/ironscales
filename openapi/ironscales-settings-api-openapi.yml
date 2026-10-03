@@ -942,64 +942,6 @@ paths:
       x-operation-id-original: Delete company notification settings
 components:
   schemas:
-    ChallengedSettings:
-      required:
-      - recipients
-      type: object
-      properties:
-        recipients:
-          type: array
-          items:
-            type: string
-            format: email
-            minLength: 1
-    WhiteListDelete:
-      required:
-      - selected_ids
-      type: object
-      properties:
-        selected_ids:
-          description: List of allow list entry IDs to delete
-          type: array
-          items:
-            type: integer
-            minimum: 1
-          minItems: 1
-    WhiteListResponse:
-      required:
-      - allow_list
-      - internal_active
-      - external_active
-      - pages_count
-      - page
-      - items_per_page
-      type: object
-      properties:
-        allow_list:
-          description: List of allowed entries
-          type: array
-          items:
-            $ref: '#/components/schemas/WhiteListEntry'
-        internal_active:
-          title: Internal active
-          description: Whether internal whitelist is active
-          type: boolean
-        external_active:
-          title: External active
-          description: Whether external whitelist is active
-          type: boolean
-        pages_count:
-          title: Pages count
-          description: Total number of pages
-          type: integer
-        page:
-          title: Page
-          description: Current page number
-          type: integer
-        items_per_page:
-          title: Items per page
-          description: Number of items per page
-          type: integer
     AccountTakeoverSettings:
       required:
       - sensitivity
@@ -1013,6 +955,18 @@ components:
           - 1
           - 2
           - 3
+    WhiteListDelete:
+      required:
+      - selected_ids
+      type: object
+      properties:
+        selected_ids:
+          description: List of allow list entry IDs to delete
+          type: array
+          items:
+            type: integer
+            minimum: 1
+          minItems: 1
     WhiteListEntry:
       description: List of allowed entries
       required:
@@ -1083,6 +1037,93 @@ components:
           title: Ignore auth
           description: Whether authentication should be ignored for this entry
           type: boolean
+    WhiteListResponse:
+      required:
+      - allow_list
+      - internal_active
+      - external_active
+      - pages_count
+      - page
+      - items_per_page
+      type: object
+      properties:
+        allow_list:
+          description: List of allowed entries
+          type: array
+          items:
+            $ref: '#/components/schemas/WhiteListEntry'
+        internal_active:
+          title: Internal active
+          description: Whether internal whitelist is active
+          type: boolean
+        external_active:
+          title: External active
+          description: Whether external whitelist is active
+          type: boolean
+        pages_count:
+          title: Pages count
+          description: Total number of pages
+          type: integer
+        page:
+          title: Page
+          description: Current page number
+          type: integer
+        items_per_page:
+          title: Items per page
+          description: Number of items per page
+          type: integer
+    ChallengedSettings:
+      required:
+      - recipients
+      type: object
+      properties:
+        recipients:
+          type: array
+          items:
+            type: string
+            format: email
+            minLength: 1
+    WhitelistAddRow:
+      required:
+      - type
+      - value
+      type: object
+      properties:
+        type:
+          title: Type
+          description: 'Type of whitelist entry. Choices: 1=IP Network (for IP addresses or CIDR notation), 2=Domain (for domain names), 3=Sender Address (for email addresses), 4=Unscanned Domain Link (for domain names in links)'
+          type: string
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+        scope:
+          title: Scope
+          description: 'Scope of the whitelist entry: 1=Skip All Inspections, 2=Bypass Impersonation Banners, 3=Bypass link clicking by IRONSCALES, 4=Spam Filter, 6=Bypass all scanning for links'
+          type: integer
+          default: 1
+        value:
+          title: Value
+          description: 'Value to whitelist. For type=1: provide IP address or CIDR notation (e.g., 192.168.1.1 or 10.0.0.0/24). For type=2: provide domain name (e.g., example.com). For type=3: provide email address (e.g., user@example.com). For type=4: provide domain name for unscanned links.'
+          type: string
+          minLength: 1
+        comment:
+          title: Comment
+          description: Optional comment or description for this whitelist entry
+          type:
+          - string
+          - 'null'
+        external_campaigns:
+          title: External campaigns
+          description: When true, this whitelist entry will also apply to external campaigns
+          type: boolean
+          default: false
+        ignore_auth:
+          title: Ignore auth
+          description: When true, authentication will be ignored for this whitelist entry
+          type: boolean
+          default: false
     NotificationSettings:
       required:
       - recipients
@@ -1141,47 +1182,6 @@ components:
           description: ID of the existing allow list entry to update.
           type: integer
           minimum: 1
-    WhitelistAddRow:
-      required:
-      - type
-      - value
-      type: object
-      properties:
-        type:
-          title: Type
-          description: 'Type of whitelist entry. Choices: 1=IP Network (for IP addresses or CIDR notation), 2=Domain (for domain names), 3=Sender Address (for email addresses), 4=Unscanned Domain Link (for domain names in links)'
-          type: string
-          enum:
-          - 1
-          - 2
-          - 3
-          - 4
-        scope:
-          title: Scope
-          description: 'Scope of the whitelist entry: 1=Skip All Inspections, 2=Bypass Impersonation Banners, 3=Bypass link clicking by IRONSCALES, 4=Spam Filter, 6=Bypass all scanning for links'
-          type: integer
-          default: 1
-        value:
-          title: Value
-          description: 'Value to whitelist. For type=1: provide IP address or CIDR notation (e.g., 192.168.1.1 or 10.0.0.0/24). For type=2: provide domain name (e.g., example.com). For type=3: provide email address (e.g., user@example.com). For type=4: provide domain name for unscanned links.'
-          type: string
-          minLength: 1
-        comment:
-          title: Comment
-          description: Optional comment or description for this whitelist entry
-          type:
-          - string
-          - 'null'
-        external_campaigns:
-          title: External campaigns
-          description: When true, this whitelist entry will also apply to external campaigns
-          type: boolean
-          default: false
-        ignore_auth:
-          title: Ignore auth
-          description: When true, authentication will be ignored for this whitelist entry
-          type: boolean
-          default: false
   securitySchemes:
     JWT:
       type: apiKey

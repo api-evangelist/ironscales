@@ -1199,33 +1199,128 @@ paths:
       x-operation-id-original: Get IDs list of unclassified incidents
 components:
   schemas:
-    FilterOptions:
-      description: Available filter options
+    AccountTakeoverRemediationError:
       required:
-      - titles
-      - locations
-      - ips
+      - data
       type: object
       properties:
-        titles:
-          description: Available alert titles for filtering
+        data:
+          title: Data
+          description: Validation errors for request fields
+          type: object
+          additionalProperties:
+            description: Field validation errors
+            type: array
+            items:
+              type: string
+              minLength: 1
+    AccountTakeoverDetailsResponse:
+      required:
+      - incident_details
+      - filter_options
+      - pages_count
+      - page
+      - items_per_page
+      type: object
+      properties:
+        incident_details:
+          $ref: '#/components/schemas/AccountTakeoverIncidentDetails'
+        filter_options:
+          $ref: '#/components/schemas/FilterOptions'
+        pages_count:
+          title: Pages count
+          description: Total number of pages
+          type: integer
+        page:
+          title: Page
+          description: Current page number
+          type: integer
+        items_per_page:
+          title: Items per page
+          description: Number of items per page
+          type: integer
+    UnclusterIncident:
+      required:
+      - classification
+      type: object
+      properties:
+        mitigationsList:
+          description: List of mitigation IDs to move.
           type: array
           items:
-            type: string
-            minLength: 1
-        locations:
-          description: Available locations for filtering
+            type: integer
+        excludeMitigations:
+          description: List of mitigation IDs to exclude when using the 'all' flag.
           type: array
           items:
-            type: string
-            minLength: 1
-        ips:
-          description: Available IP addresses for filtering
+            type: integer
+          default: []
+        notFoundFilter:
+          title: Notfoundfilter
+          description: Filter mitigations that were not found in mailbox.
+          type: boolean
+          default: false
+        isReadFilter:
+          title: Isreadfilter
+          description: Filter mitigations by read status.
+          type:
+          - boolean
+          - 'null'
+        unclusterAll:
+          title: Unclusterall
+          description: If true, move all mitigations matching filters (uses incident_id from URL).
+          type: boolean
+          default: false
+        classification:
+          title: Classification
+          description: 'New classification for the unclustered incident. Must be one of: Attack, False Positive, Spam'
+          type: string
+          minLength: 1
+    ReclusterIncident:
+      type: object
+      properties:
+        mitigationsList:
+          description: List of mitigation IDs to move.
           type: array
           items:
-            type: string
-            minLength: 1
-    IncidentListPage:
+            type: integer
+        excludeMitigations:
+          description: List of mitigation IDs to exclude when using the 'all' flag.
+          type: array
+          items:
+            type: integer
+          default: []
+        notFoundFilter:
+          title: Notfoundfilter
+          description: Filter mitigations that were not found in mailbox.
+          type: boolean
+          default: false
+        isReadFilter:
+          title: Isreadfilter
+          description: Filter mitigations by read status.
+          type:
+          - boolean
+          - 'null'
+        reclusterAll:
+          title: Reclusterall
+          description: If true, move all mitigations matching filters (uses incident_id from URL).
+          type: boolean
+          default: false
+    MailServer:
+      required:
+      - host
+      - ip
+      type: object
+      properties:
+        host:
+          title: Host
+          type: string
+          minLength: 1
+        ip:
+          title: Ip
+          type: string
+          minLength: 1
+    ScanBackPage:
       required:
       - page
       - total_pages
@@ -1245,7 +1340,67 @@ components:
         incidents:
           type: array
           items:
-            $ref: '#/components/schemas/IncidentList'
+            $ref: '#/components/schemas/ScanBackList'
+    Header:
+      required:
+      - name
+      - value
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+          minLength: 1
+        value:
+          title: Value
+          type: string
+          minLength: 1
+    IncidentComment:
+      description: Comments on the incident, across the internal and community threads.
+      required:
+      - id
+      - author
+      - text
+      - created
+      - type
+      type: object
+      properties:
+        id:
+          title: Id
+          description: Comment ID
+          type: integer
+        author:
+          title: Author
+          description: Display name of the comment author
+          type: string
+        text:
+          title: Text
+          description: Comment body text
+          type: string
+        created:
+          title: Created
+          description: When the comment was created
+          type: string
+          format: date-time
+        type:
+          title: Type
+          description: 'Comment thread: ''internal'' (private analyst notes) or ''community'' (shared).'
+          type: string
+          enum:
+          - internal
+          - community
+    AccountTakeoverRemediationResponse:
+      required:
+      - state
+      type: object
+      properties:
+        state:
+          title: State
+          description: 'Updated incident state: 2 (Safe), 3 (Compromised)'
+          type: integer
+          enum:
+          - 2
+          - 3
     RemediationStatusesStats:
       required:
       - phishing
@@ -1262,6 +1417,192 @@ components:
           $ref: '#/components/schemas/RemediationStatusStats'
         unclassified:
           $ref: '#/components/schemas/RemediationStatusStats'
+    ScanBackList:
+      required:
+      - incidentID
+      - emailSubject
+      - linksCount
+      - attachmentsCount
+      - recipientEmail
+      - recipientName
+      - classification
+      - assignee
+      - senderName
+      - senderEmail
+      - affectedMailboxesCount
+      - created
+      - reportedBy
+      - resolvedBy
+      - challengedType
+      - firstChallengedDate
+      type: object
+      properties:
+        incidentID:
+          title: Incidentid
+          type: integer
+        emailSubject:
+          title: Emailsubject
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        linksCount:
+          title: Linkscount
+          type:
+          - integer
+          - 'null'
+        attachmentsCount:
+          title: Attachmentscount
+          type:
+          - integer
+          - 'null'
+        recipientEmail:
+          title: Recipientemail
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        recipientName:
+          title: Recipientname
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        classification:
+          title: Classification
+          type: string
+          minLength: 1
+        assignee:
+          title: Assignee
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        senderName:
+          title: Sendername
+          type: string
+          minLength: 1
+        senderEmail:
+          title: Senderemail
+          type: string
+          format: email
+          minLength: 1
+        affectedMailboxesCount:
+          title: Affectedmailboxescount
+          type: integer
+        created:
+          title: Created
+          type: string
+          format: date-time
+        reportedBy:
+          title: Reportedby
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        resolvedBy:
+          title: Resolvedby
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        challengedType:
+          title: Challengedtype
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        firstChallengedDate:
+          title: Firstchallengeddate
+          type:
+          - string
+          - 'null'
+          format: date-time
+    AlertDetail:
+      description: List of alert details
+      required:
+      - ip
+      - location
+      - logon_time
+      type: object
+      properties:
+        ip:
+          title: Ip
+          description: IP address associated with the alert
+          type: string
+          minLength: 1
+        location:
+          title: Location
+          description: Geographic location
+          type: string
+          minLength: 1
+        logon_time:
+          title: Logon time
+          description: Time of the logon event
+          type: string
+          format: date-time
+    Link:
+      required:
+      - url
+      - name
+      - scan_result
+      type: object
+      properties:
+        url:
+          title: Url
+          type: string
+          minLength: 1
+        name:
+          title: Name
+          type: string
+          minLength: 1
+        scan_result:
+          title: Scan result
+          type:
+          - string
+          - 'null'
+          minLength: 1
+    AffectedMailbox:
+      description: List of affected mailboxes (mitigations) for this incident
+      required:
+      - id
+      - recipient
+      - recipient_id
+      - employee_active
+      - first_reported
+      - not_found
+      - can_recluster
+      type: object
+      properties:
+        id:
+          title: Id
+          description: Mitigation ID
+          type: integer
+        recipient:
+          title: Recipient
+          description: Email address of the affected mailbox
+          type: string
+          minLength: 1
+        recipient_id:
+          title: Recipient id
+          description: Employee ID
+          type: integer
+        employee_active:
+          title: Employee active
+          description: employee is active
+          type: boolean
+        first_reported:
+          title: First reported
+          description: Is first reporter
+          type: boolean
+        not_found:
+          title: Not found
+          description: Email not found in mailbox
+          type: boolean
+        can_recluster:
+          title: Can recluster
+          description: Email can be reclustered back to the original incident. False for the root email (first_reported) of a reclassified incident.
+          type: boolean
     AccountDetails:
       description: Account information
       required:
@@ -1312,186 +1653,50 @@ components:
           - string
           - 'null'
           minLength: 1
-    Attachment:
+    RemediationStatusStats:
       required:
-      - file_name
-      - file_size
-      - md5
-      - scan_result
+      - incidents_count
+      - emails_count
       type: object
       properties:
-        file_name:
-          title: File name
-          type: string
-          minLength: 1
-        file_size:
-          title: File size
+        incidents_count:
+          title: Incidents count
           type: integer
-        md5:
-          title: Md5
-          type: string
-          minLength: 1
-        scan_result:
-          title: Scan result
-          type:
-          - string
-          - 'null'
-          minLength: 1
-    AffectedMailbox:
-      description: List of affected mailboxes (mitigations) for this incident
+        emails_count:
+          title: Emails count
+          type: integer
+    ReportedEmail:
       required:
-      - id
-      - recipient
-      - recipient_id
-      - employee_active
-      - first_reported
-      - not_found
-      - can_recluster
+      - name
+      - email
+      - subject
+      - sender_email
+      - mail_server
+      - headers
       type: object
       properties:
-        id:
-          title: Id
-          description: Mitigation ID
-          type: integer
-        recipient:
-          title: Recipient
-          description: Email address of the affected mailbox
+        name:
+          title: Name
           type: string
           minLength: 1
-        recipient_id:
-          title: Recipient id
-          description: Employee ID
-          type: integer
-        employee_active:
-          title: Employee active
-          description: employee is active
-          type: boolean
-        first_reported:
-          title: First reported
-          description: Is first reporter
-          type: boolean
-        not_found:
-          title: Not found
-          description: Email not found in mailbox
-          type: boolean
-        can_recluster:
-          title: Can recluster
-          description: Email can be reclustered back to the original incident. False for the root email (first_reported) of a reclassified incident.
-          type: boolean
-    AccountTakeoverIncidentDetails:
-      description: Account takeover incident details
-      required:
-      - id
-      - account_details
-      - alerts
-      - state
-      - original_state
-      - resolved_by
-      - resolved_on
-      - created
-      - assignee
-      type: object
-      properties:
-        id:
-          title: Id
-          description: Incident identifier
-          type: integer
-        account_details:
-          $ref: '#/components/schemas/AccountDetails'
-        alerts:
-          description: List of security alerts
+        email:
+          title: Email
+          type: string
+          minLength: 1
+        subject:
+          title: Subject
+          type: string
+          minLength: 1
+        sender_email:
+          title: Sender email
+          type: string
+          minLength: 1
+        mail_server:
+          $ref: '#/components/schemas/MailServer'
+        headers:
           type: array
           items:
-            $ref: '#/components/schemas/Alert'
-        state:
-          title: State
-          description: Incident state
-          type: integer
-        original_state:
-          title: Original state
-          description: Original incident state
-          type: integer
-        resolved_by:
-          title: Resolved by
-          description: Name of resolver
-          type:
-          - string
-          - 'null'
-          minLength: 1
-        resolved_on:
-          title: Resolved on
-          description: Resolution timestamp
-          type:
-          - string
-          - 'null'
-          format: date-time
-        created:
-          title: Created
-          description: Incident creation timestamp
-          type: string
-          format: date-time
-        assignee:
-          $ref: '#/components/schemas/Assignee'
-    Link:
-      required:
-      - url
-      - name
-      - scan_result
-      type: object
-      properties:
-        url:
-          title: Url
-          type: string
-          minLength: 1
-        name:
-          title: Name
-          type: string
-          minLength: 1
-        scan_result:
-          title: Scan result
-          type:
-          - string
-          - 'null'
-          minLength: 1
-    Header:
-      required:
-      - name
-      - value
-      type: object
-      properties:
-        name:
-          title: Name
-          type: string
-          minLength: 1
-        value:
-          title: Value
-          type: string
-          minLength: 1
-    AccountTakeoverDetailsResponse:
-      required:
-      - incident_details
-      - filter_options
-      - pages_count
-      - page
-      - items_per_page
-      type: object
-      properties:
-        incident_details:
-          $ref: '#/components/schemas/AccountTakeoverIncidentDetails'
-        filter_options:
-          $ref: '#/components/schemas/FilterOptions'
-        pages_count:
-          title: Pages count
-          description: Total number of pages
-          type: integer
-        page:
-          title: Page
-          description: Current page number
-          type: integer
-        items_per_page:
-          title: Items per page
-          description: Number of items per page
-          type: integer
+            $ref: '#/components/schemas/Header'
     IncidentDetails:
       required:
       - company_id
@@ -1727,94 +1932,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/IncidentComment'
-    ReportedEmail:
-      required:
-      - name
-      - email
-      - subject
-      - sender_email
-      - mail_server
-      - headers
-      type: object
-      properties:
-        name:
-          title: Name
-          type: string
-          minLength: 1
-        email:
-          title: Email
-          type: string
-          minLength: 1
-        subject:
-          title: Subject
-          type: string
-          minLength: 1
-        sender_email:
-          title: Sender email
-          type: string
-          minLength: 1
-        mail_server:
-          $ref: '#/components/schemas/MailServer'
-        headers:
-          type: array
-          items:
-            $ref: '#/components/schemas/Header'
-    ScanBackPage:
-      required:
-      - page
-      - total_pages
-      - total_count
-      - incidents
-      type: object
-      properties:
-        page:
-          title: Page
-          type: integer
-        total_pages:
-          title: Total pages
-          type: integer
-        total_count:
-          title: Total count
-          type: integer
-        incidents:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScanBackList'
-    MailServer:
-      required:
-      - host
-      - ip
-      type: object
-      properties:
-        host:
-          title: Host
-          type: string
-          minLength: 1
-        ip:
-          title: Ip
-          type: string
-          minLength: 1
-    AccountTakeoverRemediation:
-      required:
-      - state
-      type: object
-      properties:
-        state:
-          title: State
-          description: 'ATO remediation state: 2 (Safe), 3 (Compromised)'
-          type: integer
-          enum:
-          - 2
-          - 3
-        action:
-          title: Action
-          description: 'ATO remediation action: 2 (DISABLE_ACCOUNT), 3 (SIGN_OUT)'
-          type:
-          - integer
-          - 'null'
-          enum:
-          - 3
-          - 2
     Alert:
       description: List of security alerts
       required:
@@ -1854,347 +1971,74 @@ components:
           description: Alert creation timestamp
           type: string
           format: date-time
-    ReclusterIncident:
+    IncidentListPage:
+      required:
+      - page
+      - total_pages
+      - total_count
+      - incidents
       type: object
       properties:
-        mitigationsList:
-          description: List of mitigation IDs to move.
+        page:
+          title: Page
+          type: integer
+        total_pages:
+          title: Total pages
+          type: integer
+        total_count:
+          title: Total count
+          type: integer
+        incidents:
           type: array
           items:
-            type: integer
-        excludeMitigations:
-          description: List of mitigation IDs to exclude when using the 'all' flag.
+            $ref: '#/components/schemas/IncidentList'
+    FilterOptions:
+      description: Available filter options
+      required:
+      - titles
+      - locations
+      - ips
+      type: object
+      properties:
+        titles:
+          description: Available alert titles for filtering
           type: array
           items:
-            type: integer
-          default: []
-        notFoundFilter:
-          title: Notfoundfilter
-          description: Filter mitigations that were not found in mailbox.
-          type: boolean
-          default: false
-        isReadFilter:
-          title: Isreadfilter
-          description: Filter mitigations by read status.
-          type:
-          - boolean
-          - 'null'
-        reclusterAll:
-          title: Reclusterall
-          description: If true, move all mitigations matching filters (uses incident_id from URL).
-          type: boolean
-          default: false
-    ScanBackList:
-      required:
-      - incidentID
-      - emailSubject
-      - linksCount
-      - attachmentsCount
-      - recipientEmail
-      - recipientName
-      - classification
-      - assignee
-      - senderName
-      - senderEmail
-      - affectedMailboxesCount
-      - created
-      - reportedBy
-      - resolvedBy
-      - challengedType
-      - firstChallengedDate
-      type: object
-      properties:
-        incidentID:
-          title: Incidentid
-          type: integer
-        emailSubject:
-          title: Emailsubject
-          type:
-          - string
-          - 'null'
-          minLength: 1
-        linksCount:
-          title: Linkscount
-          type:
-          - integer
-          - 'null'
-        attachmentsCount:
-          title: Attachmentscount
-          type:
-          - integer
-          - 'null'
-        recipientEmail:
-          title: Recipientemail
-          type:
-          - string
-          - 'null'
-          minLength: 1
-        recipientName:
-          title: Recipientname
-          type:
-          - string
-          - 'null'
-          minLength: 1
-        classification:
-          title: Classification
-          type: string
-          minLength: 1
-        assignee:
-          title: Assignee
-          type:
-          - string
-          - 'null'
-          minLength: 1
-        senderName:
-          title: Sendername
-          type: string
-          minLength: 1
-        senderEmail:
-          title: Senderemail
-          type: string
-          format: email
-          minLength: 1
-        affectedMailboxesCount:
-          title: Affectedmailboxescount
-          type: integer
-        created:
-          title: Created
-          type: string
-          format: date-time
-        reportedBy:
-          title: Reportedby
-          type:
-          - string
-          - 'null'
-          minLength: 1
-        resolvedBy:
-          title: Resolvedby
-          type:
-          - string
-          - 'null'
-          minLength: 1
-        challengedType:
-          title: Challengedtype
-          type:
-          - string
-          - 'null'
-          minLength: 1
-        firstChallengedDate:
-          title: Firstchallengeddate
-          type:
-          - string
-          - 'null'
-          format: date-time
-    AlertDetail:
-      description: List of alert details
-      required:
-      - ip
-      - location
-      - logon_time
-      type: object
-      properties:
-        ip:
-          title: Ip
-          description: IP address associated with the alert
-          type: string
-          minLength: 1
-        location:
-          title: Location
-          description: Geographic location
-          type: string
-          minLength: 1
-        logon_time:
-          title: Logon time
-          description: Time of the logon event
-          type: string
-          format: date-time
-    IncidentClassification:
-      required:
-      - classification
-      - prev_classification
-      - classifying_user_email
-      type: object
-      properties:
-        classification:
-          title: Classification
-          description: "The same classification can be achieved using multiple values:\n<table>\n  <thead>\n    <tr>\n      <th scope=\"col\">Value</th>\n      <th scope=\"col\">Classification</th>\n    </tr>\n  </thead>\n  <tbody>\n  <tr><td><li>report</li><li>unclassified</li></td><td>Report</td></tr><tr><td><li>attack</li><li>phishing</li><li>malicious</li></td><td>Attack</td></tr><tr><td><li>safe</li><li>fp</li><li>false positive</li></td><td>False Positive</td></tr><tr><td><li>spam</li></td><td>Spam</td></tr><tr><td><li>close phishing</li></td><td>Close Phishing</td></tr>\n  </tbody>\n</table>\n"
-          type: string
-          minLength: 1
-        prev_classification:
-          title: Prev classification
-          type: string
-          enum:
-          - Attack
-          - False Positive
-          - Spam
-          - Close Phishing
-          - Report
-        classifying_user_email:
-          title: Classifying user email
-          type: string
-          format: email
-          minLength: 1
-    IncidentComment:
-      description: Comments on the incident, across the internal and community threads.
-      required:
-      - id
-      - author
-      - text
-      - created
-      - type
-      type: object
-      properties:
-        id:
-          title: Id
-          description: Comment ID
-          type: integer
-        author:
-          title: Author
-          description: Display name of the comment author
-          type: string
-        text:
-          title: Text
-          description: Comment body text
-          type: string
-        created:
-          title: Created
-          description: When the comment was created
-          type: string
-          format: date-time
-        type:
-          title: Type
-          description: 'Comment thread: ''internal'' (private analyst notes) or ''community'' (shared).'
-          type: string
-          enum:
-          - internal
-          - community
-    Assignee:
-      description: Assigned user information
-      required:
-      - id
-      - email
-      - first_name
-      - last_name
-      type: object
-      properties:
-        id:
-          title: Id
-          description: User ID
-          type:
-          - integer
-          - 'null'
-        email:
-          title: Email
-          description: User email
-          type:
-          - string
-          - 'null'
-          format: email
-          minLength: 1
-        first_name:
-          title: First name
-          description: First name
-          type:
-          - string
-          - 'null'
-          minLength: 1
-        last_name:
-          title: Last name
-          description: Last name
-          type:
-          - string
-          - 'null'
-          minLength: 1
-    RemediationStatusStats:
-      required:
-      - incidents_count
-      - emails_count
-      type: object
-      properties:
-        incidents_count:
-          title: Incidents count
-          type: integer
-        emails_count:
-          title: Emails count
-          type: integer
-    FederationDetails:
-      required:
-      - companies_affected
-      - companies_marked_phishing
-      - companies_marked_spam
-      - companies_marked_fp
-      - companies_unclassified
-      - phishing_ratio
-      type: object
-      properties:
-        companies_affected:
-          title: Companies affected
-          type: integer
-        companies_marked_phishing:
-          title: Companies marked phishing
-          type: integer
-        companies_marked_spam:
-          title: Companies marked spam
-          type: integer
-        companies_marked_fp:
-          title: Companies marked fp
-          type: integer
-        companies_unclassified:
-          title: Companies unclassified
-          type: integer
-        phishing_ratio:
-          title: Phishing ratio
-          type: number
-          format: decimal
-    UnclusterIncident:
-      required:
-      - classification
-      type: object
-      properties:
-        mitigationsList:
-          description: List of mitigation IDs to move.
+            type: string
+            minLength: 1
+        locations:
+          description: Available locations for filtering
           type: array
           items:
-            type: integer
-        excludeMitigations:
-          description: List of mitigation IDs to exclude when using the 'all' flag.
+            type: string
+            minLength: 1
+        ips:
+          description: Available IP addresses for filtering
           type: array
           items:
-            type: integer
-          default: []
-        notFoundFilter:
-          title: Notfoundfilter
-          description: Filter mitigations that were not found in mailbox.
-          type: boolean
-          default: false
-        isReadFilter:
-          title: Isreadfilter
-          description: Filter mitigations by read status.
-          type:
-          - boolean
-          - 'null'
-        unclusterAll:
-          title: Unclusterall
-          description: If true, move all mitigations matching filters (uses incident_id from URL).
-          type: boolean
-          default: false
-        classification:
-          title: Classification
-          description: 'New classification for the unclustered incident. Must be one of: Attack, False Positive, Spam'
-          type: string
-          minLength: 1
-    AccountTakeoverRemediationResponse:
+            type: string
+            minLength: 1
+    AccountTakeoverRemediation:
       required:
       - state
       type: object
       properties:
         state:
           title: State
-          description: 'Updated incident state: 2 (Safe), 3 (Compromised)'
+          description: 'ATO remediation state: 2 (Safe), 3 (Compromised)'
           type: integer
           enum:
           - 2
           - 3
+        action:
+          title: Action
+          description: 'ATO remediation action: 2 (DISABLE_ACCOUNT), 3 (SIGN_OUT)'
+          type:
+          - integer
+          - 'null'
+          enum:
+          - 3
+          - 2
     IncidentList:
       required:
       - incidentID
@@ -2328,21 +2172,177 @@ components:
           - string
           - 'null'
           format: date-time
-    AccountTakeoverRemediationError:
+    FederationDetails:
       required:
-      - data
+      - companies_affected
+      - companies_marked_phishing
+      - companies_marked_spam
+      - companies_marked_fp
+      - companies_unclassified
+      - phishing_ratio
       type: object
       properties:
-        data:
-          title: Data
-          description: Validation errors for request fields
-          type: object
-          additionalProperties:
-            description: Field validation errors
-            type: array
-            items:
-              type: string
-              minLength: 1
+        companies_affected:
+          title: Companies affected
+          type: integer
+        companies_marked_phishing:
+          title: Companies marked phishing
+          type: integer
+        companies_marked_spam:
+          title: Companies marked spam
+          type: integer
+        companies_marked_fp:
+          title: Companies marked fp
+          type: integer
+        companies_unclassified:
+          title: Companies unclassified
+          type: integer
+        phishing_ratio:
+          title: Phishing ratio
+          type: number
+          format: decimal
+    Assignee:
+      description: Assigned user information
+      required:
+      - id
+      - email
+      - first_name
+      - last_name
+      type: object
+      properties:
+        id:
+          title: Id
+          description: User ID
+          type:
+          - integer
+          - 'null'
+        email:
+          title: Email
+          description: User email
+          type:
+          - string
+          - 'null'
+          format: email
+          minLength: 1
+        first_name:
+          title: First name
+          description: First name
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        last_name:
+          title: Last name
+          description: Last name
+          type:
+          - string
+          - 'null'
+          minLength: 1
+    IncidentClassification:
+      required:
+      - classification
+      - prev_classification
+      - classifying_user_email
+      type: object
+      properties:
+        classification:
+          title: Classification
+          description: "The same classification can be achieved using multiple values:\n<table>\n  <thead>\n    <tr>\n      <th scope=\"col\">Value</th>\n      <th scope=\"col\">Classification</th>\n    </tr>\n  </thead>\n  <tbody>\n  <tr><td><li>report</li><li>unclassified</li></td><td>Report</td></tr><tr><td><li>attack</li><li>phishing</li><li>malicious</li></td><td>Attack</td></tr><tr><td><li>safe</li><li>fp</li><li>false positive</li></td><td>False Positive</td></tr><tr><td><li>spam</li></td><td>Spam</td></tr><tr><td><li>close phishing</li></td><td>Close Phishing</td></tr>\n  </tbody>\n</table>\n"
+          type: string
+          minLength: 1
+        prev_classification:
+          title: Prev classification
+          type: string
+          enum:
+          - Attack
+          - False Positive
+          - Spam
+          - Close Phishing
+          - Report
+        classifying_user_email:
+          title: Classifying user email
+          type: string
+          format: email
+          minLength: 1
+    Attachment:
+      required:
+      - file_name
+      - file_size
+      - md5
+      - scan_result
+      type: object
+      properties:
+        file_name:
+          title: File name
+          type: string
+          minLength: 1
+        file_size:
+          title: File size
+          type: integer
+        md5:
+          title: Md5
+          type: string
+          minLength: 1
+        scan_result:
+          title: Scan result
+          type:
+          - string
+          - 'null'
+          minLength: 1
+    AccountTakeoverIncidentDetails:
+      description: Account takeover incident details
+      required:
+      - id
+      - account_details
+      - alerts
+      - state
+      - original_state
+      - resolved_by
+      - resolved_on
+      - created
+      - assignee
+      type: object
+      properties:
+        id:
+          title: Id
+          description: Incident identifier
+          type: integer
+        account_details:
+          $ref: '#/components/schemas/AccountDetails'
+        alerts:
+          description: List of security alerts
+          type: array
+          items:
+            $ref: '#/components/schemas/Alert'
+        state:
+          title: State
+          description: Incident state
+          type: integer
+        original_state:
+          title: Original state
+          description: Original incident state
+          type: integer
+        resolved_by:
+          title: Resolved by
+          description: Name of resolver
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        resolved_on:
+          title: Resolved on
+          description: Resolution timestamp
+          type:
+          - string
+          - 'null'
+          format: date-time
+        created:
+          title: Created
+          description: Incident creation timestamp
+          type: string
+          format: date-time
+        assignee:
+          $ref: '#/components/schemas/Assignee'
   securitySchemes:
     JWT:
       type: apiKey

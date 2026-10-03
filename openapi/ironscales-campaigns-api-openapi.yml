@@ -275,6 +275,27 @@ paths:
       x-operation-id-original: Get campaign participants details
 components:
   schemas:
+    CampaignParticipantsDetailsPage:
+      required:
+      - page
+      - total_pages
+      - campaign_id
+      - participants
+      type: object
+      properties:
+        page:
+          title: Page
+          type: integer
+        total_pages:
+          title: Total pages
+          type: integer
+        campaign_id:
+          title: Campaign id
+          type: integer
+        participants:
+          type: array
+          items:
+            $ref: '#/components/schemas/CampaignParticipantsDetails'
     ParticipantsActionsRequest:
       required:
       - filters
@@ -300,6 +321,17 @@ components:
           - string
           - 'null'
           format: date
+    ParticipantsActionsFilters:
+      type: object
+      properties:
+        emails:
+          description: A list of recipient emails to filter by. Limited to 300 items.
+          type: array
+          items:
+            type: string
+            format: email
+            minLength: 1
+          maxItems: 300
     CampaignDetails:
       required:
       - campaignID
@@ -407,17 +439,6 @@ components:
           title: Randomized
           type: boolean
           readOnly: true
-    ParticipantsActionsFilters:
-      type: object
-      properties:
-        emails:
-          description: A list of recipient emails to filter by. Limited to 300 items.
-          type: array
-          items:
-            type: string
-            format: email
-            minLength: 1
-          maxItems: 300
     CampaignParticipantsDetails:
       type: object
       properties:
@@ -622,27 +643,6 @@ components:
           title: Userip
           type: string
           minLength: 1
-    CampaignParticipantsDetailsPage:
-      required:
-      - page
-      - total_pages
-      - campaign_id
-      - participants
-      type: object
-      properties:
-        page:
-          title: Page
-          type: integer
-        total_pages:
-          title: Total pages
-          type: integer
-        campaign_id:
-          title: Campaign id
-          type: integer
-        participants:
-          type: array
-          items:
-            $ref: '#/components/schemas/CampaignParticipantsDetails'
     CampaignDetailsPage:
       required:
       - page
