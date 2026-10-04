@@ -821,70 +821,30 @@ paths:
       x-operation-id-original: Get a company mitigation statistics V2
 components:
   schemas:
-    ResolvedByAnalyst:
-      type: object
-      properties:
-        time_saved:
-          title: Time saved
-          type:
-          - number
-          - 'null'
-        from_users:
-          title: From users
-          type:
-          - integer
-          - 'null'
-        from_community:
-          title: From community
-          type:
-          - integer
-          - 'null'
-        from_mailbox_anomaly:
-          title: From mailbox anomaly
-          type:
-          - integer
-          - 'null'
-        avg_resolution_time:
-          title: Avg resolution time
-          type:
-          - number
-          - 'null'
-        total:
-          title: Total
-          type:
-          - integer
-          - 'null'
-    MitigationIncidentDetails:
+    ImpersonationDetails:
       required:
       - incidentID
-      - incidentState
-      - remediatedTime
-      - affectedMailboxCount
       - mailboxId
+      - remediatedTime
       - mailboxEmail
       - senderEmail
       - subject
-      - threatType
-      - detectionType
       - reportedBy
+      - incidentType
+      - resolution
+      - remediations
       type: object
       properties:
         incidentID:
           title: Incidentid
           type: integer
-        incidentState:
-          title: Incidentstate
+        mailboxId:
+          title: Mailboxid
           type: integer
         remediatedTime:
           title: Remediatedtime
           type: string
           format: date-time
-        affectedMailboxCount:
-          title: Affectedmailboxcount
-          type: integer
-        mailboxId:
-          title: Mailboxid
-          type: integer
         mailboxEmail:
           title: Mailboxemail
           type: string
@@ -899,18 +859,39 @@ components:
           title: Subject
           type: string
           minLength: 1
-        threatType:
-          title: Threattype
-          type: string
-          minLength: 1
-        detectionType:
-          title: Detectiontype
-          type: string
-          minLength: 1
         reportedBy:
           title: Reportedby
           type: string
           format: email
+          minLength: 1
+        incidentType:
+          title: Incidenttype
+          type: string
+          minLength: 1
+        resolution:
+          title: Resolution
+          type: string
+          minLength: 1
+        remediations:
+          title: Remediations
+          type: integer
+    IncidentDetailsRequest:
+      required:
+      - incidents
+      type: object
+      properties:
+        incidents:
+          type: array
+          items:
+            type: integer
+        page:
+          title: Page
+          type: integer
+          default: 1
+        period:
+          title: Period
+          type: string
+          default: '6'
           minLength: 1
     ImpersonationDetailsRequest:
       type: object
@@ -924,43 +905,6 @@ components:
           type: string
           default: '6'
           minLength: 1
-    MaliciousContentIncidents:
-      required:
-      - computer_vision
-      - total_malicious_incidents
-      - attachments
-      - malware_and_url_protection
-      type: object
-      properties:
-        computer_vision:
-          title: Computer vision
-          type:
-          - integer
-          - 'null'
-        total_malicious_incidents:
-          title: Total malicious incidents
-          type:
-          - integer
-          - 'null'
-        attachments:
-          title: Attachments
-          type:
-          - integer
-          - 'null'
-        malware_and_url_protection:
-          title: Malware and url protection
-          type:
-          - integer
-          - 'null'
-    MostTargetedDepartments:
-      required:
-      - items
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/MostTargetedDepartment'
     MitigationDetails:
       required:
       - incidentID
@@ -1022,166 +966,40 @@ components:
           title: Spfresult
           type: string
           minLength: 1
-    EmailPhishingThreatTypeStats:
+    ImpersonationDetailsPage:
       required:
-      - name
-      - emails_count
-      type: object
-      properties:
-        name:
-          title: Name
-          type: string
-          minLength: 1
-        emails_count:
-          title: Emails count
-          type: integer
-    MitigationStats:
-      required:
-      - openIncidentCount
-      - resolvedIncidentCount
-      - phishingCount
-      - remediationCount
-      - maliciousAttachmentsCount
-      - maliciousLinksCount
-      - impersonationCount
-      - reportedByEmployeesCount
-      type: object
-      properties:
-        openIncidentCount:
-          title: Openincidentcount
-          type: integer
-        resolvedIncidentCount:
-          title: Resolvedincidentcount
-          type: integer
-        phishingCount:
-          title: Phishingcount
-          type: integer
-        remediationCount:
-          title: Remediationcount
-          type: integer
-        maliciousAttachmentsCount:
-          title: Maliciousattachmentscount
-          type: integer
-        maliciousLinksCount:
-          title: Maliciouslinkscount
-          type: integer
-        impersonationCount:
-          title: Impersonationcount
-          type: integer
-        reportedByEmployeesCount:
-          title: Reportedbyemployeescount
-          type: integer
-    InspectedEmails:
-      required:
-      - phishing
-      - false_positive
-      - incidents
-      - inspected
-      - spam
-      type: object
-      properties:
-        phishing:
-          title: Phishing
-          type:
-          - integer
-          - 'null'
-        false_positive:
-          title: False positive
-          type:
-          - integer
-          - 'null'
-        incidents:
-          title: Incidents
-          type:
-          - integer
-          - 'null'
-        inspected:
-          title: Inspected
-          type:
-          - integer
-          - 'null'
-        spam:
-          title: Spam
-          type:
-          - integer
-          - 'null'
-    IncidentPageDetails:
-      required:
-      - page
-      - total_pages
       - incidents
       - messages
       type: object
       properties:
         page:
           title: Page
-          type: integer
+          type:
+          - integer
+          - 'null'
         total_pages:
           title: Total pages
-          type: integer
+          type:
+          - integer
+          - 'null'
         incidents:
           type: array
           items:
-            $ref: '#/components/schemas/MitigationIncidentDetails'
+            $ref: '#/components/schemas/ImpersonationDetails'
         messages:
           type: array
           items:
             type: string
             minLength: 1
-    ImpersonationDetails:
+    MostTargetedDepartments:
       required:
-      - incidentID
-      - mailboxId
-      - remediatedTime
-      - mailboxEmail
-      - senderEmail
-      - subject
-      - reportedBy
-      - incidentType
-      - resolution
-      - remediations
+      - items
       type: object
       properties:
-        incidentID:
-          title: Incidentid
-          type: integer
-        mailboxId:
-          title: Mailboxid
-          type: integer
-        remediatedTime:
-          title: Remediatedtime
-          type: string
-          format: date-time
-        mailboxEmail:
-          title: Mailboxemail
-          type: string
-          format: email
-          minLength: 1
-        senderEmail:
-          title: Senderemail
-          type: string
-          format: email
-          minLength: 1
-        subject:
-          title: Subject
-          type: string
-          minLength: 1
-        reportedBy:
-          title: Reportedby
-          type: string
-          format: email
-          minLength: 1
-        incidentType:
-          title: Incidenttype
-          type: string
-          minLength: 1
-        resolution:
-          title: Resolution
-          type: string
-          minLength: 1
-        remediations:
-          title: Remediations
-          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/MostTargetedDepartment'
     MailboxesDetails:
       required:
       - id
@@ -1275,6 +1093,260 @@ components:
           - string
           - 'null'
           minLength: 1
+    MitigationIncidentDetails:
+      required:
+      - incidentID
+      - incidentState
+      - remediatedTime
+      - affectedMailboxCount
+      - mailboxId
+      - mailboxEmail
+      - senderEmail
+      - subject
+      - threatType
+      - detectionType
+      - reportedBy
+      type: object
+      properties:
+        incidentID:
+          title: Incidentid
+          type: integer
+        incidentState:
+          title: Incidentstate
+          type: integer
+        remediatedTime:
+          title: Remediatedtime
+          type: string
+          format: date-time
+        affectedMailboxCount:
+          title: Affectedmailboxcount
+          type: integer
+        mailboxId:
+          title: Mailboxid
+          type: integer
+        mailboxEmail:
+          title: Mailboxemail
+          type: string
+          format: email
+          minLength: 1
+        senderEmail:
+          title: Senderemail
+          type: string
+          format: email
+          minLength: 1
+        subject:
+          title: Subject
+          type: string
+          minLength: 1
+        threatType:
+          title: Threattype
+          type: string
+          minLength: 1
+        detectionType:
+          title: Detectiontype
+          type: string
+          minLength: 1
+        reportedBy:
+          title: Reportedby
+          type: string
+          format: email
+          minLength: 1
+    InspectedEmails:
+      required:
+      - phishing
+      - false_positive
+      - incidents
+      - inspected
+      - spam
+      type: object
+      properties:
+        phishing:
+          title: Phishing
+          type:
+          - integer
+          - 'null'
+        false_positive:
+          title: False positive
+          type:
+          - integer
+          - 'null'
+        incidents:
+          title: Incidents
+          type:
+          - integer
+          - 'null'
+        inspected:
+          title: Inspected
+          type:
+          - integer
+          - 'null'
+        spam:
+          title: Spam
+          type:
+          - integer
+          - 'null'
+    ResolvedByAnalyst:
+      type: object
+      properties:
+        time_saved:
+          title: Time saved
+          type:
+          - number
+          - 'null'
+        from_users:
+          title: From users
+          type:
+          - integer
+          - 'null'
+        from_community:
+          title: From community
+          type:
+          - integer
+          - 'null'
+        from_mailbox_anomaly:
+          title: From mailbox anomaly
+          type:
+          - integer
+          - 'null'
+        avg_resolution_time:
+          title: Avg resolution time
+          type:
+          - number
+          - 'null'
+        total:
+          title: Total
+          type:
+          - integer
+          - 'null'
+    MostTargetedDepartment:
+      required:
+      - name
+      - emails_count
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+          minLength: 1
+        emails_count:
+          title: Emails count
+          type: integer
+    EmailPhishingThreatTypeStats:
+      required:
+      - name
+      - emails_count
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+          minLength: 1
+        emails_count:
+          title: Emails count
+          type: integer
+    MostTargetedEmployee:
+      type: object
+      properties:
+        mailbox:
+          $ref: '#/components/schemas/MailboxesDetails'
+        emails_count:
+          title: Emails count
+          type: integer
+          readOnly: true
+    IncidentPageDetails:
+      required:
+      - page
+      - total_pages
+      - incidents
+      - messages
+      type: object
+      properties:
+        page:
+          title: Page
+          type: integer
+        total_pages:
+          title: Total pages
+          type: integer
+        incidents:
+          type: array
+          items:
+            $ref: '#/components/schemas/MitigationIncidentDetails'
+        messages:
+          type: array
+          items:
+            type: string
+            minLength: 1
+    MitigationStatsV2View:
+      type: object
+      properties:
+        resolved_by_analyst:
+          $ref: '#/components/schemas/ResolvedByAnalyst'
+        inspected_emails:
+          $ref: '#/components/schemas/InspectedEmails'
+        resolved_automatically:
+          $ref: '#/components/schemas/ResolvedAutomatically'
+        malicious_content_incidents:
+          $ref: '#/components/schemas/MaliciousContentIncidents'
+    MostTargetedEmployees:
+      required:
+      - items
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/MostTargetedEmployee'
+    MitigationPageDetails:
+      required:
+      - page
+      - total_pages
+      - mitigations
+      - messages
+      type: object
+      properties:
+        page:
+          title: Page
+          type: integer
+        total_pages:
+          title: Total pages
+          type: integer
+        mitigations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MitigationDetails'
+        messages:
+          type: array
+          items:
+            type: string
+            minLength: 1
+    MaliciousContentIncidents:
+      required:
+      - computer_vision
+      - total_malicious_incidents
+      - attachments
+      - malware_and_url_protection
+      type: object
+      properties:
+        computer_vision:
+          title: Computer vision
+          type:
+          - integer
+          - 'null'
+        total_malicious_incidents:
+          title: Total malicious incidents
+          type:
+          - integer
+          - 'null'
+        attachments:
+          title: Attachments
+          type:
+          - integer
+          - 'null'
+        malware_and_url_protection:
+          title: Malware and url protection
+          type:
+          - integer
+          - 'null'
     ResolvedAutomatically:
       required:
       - time_saved
@@ -1327,89 +1399,42 @@ components:
           type:
           - integer
           - 'null'
-    MitigationPageDetails:
+    MitigationStats:
       required:
-      - page
-      - total_pages
-      - mitigations
-      - messages
+      - openIncidentCount
+      - resolvedIncidentCount
+      - phishingCount
+      - remediationCount
+      - maliciousAttachmentsCount
+      - maliciousLinksCount
+      - impersonationCount
+      - reportedByEmployeesCount
       type: object
       properties:
-        page:
-          title: Page
+        openIncidentCount:
+          title: Openincidentcount
           type: integer
-        total_pages:
-          title: Total pages
+        resolvedIncidentCount:
+          title: Resolvedincidentcount
           type: integer
-        mitigations:
-          type: array
-          items:
-            $ref: '#/components/schemas/MitigationDetails'
-        messages:
-          type: array
-          items:
-            type: string
-            minLength: 1
-    IncidentDetailsRequest:
-      required:
-      - incidents
-      type: object
-      properties:
-        incidents:
-          type: array
-          items:
-            type: integer
-        page:
-          title: Page
+        phishingCount:
+          title: Phishingcount
           type: integer
-          default: 1
-        period:
-          title: Period
-          type: string
-          default: '6'
-          minLength: 1
-    MitigationStatsV2View:
-      type: object
-      properties:
-        resolved_by_analyst:
-          $ref: '#/components/schemas/ResolvedByAnalyst'
-        inspected_emails:
-          $ref: '#/components/schemas/InspectedEmails'
-        resolved_automatically:
-          $ref: '#/components/schemas/ResolvedAutomatically'
-        malicious_content_incidents:
-          $ref: '#/components/schemas/MaliciousContentIncidents'
-    MostTargetedEmployee:
-      type: object
-      properties:
-        mailbox:
-          $ref: '#/components/schemas/MailboxesDetails'
-        emails_count:
-          title: Emails count
+        remediationCount:
+          title: Remediationcount
           type: integer
-          readOnly: true
-    MostTargetedDepartment:
-      required:
-      - name
-      - emails_count
-      type: object
-      properties:
-        name:
-          title: Name
-          type: string
-          minLength: 1
-        emails_count:
-          title: Emails count
+        maliciousAttachmentsCount:
+          title: Maliciousattachmentscount
           type: integer
-    MostTargetedEmployees:
-      required:
-      - items
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/MostTargetedEmployee'
+        maliciousLinksCount:
+          title: Maliciouslinkscount
+          type: integer
+        impersonationCount:
+          title: Impersonationcount
+          type: integer
+        reportedByEmployeesCount:
+          title: Reportedbyemployeescount
+          type: integer
     EmailsStats:
       required:
       - inspected_count
@@ -1435,31 +1460,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EmailPhishingThreatTypeStats'
-    ImpersonationDetailsPage:
-      required:
-      - incidents
-      - messages
-      type: object
-      properties:
-        page:
-          title: Page
-          type:
-          - integer
-          - 'null'
-        total_pages:
-          title: Total pages
-          type:
-          - integer
-          - 'null'
-        incidents:
-          type: array
-          items:
-            $ref: '#/components/schemas/ImpersonationDetails'
-        messages:
-          type: array
-          items:
-            type: string
-            minLength: 1
   securitySchemes:
     JWT:
       type: apiKey

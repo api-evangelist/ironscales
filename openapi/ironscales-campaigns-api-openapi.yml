@@ -275,52 +275,6 @@ paths:
       x-operation-id-original: Get campaign participants details
 components:
   schemas:
-    CampaignParticipantsDetailsPage:
-      required:
-      - page
-      - total_pages
-      - campaign_id
-      - participants
-      type: object
-      properties:
-        page:
-          title: Page
-          type: integer
-        total_pages:
-          title: Total pages
-          type: integer
-        campaign_id:
-          title: Campaign id
-          type: integer
-        participants:
-          type: array
-          items:
-            $ref: '#/components/schemas/CampaignParticipantsDetails'
-    ParticipantsActionsRequest:
-      required:
-      - filters
-      - action
-      type: object
-      properties:
-        filters:
-          $ref: '#/components/schemas/ParticipantsActionsFilters'
-        action:
-          title: Action
-          description: 'The action to perform on participants:<br/>1 - Reported: Mark as reported<br/>2 - Manually Trained: Set training status to manually trained<br/>3 - Postponed: Set training status to postponed (requires expiration_date)<br/>4 - Revert Training: Revert Postponed and Manually Trained statuses only<br/>5 - Revert Reported: Revert Reported status set via appapi only'
-          type: integer
-          enum:
-          - 1
-          - 2
-          - 3
-          - 4
-          - 5
-        expiration_date:
-          title: Expiration date
-          description: The expiration date of the Postponed Training status (ISO 8601 format, e.g. '2024-01-15'). Only valid when action is 3 (Postponed).
-          type:
-          - string
-          - 'null'
-          format: date
     ParticipantsActionsFilters:
       type: object
       properties:
@@ -332,113 +286,23 @@ components:
             format: email
             minLength: 1
           maxItems: 300
-    CampaignDetails:
+    CampaignDetailsPage:
       required:
-      - campaignID
-      - campaignName
-      - language
-      - companyId
+      - page
+      - total_pages
+      - campaigns
       type: object
       properties:
-        campaignID:
-          title: Campaignid
+        page:
+          title: Page
           type: integer
-        campaignName:
-          title: Campaignname
-          type: string
-          minLength: 1
-        campaignStatus:
-          title: Campaignstatus
-          type: string
-          readOnly: true
-          minLength: 1
-        flowType:
-          title: Flowtype
-          type: string
-          readOnly: true
-          minLength: 1
-        language:
-          title: Language
-          type: string
-          minLength: 1
-        maxEmailPerDay:
-          title: Maxemailperday
-          description: 0 - Unlimited
+        total_pages:
+          title: Total pages
           type: integer
-          readOnly: true
-        endDate:
-          title: Enddate
-          type: string
-          format: date-time
-          readOnly: true
-        launchDate:
-          title: Launchdate
-          type: string
-          format: date-time
-          readOnly: true
-        emailsSent:
-          title: Emailssent
-          type: integer
-          readOnly: true
-        participants:
-          title: Participants
-          type: integer
-          readOnly: true
-        emailsBounced:
-          title: Emailsbounced
-          type: integer
-          readOnly: true
-        numberOfClickedParticipants:
-          title: Numberofclickedparticipants
-          type: integer
-          readOnly: true
-        numberOfTrainedParticipants:
-          title: Numberoftrainedparticipants
-          type: integer
-          readOnly: true
-        numberOfTrainedParticipatns:
-          title: Numberoftrainedparticipatns
-          type: integer
-          readOnly: true
-        numberOfReportedParticipants:
-          title: Numberofreportedparticipants
-          type: integer
-          readOnly: true
-        numberOfReadParticipants:
-          title: Numberofreadparticipants
-          type: integer
-          readOnly: true
-        numberOfDeleted:
-          title: Numberofdeleted
-          type: integer
-          readOnly: true
-        attackReadinessFirstReport:
-          title: Attackreadinessfirstreport
-          type: string
-          readOnly: true
-          minLength: 1
-        attackReadinessMitigationTime:
-          title: Attackreadinessmitigationtime
-          type: string
-          readOnly: true
-          minLength: 1
-        attackReadinessLuredBeforeMitigation:
-          title: Attackreadinessluredbeforemitigation
-          type: string
-          readOnly: true
-          minLength: 1
-        attackReadinessReportsToMitigate:
-          title: Attackreadinessreportstomitigate
-          type: string
-          readOnly: true
-          minLength: 1
-        companyId:
-          title: Companyid
-          type: integer
-        randomized:
-          title: Randomized
-          type: boolean
-          readOnly: true
+        campaigns:
+          type: array
+          items:
+            $ref: '#/components/schemas/CampaignDetails'
     CampaignParticipantsDetails:
       type: object
       properties:
@@ -643,11 +507,12 @@ components:
           title: Userip
           type: string
           minLength: 1
-    CampaignDetailsPage:
+    CampaignParticipantsDetailsPage:
       required:
       - page
       - total_pages
-      - campaigns
+      - campaign_id
+      - participants
       type: object
       properties:
         page:
@@ -656,10 +521,145 @@ components:
         total_pages:
           title: Total pages
           type: integer
-        campaigns:
+        campaign_id:
+          title: Campaign id
+          type: integer
+        participants:
           type: array
           items:
-            $ref: '#/components/schemas/CampaignDetails'
+            $ref: '#/components/schemas/CampaignParticipantsDetails'
+    CampaignDetails:
+      required:
+      - campaignID
+      - campaignName
+      - language
+      - companyId
+      type: object
+      properties:
+        campaignID:
+          title: Campaignid
+          type: integer
+        campaignName:
+          title: Campaignname
+          type: string
+          minLength: 1
+        campaignStatus:
+          title: Campaignstatus
+          type: string
+          readOnly: true
+          minLength: 1
+        flowType:
+          title: Flowtype
+          type: string
+          readOnly: true
+          minLength: 1
+        language:
+          title: Language
+          type: string
+          minLength: 1
+        maxEmailPerDay:
+          title: Maxemailperday
+          description: 0 - Unlimited
+          type: integer
+          readOnly: true
+        endDate:
+          title: Enddate
+          type: string
+          format: date-time
+          readOnly: true
+        launchDate:
+          title: Launchdate
+          type: string
+          format: date-time
+          readOnly: true
+        emailsSent:
+          title: Emailssent
+          type: integer
+          readOnly: true
+        participants:
+          title: Participants
+          type: integer
+          readOnly: true
+        emailsBounced:
+          title: Emailsbounced
+          type: integer
+          readOnly: true
+        numberOfClickedParticipants:
+          title: Numberofclickedparticipants
+          type: integer
+          readOnly: true
+        numberOfTrainedParticipants:
+          title: Numberoftrainedparticipants
+          type: integer
+          readOnly: true
+        numberOfTrainedParticipatns:
+          title: Numberoftrainedparticipatns
+          type: integer
+          readOnly: true
+        numberOfReportedParticipants:
+          title: Numberofreportedparticipants
+          type: integer
+          readOnly: true
+        numberOfReadParticipants:
+          title: Numberofreadparticipants
+          type: integer
+          readOnly: true
+        numberOfDeleted:
+          title: Numberofdeleted
+          type: integer
+          readOnly: true
+        attackReadinessFirstReport:
+          title: Attackreadinessfirstreport
+          type: string
+          readOnly: true
+          minLength: 1
+        attackReadinessMitigationTime:
+          title: Attackreadinessmitigationtime
+          type: string
+          readOnly: true
+          minLength: 1
+        attackReadinessLuredBeforeMitigation:
+          title: Attackreadinessluredbeforemitigation
+          type: string
+          readOnly: true
+          minLength: 1
+        attackReadinessReportsToMitigate:
+          title: Attackreadinessreportstomitigate
+          type: string
+          readOnly: true
+          minLength: 1
+        companyId:
+          title: Companyid
+          type: integer
+        randomized:
+          title: Randomized
+          type: boolean
+          readOnly: true
+    ParticipantsActionsRequest:
+      required:
+      - filters
+      - action
+      type: object
+      properties:
+        filters:
+          $ref: '#/components/schemas/ParticipantsActionsFilters'
+        action:
+          title: Action
+          description: 'The action to perform on participants:<br/>1 - Reported: Mark as reported<br/>2 - Manually Trained: Set training status to manually trained<br/>3 - Postponed: Set training status to postponed (requires expiration_date)<br/>4 - Revert Training: Revert Postponed and Manually Trained statuses only<br/>5 - Revert Reported: Revert Reported status set via appapi only'
+          type: integer
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+        expiration_date:
+          title: Expiration date
+          description: The expiration date of the Postponed Training status (ISO 8601 format, e.g. '2024-01-15'). Only valid when action is 3 (Postponed).
+          type:
+          - string
+          - 'null'
+          format: date
   securitySchemes:
     JWT:
       type: apiKey

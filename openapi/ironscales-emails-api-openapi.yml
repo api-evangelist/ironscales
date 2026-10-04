@@ -191,27 +191,6 @@ paths:
       x-operation-id-original: List of escalated emails
 components:
   schemas:
-    EmailsResponse:
-      required:
-      - emails
-      - page
-      - total_pages
-      - total_count
-      type: object
-      properties:
-        emails:
-          type: array
-          items:
-            $ref: '#/components/schemas/EmailsDetailFromElastic'
-        page:
-          title: Page
-          type: integer
-        total_pages:
-          title: Total pages
-          type: integer
-        total_count:
-          title: Total count
-          type: integer
     EmailsDetailFromElastic:
       type: object
       properties:
@@ -339,6 +318,27 @@ components:
           - 'null'
           format: date-time
           readOnly: true
+    EmailsResponse:
+      required:
+      - emails
+      - page
+      - total_pages
+      - total_count
+      type: object
+      properties:
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmailsDetailFromElastic'
+        page:
+          title: Page
+          type: integer
+        total_pages:
+          title: Total pages
+          type: integer
+        total_count:
+          title: Total count
+          type: integer
   securitySchemes:
     JWT:
       type: apiKey

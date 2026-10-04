@@ -109,21 +109,6 @@ paths:
       x-operation-id-original: Get list of Deepfake SIEM events
 components:
   schemas:
-    DeepfakeEventsPage:
-      required:
-      - events
-      - next_cursor
-      type: object
-      properties:
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeepfakeEvent'
-        next_cursor:
-          title: Next cursor
-          type:
-          - integer
-          - 'null'
     DeepfakeEvent:
       required:
       - event_uuid
@@ -222,6 +207,21 @@ components:
           title: Audio confidence
           type:
           - number
+          - 'null'
+    DeepfakeEventsPage:
+      required:
+      - events
+      - next_cursor
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeepfakeEvent'
+        next_cursor:
+          title: Next cursor
+          type:
+          - integer
           - 'null'
   securitySchemes:
     JWT:

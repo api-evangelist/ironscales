@@ -449,292 +449,6 @@ paths:
       x-operation-id-original: Get user campaign performance
 components:
   schemas:
-    MailboxesPageDetails:
-      required:
-      - page
-      - total_pages
-      - total_count
-      - mailboxes
-      type: object
-      properties:
-        page:
-          title: Page
-          type: integer
-        total_pages:
-          title: Total pages
-          type: integer
-        total_count:
-          title: Total count
-          type: integer
-        mailboxes:
-          type: array
-          items:
-            $ref: '#/components/schemas/MailboxesDetails'
-    MailboxesUserPerformanceResponse:
-      required:
-      - page
-      - total_pages
-      - data
-      type: object
-      properties:
-        page:
-          title: Page
-          type: integer
-        total_pages:
-          title: Total pages
-          type: integer
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/MailboxesUserPerformance'
-    MailboxFilter:
-      type: object
-      properties:
-        ids:
-          type: array
-          items:
-            type: integer
-        exclude_ids:
-          type: array
-          items:
-            type: integer
-        search:
-          title: Search
-          type: string
-          minLength: 1
-        is_enabled:
-          title: Is enabled
-          type:
-          - boolean
-          - 'null'
-        tags:
-          type: array
-          items:
-            type: string
-            minLength: 1
-    MailboxesDetails:
-      required:
-      - id
-      - firstName
-      - lastName
-      - title
-      - department
-      - email
-      - phoneNumber
-      - tags
-      - language
-      - riskLevel
-      - awarenessLevel
-      - protected
-      - unprotectedReason
-      type: object
-      properties:
-        id:
-          title: Id
-          type: integer
-        firstName:
-          title: Firstname
-          type:
-          - string
-          - 'null'
-          minLength: 1
-        lastName:
-          title: Lastname
-          type:
-          - string
-          - 'null'
-          minLength: 1
-        title:
-          title: Title
-          type:
-          - string
-          - 'null'
-          minLength: 1
-        department:
-          title: Department
-          type:
-          - string
-          - 'null'
-          minLength: 1
-        email:
-          title: Email
-          type: string
-          minLength: 1
-        phoneNumber:
-          title: Phonenumber
-          type:
-          - string
-          - 'null'
-          minLength: 1
-        tags:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            minLength: 1
-        language:
-          title: Language
-          type:
-          - string
-          - 'null'
-          minLength: 1
-        enabled:
-          title: Enabled
-          type: boolean
-        riskLevel:
-          title: Risklevel
-          type:
-          - string
-          - 'null'
-          minLength: 1
-        awarenessLevel:
-          title: Awarenesslevel
-          type:
-          - string
-          - 'null'
-          minLength: 1
-        protected:
-          title: Protected
-          type:
-          - boolean
-          - 'null'
-        unprotectedReason:
-          title: Unprotectedreason
-          type:
-          - string
-          - 'null'
-          minLength: 1
-    MailboxUpdateRequest:
-      required:
-      - params
-      type: object
-      properties:
-        filters:
-          $ref: '#/components/schemas/MailboxFilter'
-        params:
-          $ref: '#/components/schemas/MailboxUpdateParams'
-    MailboxesUserPerformance:
-      required:
-      - userId
-      - firstName
-      - lastName
-      - country
-      - department
-      - title
-      - email
-      - campaignId
-      - campaignName
-      - campaignCollectingEndDate
-      type: object
-      properties:
-        id:
-          title: ID
-          type: integer
-          readOnly: true
-        userId:
-          title: Userid
-          type: integer
-        firstName:
-          title: First name
-          type: string
-          minLength: 1
-        lastName:
-          title: Last name
-          type: string
-          minLength: 1
-        country:
-          title: Country
-          type: string
-          minLength: 1
-        department:
-          title: Department
-          type: string
-          minLength: 1
-        title:
-          title: Title
-          type: string
-          minLength: 1
-        email:
-          title: Email
-          type: string
-          minLength: 1
-        campaignId:
-          title: Campaign id
-          type: integer
-        campaignName:
-          title: Campaign name
-          type: string
-          minLength: 1
-        campaignType:
-          title: Campaign type
-          type: string
-          enum:
-          - Training
-          - Simulation
-          - Spear Phishing
-          - Agentic
-          readOnly: true
-        campaignSimulationResult:
-          title: Campaign simulation result
-          type:
-          - string
-          - 'null'
-          enum:
-          - Reported
-          - Clicked
-          - Entered Details
-          - Opened
-          - Unopened
-          - Not delivered
-          - N/A
-          readOnly: true
-        campaignTrainingStatus:
-          title: Campaign training status
-          type:
-          - string
-          - 'null'
-          enum:
-          - Postponed
-          - Manually trained
-          - 'Yes'
-          - 'No'
-          - Started, not completed
-          - Not started
-          - N/A
-          - Scheduled to send
-          readOnly: true
-        campaignTrainingName:
-          title: Campaign training name
-          type:
-          - string
-          - 'null'
-          readOnly: true
-          minLength: 1
-        campaignCollectingEndDate:
-          title: Collecting end date (UTC)
-          description: date-time format %b %d, %Y %H:%M
-          type: string
-          format: date-time
-        campaignScore:
-          title: Campaign score
-          type:
-          - integer
-          - 'null'
-          readOnly: true
-          maximum: 100
-          minimum: 0
-        campaignLocale:
-          title: Campaign locale
-          type: string
-          readOnly: true
-        campaignTemplateName:
-          title: Campaign template name
-          type:
-          - string
-          - 'null'
-          readOnly: true
-          minLength: 1
     MailboxesUserComplianceReport:
       required:
       - firstName
@@ -857,6 +571,154 @@ components:
           description: Error description if any of mailboxes wasn't updated
           type: string
           minLength: 1
+    MailboxesDetails:
+      required:
+      - id
+      - firstName
+      - lastName
+      - title
+      - department
+      - email
+      - phoneNumber
+      - tags
+      - language
+      - riskLevel
+      - awarenessLevel
+      - protected
+      - unprotectedReason
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        firstName:
+          title: Firstname
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        lastName:
+          title: Lastname
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        title:
+          title: Title
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        department:
+          title: Department
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        email:
+          title: Email
+          type: string
+          minLength: 1
+        phoneNumber:
+          title: Phonenumber
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        tags:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            minLength: 1
+        language:
+          title: Language
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        enabled:
+          title: Enabled
+          type: boolean
+        riskLevel:
+          title: Risklevel
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        awarenessLevel:
+          title: Awarenesslevel
+          type:
+          - string
+          - 'null'
+          minLength: 1
+        protected:
+          title: Protected
+          type:
+          - boolean
+          - 'null'
+        unprotectedReason:
+          title: Unprotectedreason
+          type:
+          - string
+          - 'null'
+          minLength: 1
+    MailboxesPageDetails:
+      required:
+      - page
+      - total_pages
+      - total_count
+      - mailboxes
+      type: object
+      properties:
+        page:
+          title: Page
+          type: integer
+        total_pages:
+          title: Total pages
+          type: integer
+        total_count:
+          title: Total count
+          type: integer
+        mailboxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/MailboxesDetails'
+    MailboxFilter:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: integer
+        exclude_ids:
+          type: array
+          items:
+            type: integer
+        search:
+          title: Search
+          type: string
+          minLength: 1
+        is_enabled:
+          title: Is enabled
+          type:
+          - boolean
+          - 'null'
+        tags:
+          type: array
+          items:
+            type: string
+            minLength: 1
+    MailboxUpdateRequest:
+      required:
+      - params
+      type: object
+      properties:
+        filters:
+          $ref: '#/components/schemas/MailboxFilter'
+        params:
+          $ref: '#/components/schemas/MailboxUpdateParams'
     MailboxUpdateParams:
       type: object
       properties:
@@ -873,6 +735,144 @@ components:
           items:
             type: string
             minLength: 1
+    MailboxesUserPerformanceResponse:
+      required:
+      - page
+      - total_pages
+      - data
+      type: object
+      properties:
+        page:
+          title: Page
+          type: integer
+        total_pages:
+          title: Total pages
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MailboxesUserPerformance'
+    MailboxesUserPerformance:
+      required:
+      - userId
+      - firstName
+      - lastName
+      - country
+      - department
+      - title
+      - email
+      - campaignId
+      - campaignName
+      - campaignCollectingEndDate
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        userId:
+          title: Userid
+          type: integer
+        firstName:
+          title: First name
+          type: string
+          minLength: 1
+        lastName:
+          title: Last name
+          type: string
+          minLength: 1
+        country:
+          title: Country
+          type: string
+          minLength: 1
+        department:
+          title: Department
+          type: string
+          minLength: 1
+        title:
+          title: Title
+          type: string
+          minLength: 1
+        email:
+          title: Email
+          type: string
+          minLength: 1
+        campaignId:
+          title: Campaign id
+          type: integer
+        campaignName:
+          title: Campaign name
+          type: string
+          minLength: 1
+        campaignType:
+          title: Campaign type
+          type: string
+          enum:
+          - Training
+          - Simulation
+          - Spear Phishing
+          - Agentic
+          readOnly: true
+        campaignSimulationResult:
+          title: Campaign simulation result
+          type:
+          - string
+          - 'null'
+          enum:
+          - Reported
+          - Clicked
+          - Entered Details
+          - Opened
+          - Unopened
+          - Not delivered
+          - N/A
+          readOnly: true
+        campaignTrainingStatus:
+          title: Campaign training status
+          type:
+          - string
+          - 'null'
+          enum:
+          - Postponed
+          - Manually trained
+          - 'Yes'
+          - 'No'
+          - Started, not completed
+          - Not started
+          - N/A
+          - Scheduled to send
+          readOnly: true
+        campaignTrainingName:
+          title: Campaign training name
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          minLength: 1
+        campaignCollectingEndDate:
+          title: Collecting end date (UTC)
+          description: date-time format %b %d, %Y %H:%M
+          type: string
+          format: date-time
+        campaignScore:
+          title: Campaign score
+          type:
+          - integer
+          - 'null'
+          readOnly: true
+          maximum: 100
+          minimum: 0
+        campaignLocale:
+          title: Campaign locale
+          type: string
+          readOnly: true
+        campaignTemplateName:
+          title: Campaign template name
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          minLength: 1
   securitySchemes:
     JWT:
       type: apiKey
