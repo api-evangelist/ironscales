@@ -346,6 +346,9 @@ apis:
   - type: DataModel
     url: data-model/ironscales-data-model.yml
 common:
+- type: CapabilityMap
+  url: capabilities/ironscales-capability-edges.yml
+  name: IRONSCALES Business Capability Map
 - type: Overlay
   url: overlays/ironscales-management-api-overlay.yaml
 - type: TrustCenter

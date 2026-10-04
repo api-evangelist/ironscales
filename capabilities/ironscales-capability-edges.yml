@@ -1,0 +1,64 @@
+slug: ironscales
+provider: IRONSCALES
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 5
+edges:
+- tag: Incident
+  spec_file: ironscales-incident-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.93
+  evidence: POST /incident/{company_id}/account-takeover/{incident_id}/remediation/  Create account takeover
+    remediation; GetListOfIncidents; RemediationStatusesStats
+  reason: 'Security incident lifecycle: listing, classifying, clustering and remediating account-takeover/phishing
+    incidents — classic SOC incident detection and response, not ITSM incident management for service
+    outages.'
+- tag: SAT
+  spec_file: ironscales-sat-api-openapi.yml
+  capability_id: BC-620.60
+  capability_id_l1: BC-620
+  capability_name: Security Awareness Management
+  confidence: 0.9
+  evidence: POST /sat/{company_id}/campaigns/  Create a new draft campaign; GetLandingPages; TrainingsListResponse;
+    AwarenessLevelsDistribution
+  reason: 'SAT = Security Awareness Training: phishing-simulation campaign lifecycle, landing pages, training
+    content and participant targeting, with awareness-level distribution — Security Awareness Management.'
+- tag: Mitigation
+  spec_file: ironscales-mitigation-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.88
+  evidence: GET /mitigation/{company_id}/impersonation/details/  Get the latest company impersonation
+    incidents; MostTargetedEmployees; EmailPhishingThreatTypeStats
+  reason: Reports on detected phishing/impersonation incidents and their mitigation statistics across
+    mailboxes — threat detection and response analytics.
+- tag: Deepfake
+  spec_file: ironscales-deepfake-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.85
+  evidence: GET /deepfake/{company_id}/events/  Get list of deepfake SIEM events
+  reason: Exposes detection events (SIEM-bound) for deepfake-assisted social engineering threats — threat
+    detection and response telemetry from a security product.
+- tag: Emails
+  spec_file: ironscales-emails-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.72
+  evidence: GET /emails/{company_id}/  List of escalated emails
+  reason: Escalated emails in a phishing-protection platform are suspicious messages raised for analyst
+    handling, which is threat detection/response rather than any messaging or marketing capability.
