@@ -44,7 +44,7 @@ x-type: company
 x-source: harvest:secondary-market
 specificationVersion: '0.23'
 created: '2026-08-04'
-modified: '2026-08-04'
+modified: '2026-10-06'
 tags:
 - Email Security
 - Cybersecurity
@@ -346,6 +346,8 @@ apis:
   - type: DataModel
     url: data-model/ironscales-data-model.yml
 common:
+- url: https://ironscales.com/blog/rss.xml
+  type: BlogRSS
 - type: CapabilityMap
   url: capabilities/ironscales-capability-edges.yml
   name: IRONSCALES Business Capability Map
