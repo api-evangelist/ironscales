@@ -538,39 +538,6 @@ components:
           - Mid Level
           - Expert Level
           readOnly: true
-    MailboxesUserComplianceReportResponse:
-      required:
-      - page
-      - total_pages
-      - data
-      type: object
-      properties:
-        page:
-          title: Page
-          type: integer
-        total_pages:
-          title: Total pages
-          type: integer
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/MailboxesUserComplianceReport'
-    MailboxesUpdateResponse:
-      required:
-      - mailbox_ids
-      - error_message
-      type: object
-      properties:
-        mailbox_ids:
-          description: IDs of mailboxes that matched the filters
-          type: array
-          items:
-            type: integer
-        error_message:
-          title: Error message
-          description: Error description if any of mailboxes wasn't updated
-          type: string
-          minLength: 1
     MailboxesDetails:
       required:
       - id
@@ -710,31 +677,22 @@ components:
           items:
             type: string
             minLength: 1
-    MailboxUpdateRequest:
+    MailboxesUpdateResponse:
       required:
-      - params
+      - mailbox_ids
+      - error_message
       type: object
       properties:
-        filters:
-          $ref: '#/components/schemas/MailboxFilter'
-        params:
-          $ref: '#/components/schemas/MailboxUpdateParams'
-    MailboxUpdateParams:
-      type: object
-      properties:
-        is_enabled:
-          title: Is enabled
-          type: boolean
-        add_tags:
+        mailbox_ids:
+          description: IDs of mailboxes that matched the filters
           type: array
           items:
-            type: string
-            minLength: 1
-        remove_tags:
-          type: array
-          items:
-            type: string
-            minLength: 1
+            type: integer
+        error_message:
+          title: Error message
+          description: Error description if any of mailboxes wasn't updated
+          type: string
+          minLength: 1
     MailboxesUserPerformanceResponse:
       required:
       - page
@@ -752,6 +710,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MailboxesUserPerformance'
+    MailboxUpdateRequest:
+      required:
+      - params
+      type: object
+      properties:
+        filters:
+          $ref: '#/components/schemas/MailboxFilter'
+        params:
+          $ref: '#/components/schemas/MailboxUpdateParams'
     MailboxesUserPerformance:
       required:
       - userId
@@ -873,6 +840,39 @@ components:
           - 'null'
           readOnly: true
           minLength: 1
+    MailboxesUserComplianceReportResponse:
+      required:
+      - page
+      - total_pages
+      - data
+      type: object
+      properties:
+        page:
+          title: Page
+          type: integer
+        total_pages:
+          title: Total pages
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MailboxesUserComplianceReport'
+    MailboxUpdateParams:
+      type: object
+      properties:
+        is_enabled:
+          title: Is enabled
+          type: boolean
+        add_tags:
+          type: array
+          items:
+            type: string
+            minLength: 1
+        remove_tags:
+          type: array
+          items:
+            type: string
+            minLength: 1
   securitySchemes:
     JWT:
       type: apiKey

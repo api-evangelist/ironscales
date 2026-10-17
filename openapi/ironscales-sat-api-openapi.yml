@@ -1944,162 +1944,62 @@ paths:
       x-operation-id-original: Get Training Preview URL
 components:
   schemas:
-    ParticipantItem:
+    TrainingItem:
       required:
-      - name
-      - tag
+      - locale_id
+      - embedded_subtitles
       type: object
       properties:
-        name:
-          title: Name
-          description: Display name of the participant or category item
+        locale_id:
+          title: Locale id
+          type: integer
+        image_preview:
+          title: Image preview
           type: string
+          readOnly: true
           minLength: 1
-        tag:
-          title: Tag
-          description: Category tag (e.g., 'Departments', 'Cities', 'Names')
-          type: string
-          minLength: 1
-        mail:
-          title: Mail
-          description: Email address (only present for 'Names' tag items)
+        duration:
+          title: Duration
           type:
           - string
           - 'null'
-          format: email
+          readOnly: true
           minLength: 1
-    ParticipantsCalculateBase:
-      description: Participant exclusion criteria
-      type:
-      - object
-      - 'null'
-      properties:
-        emails:
-          type: array
-          items:
-            type: string
-            format: email
-            minLength: 1
-          minItems: 1
-        departments:
-          type: array
-          items:
-            type: string
-            minLength: 1
-          minItems: 1
-        tags:
-          type: array
-          items:
-            type: string
-            minLength: 1
-          minItems: 1
-        titles:
-          type: array
-          items:
-            type: string
-            minLength: 1
-          minItems: 1
-        cities:
-          type: array
-          items:
-            type: string
-            minLength: 1
-          minItems: 1
-        countries:
-          type: array
-          items:
-            type: string
-            minLength: 1
-          minItems: 1
-        featured_groups:
-          type: array
-          items:
-            type: string
-            minLength: 1
-          minItems: 1
-        segments:
-          type: array
-          items:
-            type: string
-            minLength: 1
-          minItems: 1
-        awareness_levels:
-          type: array
-          items:
-            type: string
-            minLength: 1
-          minItems: 1
-    CampaignStatistic:
-      required:
-      - emails
-      - reported
-      - lured
-      - trained
-      type: object
-      properties:
-        emails:
-          title: Emails
+        content:
+          title: Content
           type:
-          - integer
+          - string
           - 'null'
-        reported:
-          title: Reported
-          type:
-          - integer
-          - 'null'
-        lured:
-          title: Lured
-          type:
-          - integer
-          - 'null'
-        trained:
-          title: Trained
-          type:
-          - integer
-          - 'null'
-    TemplateCategory:
-      required:
-      - id
-      - name
-      type: object
-      properties:
-        id:
-          title: Id
-          type: integer
-        name:
-          title: Name
-          type: string
+          readOnly: true
           minLength: 1
-    TrainingProvidersResponse:
-      required:
-      - data
+        embedded_subtitles:
+          title: Embedded subtitles
+          type: boolean
+    AwarenessLevelsDistribution:
+      description: "Get awareness levels distribution.\n\n        Args:\n            content: Dictionary containing participants queryset.\n\n        Returns:\n            Dictionary with awareness level distribution (beginner, mid, expert).\n"
       type: object
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/TrainingProvider'
-    LandingPages:
+        beginner:
+          title: Beginner
+          type: integer
+          readOnly: true
+        mid:
+          title: Mid
+          type: integer
+          readOnly: true
+        expert:
+          title: Expert
+          type: integer
+          readOnly: true
+    ParticipantsCalculateRequest:
       required:
-      - page
-      - total_pages
-      - total_count
-      - data
+      - include
       type: object
       properties:
-        page:
-          title: Page
-          type: integer
-        total_pages:
-          title: Total pages
-          type: integer
-        total_count:
-          title: Total count
-          type: integer
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/LandingPagesData'
+        include:
+          $ref: '#/components/schemas/ParticipantsCalculateInclude'
+        exclude:
+          $ref: '#/components/schemas/ParticipantsCalculateBase'
     LocaleContent:
       required:
       - body
@@ -2116,6 +2016,24 @@ components:
           description: Content subject
           type: string
           minLength: 1
+    LandingPage:
+      type:
+      - object
+      - 'null'
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        name:
+          title: Name
+          type: string
+          readOnly: true
+          minLength: 1
+        is_system:
+          title: Is system
+          type: boolean
+          readOnly: true
     TemplateContent:
       required:
       - locale
@@ -2245,296 +2163,14 @@ components:
           - integer
           - 'null'
           readOnly: true
-    TrainingsListResponse:
-      required:
-      - page
-      - total_pages
-      - total_count
-      - data
-      type: object
-      properties:
-        page:
-          title: Page
-          type: integer
-        total_pages:
-          title: Total pages
-          type: integer
-        total_count:
-          title: Total count
-          type: integer
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Training'
-    Category:
-      type: object
-      properties:
-        id:
-          title: ID
-          type: integer
-          readOnly: true
-        name:
-          title: Name
-          type: string
-          readOnly: true
-          maxLength: 50
-          minLength: 1
-    CampaignListResponseItem:
-      type: object
-      properties:
-        id:
-          title: ID
-          type: integer
-          readOnly: true
-        name:
-          title: Name
-          type: string
-          readOnly: true
-          minLength: 1
-        flow_type:
-          title: Flow type
-          description: 'Campaign Flow Type:
-
-            - `1` = Training Only - Campaign that only includes training content
-
-            - `2` = Simulation and Training - Campaign that includes both phishing simulation and training'
-          type: string
-          enum:
-          - 1
-          - 2
-          readOnly: true
-        status:
-          title: Status
-          description: 'Campaign Status:
-
-            - `0` = Draft - Campaign is in draft state and not yet active
-
-            - `1` = Collecting (Active) - Campaign is actively collecting participant data
-
-            - `2` = Completed - Campaign has finished and is closed
-
-            - `3` = Pending - Campaign is approved but waiting to start
-
-            - `4` = Active - Campaign is currently running and sending emails
-
-            - `5` = Inactive - Campaign is inactive'
-          type: string
-          enum:
-          - 0
-          - 1
-          - 2
-          - 3
-          - 4
-          - 5
-          readOnly: true
-        schedule_time:
-          title: Schedule time
-          type: string
-          format: date-time
-          readOnly: true
-        end_time:
-          title: End time
-          type: string
-          format: date-time
-          readOnly: true
-        close_time:
-          title: Close time
-          type: string
-          format: date-time
-          readOnly: true
-        default_locale_id:
-          title: Default locale id
-          type: integer
-          readOnly: true
-        timezone:
-          title: Timezone
-          type: string
-          readOnly: true
-          minLength: 1
-        participants_count:
-          title: Participants count
-          type: integer
-          readOnly: true
-        statistic:
-          $ref: '#/components/schemas/CampaignStatistic'
-    CallForAction:
-      required:
-      - page
-      - total_pages
-      - total_count
-      - data
-      type: object
-      properties:
-        page:
-          title: Page
-          description: Current page number
-          type: integer
-        total_pages:
-          title: Total pages
-          description: Total number of pages
-          type: integer
-        total_count:
-          title: Total count
-          description: Total number of call for action pages matching the query
-          type: integer
-        data:
-          description: List of call for action pages for the current page
-          type: array
-          items:
-            $ref: '#/components/schemas/CallForActionData'
-    CampaignCreateResponse:
-      required:
-      - id
-      type: object
-      properties:
-        id:
-          title: Id
-          description: Created campaign ID
-          type: integer
-    CampaignTrainingContent:
-      type: object
-      properties:
-        id:
-          title: ID
-          type: integer
-          readOnly: true
-        vendor:
-          title: Vendor
-          type:
-          - integer
-          - 'null'
-          enum:
-          - 6
-          - 5
-          - 1
-          - 3
-          - 4
-          readOnly: true
-        name:
-          title: Name
-          type: string
-          readOnly: true
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CampaignTrainingContentItem'
-          readOnly: true
-        type:
-          title: Type
-          type: string
-          enum:
-          - VIDEO
-          - COURSE
-          - QUIZ_HTML5
-          - CUSTOM_CONTENT
-          readOnly: true
-        subtitles:
-          type: array
-          items:
-            $ref: '#/components/schemas/BaseTrainingSubtitle'
-          readOnly: true
-    TemplatesListResponse:
-      required:
-      - page
-      - total_pages
-      - total_count
-      - data
-      type: object
-      properties:
-        page:
-          title: Page
-          type: integer
-        total_pages:
-          title: Total pages
-          type: integer
-        total_count:
-          title: Total count
-          type: integer
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Template'
-    CampaignTrainingContentItem:
-      type: object
-      properties:
-        id:
-          title: ID
-          type: integer
-          readOnly: true
-        locale_id:
-          title: Locale id
-          type: string
-          readOnly: true
-        image_preview:
-          title: Image preview
-          type: string
-          readOnly: true
-          minLength: 1
-        content:
-          title: Content
-          type:
-          - string
-          - 'null'
-          readOnly: true
-          minLength: 1
-        embedded_subtitles:
-          title: Embedded subtitles
-          type: boolean
-          readOnly: true
-        custom_type:
-          title: Custom type
-          type: string
-          enum:
-          - CUSTOM_VIDEO
-          - CUSTOM_URL
-          readOnly: true
-    LandingPageContent:
-      type: object
-      properties:
-        content:
-          title: Content
-          type:
-          - string
-          - 'null'
-        page_title:
-          title: Page title
-          type:
-          - string
-          - 'null'
-          maxLength: 100
-        locale_id:
-          title: Locale id
-          type: string
-          readOnly: true
-    CampaignLookupResponseItem:
-      type: object
-      properties:
-        id:
-          title: ID
-          type: integer
-          readOnly: true
-        name:
-          title: Name
-          type:
-          - string
-          - 'null'
-          readOnly: true
-          minLength: 1
-    ParticipantsSearchResponse:
-      type: object
-      properties:
-        items:
-          description: Flattened list of matching participant items
-          type: array
-          items:
-            $ref: '#/components/schemas/ParticipantItem'
-          readOnly: true
-    TrainingProvider:
+    LandingPagesData:
       required:
       - id
       - name
-      - total_count
-      - available_count
+      - is_system
+      - last_updated
+      - training_type
+      - contents
       type: object
       properties:
         id:
@@ -2544,264 +2180,51 @@ components:
           title: Name
           type: string
           minLength: 1
-        total_count:
-          title: Total count
-          type: integer
-        available_count:
-          title: Available count
-          type: integer
-    Segment:
-      type: object
-      properties:
-        id:
-          title: ID
-          type: integer
+        tags:
+          type: array
+          items:
+            type: string
+            minLength: 1
           readOnly: true
-        name:
-          title: Name
-          type: string
-          readOnly: true
-          maxLength: 120
-          minLength: 1
-    CampaignNotification:
-      description: List of campaign notifications
-      required:
-      - type
-      type:
-      - object
-      - 'null'
-      properties:
-        subject:
-          title: Subject
-          type: string
-        body:
-          title: Body
-          type: string
-        type:
-          title: Type
-          type: integer
-          enum:
-          - 1
-    LandingPage:
-      type:
-      - object
-      - 'null'
-      properties:
-        id:
-          title: ID
-          type: integer
-          readOnly: true
-        name:
-          title: Name
-          type: string
-          readOnly: true
-          minLength: 1
         is_system:
           title: Is system
           type: boolean
-          readOnly: true
-    Training:
-      required:
-      - is_free
-      - is_new
-      type: object
-      properties:
-        id:
-          title: ID
+        last_updated:
+          title: Last updated
+          type: string
+          format: date-time
+        training_type:
+          title: Training type
           type: integer
-          readOnly: true
-        is_free:
-          title: Is free
-          type: boolean
-        is_new:
-          title: Is new
-          type: boolean
-        vendor:
-          title: Vendor
-          type:
-          - integer
-          - 'null'
-          enum:
-          - 6
-          - 5
-          - 1
-          - 3
-          - 4
-        name:
-          title: Name
-          type: string
-          readOnly: true
-        categories:
+        contents:
           type: array
           items:
-            type: string
-            minLength: 1
-          readOnly: true
-        has_permissions:
-          title: Has permissions
-          type: boolean
-          readOnly: true
-        season_info:
-          title: Season info
+            $ref: '#/components/schemas/LandingPageContent'
+        company_id:
+          title: Company id
           type: string
           readOnly: true
-          minLength: 1
-        type:
-          title: Type
-          type: string
-          readOnly: true
-          minLength: 1
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/TrainingItem'
-          readOnly: true
-        subtitles:
-          type: array
-          items:
-            $ref: '#/components/schemas/BaseTrainingSubtitle'
-          readOnly: true
-    Language:
+    LandingPages:
       required:
-      - id
-      - name
-      - short_name
-      - localized_name
-      - ltr
-      - enabled
-      - default
-      type: object
-      properties:
-        id:
-          title: Id
-          description: Locale ID
-          type: integer
-        name:
-          title: Name
-          description: Locale name
-          type: string
-          minLength: 1
-        short_name:
-          title: Short name
-          description: Locale short name
-          type: string
-          minLength: 1
-        localized_name:
-          title: Localized name
-          description: Localized locale name
-          type: string
-          minLength: 1
-        ltr:
-          title: Ltr
-          description: Left-to-right text direction
-          type: boolean
-        enabled:
-          title: Enabled
-          description: Whether this locale is enabled for the company
-          type: boolean
-        default:
-          title: Default
-          description: Whether this is the default locale for the company
-          type: boolean
-    CampaignLookupResponse:
+      - page
+      - total_pages
+      - total_count
+      - data
       type: object
       properties:
         page:
           title: Page
           type: integer
-          readOnly: true
         total_pages:
           title: Total pages
           type: integer
-          readOnly: true
         total_count:
           title: Total count
           type: integer
-          readOnly: true
         data:
           type: array
           items:
-            $ref: '#/components/schemas/CampaignLookupResponseItem'
-          readOnly: true
-    CampaignSetup:
-      type: object
-      properties:
-        languages:
-          type: array
-          items:
-            $ref: '#/components/schemas/Language'
-          readOnly: true
-        timezone:
-          title: Timezone
-          type: string
-          readOnly: true
-          minLength: 1
-        workdays:
-          title: Workdays
-          description: 'Workdays configuration: 1 - Monday-Friday, 2 - Sunday-Thursday, 3 - All Week'
-          type: integer
-          enum:
-          - 1
-          - 2
-          - 3
-          readOnly: true
-        campaigns_limit_for_year:
-          title: Campaigns limit for year
-          type:
-          - integer
-          - 'null'
-          readOnly: true
-        campaign_mails_limit:
-          title: Campaign mails limit
-          type:
-          - integer
-          - 'null'
-          readOnly: true
-        allowed_senders_for_training_campaigns:
-          type: array
-          items:
-            type: string
-            minLength: 1
-          readOnly: true
-        manager_notification_state:
-          title: Manager notification state
-          description: 'Manager notification state: 1 - enabled, 2 - disabled, 3 - hidden'
-          type: integer
-          enum:
-          - 1
-          - 2
-          - 3
-          readOnly: true
-        default_training_reminder_content_simulation:
-          title: Default training reminder content simulation
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/LocaleContent'
-          readOnly: true
-        default_training_reminder_content_training:
-          title: Default training reminder content training
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/LocaleContent'
-          readOnly: true
-        default_campaign_failed_alert_content:
-          title: Default campaign failed alert content
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/LocaleContent'
-          readOnly: true
-        default_manager_notification_banner_content:
-          title: Default manager notification banner content
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/LocaleBannerContent'
-          readOnly: true
-        default_manager_report_email_content:
-          title: Default manager report email content
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/LocaleContent'
-          readOnly: true
+            $ref: '#/components/schemas/LandingPagesData'
     ParticipantsCalculateInclude:
       description: Participant selection criteria
       required:
@@ -2866,6 +2289,46 @@ components:
         all_company:
           title: All company
           type: boolean
+    ManagerNotificationBanner:
+      description: Manager notification banner settings
+      required:
+      - text
+      type:
+      - object
+      - 'null'
+      properties:
+        text:
+          title: Text
+          type: string
+          minLength: 1
+    CampaignStatistic:
+      required:
+      - emails
+      - reported
+      - lured
+      - trained
+      type: object
+      properties:
+        emails:
+          title: Emails
+          type:
+          - integer
+          - 'null'
+        reported:
+          title: Reported
+          type:
+          - integer
+          - 'null'
+        lured:
+          title: Lured
+          type:
+          - integer
+          - 'null'
+        trained:
+          title: Trained
+          type:
+          - integer
+          - 'null'
     ParticipantsCalculateResponse:
       type: object
       properties:
@@ -2876,6 +2339,342 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ParticipantCandidate'
+          readOnly: true
+    ManagerNotificationSettingsCreate:
+      description: Manager notification settings. If enabled is False or missing, manager notifications will not be configured.
+      type:
+      - object
+      - 'null'
+      properties:
+        enabled:
+          title: Enabled
+          description: Whether manager notifications are enabled for this campaign
+          type: boolean
+          default: false
+        banner:
+          $ref: '#/components/schemas/ManagerNotificationBanner'
+        report_email:
+          $ref: '#/components/schemas/ManagerReportEmail'
+        reminders_threshold:
+          title: Reminders threshold
+          description: Minimum number of reminders before sending manager report
+          type:
+          - integer
+          - 'null'
+          minimum: 1
+        send_report_every_x_days:
+          title: Send report every x days
+          description: 'Send manager report every X days. Allowed values: 7 or 14 days'
+          type:
+          - integer
+          - 'null'
+          enum:
+          - 7
+          - 14
+        report_day_of_week:
+          title: Report day of week
+          description: Day of week to send manager report (0=Monday, 6=Sunday)
+          type:
+          - integer
+          - 'null'
+          maximum: 6
+          minimum: 0
+    ParticipantsListResponse:
+      type: object
+      properties:
+        all_company:
+          title: All company
+          description: Total count of all company participants
+          type: integer
+          readOnly: true
+        names:
+          title: Names
+          description: Dictionary of individual users with email and full name
+          type: object
+          additionalProperties:
+            description: full_name and mail
+            type: object
+            additionalProperties:
+              type: string
+              minLength: 1
+          readOnly: true
+        departments:
+          title: Departments
+          description: Dictionary of departments with participant counts
+          type: object
+          additionalProperties:
+            type: integer
+          readOnly: true
+        cities:
+          title: Cities
+          description: Dictionary of cities with participant counts
+          type: object
+          additionalProperties:
+            type: integer
+          readOnly: true
+        countries:
+          title: Countries
+          description: Dictionary of countries with participant counts
+          type: object
+          additionalProperties:
+            type: integer
+          readOnly: true
+        titles:
+          title: Titles
+          description: Dictionary of job titles with participant counts
+          type: object
+          additionalProperties:
+            type: integer
+          readOnly: true
+        tags:
+          title: Tags
+          description: Dictionary of tags with participant counts
+          type: object
+          additionalProperties:
+            type: integer
+          readOnly: true
+        featured_groups:
+          title: Featured groups
+          description: Dictionary of featured groups with participant counts
+          type: object
+          additionalProperties:
+            type: integer
+          readOnly: true
+        segments:
+          title: Segments
+          description: Dictionary of segments with participant counts
+          type: object
+          additionalProperties:
+            type: integer
+          readOnly: true
+        awareness_levels:
+          title: Awareness levels
+          description: Dictionary of awareness levels with participant counts
+          type: object
+          additionalProperties:
+            type: integer
+          readOnly: true
+    TemplateCategoriesResponse:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateCategory'
+    TrainingProvider:
+      required:
+      - id
+      - name
+      - total_count
+      - available_count
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+          minLength: 1
+        total_count:
+          title: Total count
+          type: integer
+        available_count:
+          title: Available count
+          type: integer
+    TrainingCampaignData:
+      description: Training-specific campaign data
+      type:
+      - object
+      - 'null'
+      properties:
+        subject:
+          title: Subject
+          type:
+          - string
+          - 'null'
+          maxLength: 300
+        message:
+          title: Message
+          type:
+          - string
+          - 'null'
+        mail_signature:
+          title: Mail signature
+          type:
+          - string
+          - 'null'
+        include_logo:
+          title: Include logo
+          type:
+          - boolean
+          - 'null'
+        use_designed_image:
+          title: Use designed image
+          type:
+          - boolean
+          - 'null'
+        from_email:
+          title: From email
+          type:
+          - string
+          - 'null'
+          maxLength: 512
+    CampaignNotification:
+      description: List of campaign notifications
+      required:
+      - type
+      type:
+      - object
+      - 'null'
+      properties:
+        subject:
+          title: Subject
+          type: string
+        body:
+          title: Body
+          type: string
+        type:
+          title: Type
+          type: integer
+          enum:
+          - 1
+    ParticipantsSearchResponse:
+      type: object
+      properties:
+        items:
+          description: Flattened list of matching participant items
+          type: array
+          items:
+            $ref: '#/components/schemas/ParticipantItem'
+          readOnly: true
+    Scenario:
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        name:
+          title: Name
+          type: string
+          readOnly: true
+          minLength: 1
+        category:
+          $ref: '#/components/schemas/Category'
+        level:
+          title: Level
+          type: integer
+          enum:
+          - 0
+          - 1
+          - 2
+          readOnly: true
+        is_system:
+          title: Is system
+          type: boolean
+          readOnly: true
+    Category:
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        name:
+          title: Name
+          type: string
+          readOnly: true
+          maxLength: 50
+          minLength: 1
+    TemplatesListResponse:
+      required:
+      - page
+      - total_pages
+      - total_count
+      - data
+      type: object
+      properties:
+        page:
+          title: Page
+          type: integer
+        total_pages:
+          title: Total pages
+          type: integer
+        total_count:
+          title: Total count
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Template'
+    ParticipantItem:
+      required:
+      - name
+      - tag
+      type: object
+      properties:
+        name:
+          title: Name
+          description: Display name of the participant or category item
+          type: string
+          minLength: 1
+        tag:
+          title: Tag
+          description: Category tag (e.g., 'Departments', 'Cities', 'Names')
+          type: string
+          minLength: 1
+        mail:
+          title: Mail
+          description: Email address (only present for 'Names' tag items)
+          type:
+          - string
+          - 'null'
+          format: email
+          minLength: 1
+    CampaignTrainingContent:
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        vendor:
+          title: Vendor
+          type:
+          - integer
+          - 'null'
+          enum:
+          - 6
+          - 5
+          - 1
+          - 3
+          - 4
+          readOnly: true
+        name:
+          title: Name
+          type: string
+          readOnly: true
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CampaignTrainingContentItem'
+          readOnly: true
+        type:
+          title: Type
+          type: string
+          enum:
+          - VIDEO
+          - COURSE
+          - QUIZ_HTML5
+          - CUSTOM_CONTENT
+          readOnly: true
+        subtitles:
+          type: array
+          items:
+            $ref: '#/components/schemas/BaseTrainingSubtitle'
           readOnly: true
     BaseTrainingSubtitle:
       type: object
@@ -2889,6 +2688,26 @@ components:
           type: string
           readOnly: true
           minLength: 1
+    CampaignLookupResponse:
+      type: object
+      properties:
+        page:
+          title: Page
+          type: integer
+          readOnly: true
+        total_pages:
+          title: Total pages
+          type: integer
+          readOnly: true
+        total_count:
+          title: Total count
+          type: integer
+          readOnly: true
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CampaignLookupResponseItem'
+          readOnly: true
     CampaignDetailsResponse:
       type: object
       properties:
@@ -3094,106 +2913,6 @@ components:
           description: Banner text content
           type: string
           minLength: 1
-    CallForActionData:
-      description: List of call for action pages for the current page
-      required:
-      - id
-      - name
-      - page_title
-      - content
-      - is_system
-      - is_public
-      - last_updated
-      - company_id
-      type: object
-      properties:
-        id:
-          title: Id
-          description: Unique identifier for the call for action page
-          type: integer
-        name:
-          title: Name
-          description: Name of the call for action page
-          type: string
-          minLength: 1
-        page_title:
-          title: Page title
-          description: Title of the call for action page
-          type:
-          - string
-          - 'null'
-        content:
-          title: Content
-          description: HTML content of the call for action page
-          type:
-          - string
-          - 'null'
-        is_system:
-          title: Is system
-          description: Whether the call for action page is a system page
-          type: boolean
-        is_public:
-          title: Is public
-          description: Whether the call for action page is public
-          type: boolean
-        last_updated:
-          title: Last updated
-          description: Date and time when the call for action page was last updated
-          type: string
-          format: date-time
-        tags:
-          title: Tags
-          description: Tags indicating the origin of the call for action page (System, Company, or Partner)
-          type:
-          - string
-          - 'null'
-          readOnly: true
-          minLength: 1
-        company_id:
-          title: Company id
-          description: ID of the company that owns this call for action page (null for system pages)
-          type:
-          - integer
-          - 'null'
-    ManagerNotificationSettingsCreate:
-      description: Manager notification settings. If enabled is False or missing, manager notifications will not be configured.
-      type:
-      - object
-      - 'null'
-      properties:
-        enabled:
-          title: Enabled
-          description: Whether manager notifications are enabled for this campaign
-          type: boolean
-          default: false
-        banner:
-          $ref: '#/components/schemas/ManagerNotificationBanner'
-        report_email:
-          $ref: '#/components/schemas/ManagerReportEmail'
-        reminders_threshold:
-          title: Reminders threshold
-          description: Minimum number of reminders before sending manager report
-          type:
-          - integer
-          - 'null'
-          minimum: 1
-        send_report_every_x_days:
-          title: Send report every x days
-          description: 'Send manager report every X days. Allowed values: 7 or 14 days'
-          type:
-          - integer
-          - 'null'
-          enum:
-          - 7
-          - 14
-        report_day_of_week:
-          title: Report day of week
-          description: Day of week to send manager report (0=Monday, 6=Sunday)
-          type:
-          - integer
-          - 'null'
-          maximum: 6
-          minimum: 0
     CampaignCreateRequest:
       required:
       - name
@@ -3361,16 +3080,135 @@ components:
           $ref: '#/components/schemas/TrainingCampaignData'
         manager_notification_settings:
           $ref: '#/components/schemas/ManagerNotificationSettingsCreate'
-    ParticipantsCalculateRequest:
+    ParticipantCandidate:
       required:
-      - include
+      - id
+      - first_name
+      - last_name
+      - email
       type: object
       properties:
-        include:
-          $ref: '#/components/schemas/ParticipantsCalculateInclude'
-        exclude:
-          $ref: '#/components/schemas/ParticipantsCalculateBase'
-    TemplateCategoriesResponse:
+        id:
+          title: Id
+          type: integer
+        first_name:
+          title: First name
+          type: string
+          minLength: 1
+        last_name:
+          title: Last name
+          type: string
+          minLength: 1
+        email:
+          title: Email
+          type: string
+          format: email
+          minLength: 1
+    CampaignCreateResponse:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          title: Id
+          description: Created campaign ID
+          type: integer
+    Training:
+      required:
+      - is_free
+      - is_new
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        is_free:
+          title: Is free
+          type: boolean
+        is_new:
+          title: Is new
+          type: boolean
+        vendor:
+          title: Vendor
+          type:
+          - integer
+          - 'null'
+          enum:
+          - 6
+          - 5
+          - 1
+          - 3
+          - 4
+        name:
+          title: Name
+          type: string
+          readOnly: true
+        categories:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          readOnly: true
+        has_permissions:
+          title: Has permissions
+          type: boolean
+          readOnly: true
+        season_info:
+          title: Season info
+          type: string
+          readOnly: true
+          minLength: 1
+        type:
+          title: Type
+          type: string
+          readOnly: true
+          minLength: 1
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrainingItem'
+          readOnly: true
+        subtitles:
+          type: array
+          items:
+            $ref: '#/components/schemas/BaseTrainingSubtitle'
+          readOnly: true
+    TrainingsListResponse:
+      required:
+      - page
+      - total_pages
+      - total_count
+      - data
+      type: object
+      properties:
+        page:
+          title: Page
+          type: integer
+        total_pages:
+          title: Total pages
+          type: integer
+        total_count:
+          title: Total count
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Training'
+    Segment:
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        name:
+          title: Name
+          type: string
+          readOnly: true
+          maxLength: 120
+          minLength: 1
+    TrainingProvidersResponse:
       required:
       - data
       type: object
@@ -3378,119 +3216,137 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/TemplateCategory'
-    TrainingCampaignData:
-      description: Training-specific campaign data
-      type:
-      - object
-      - 'null'
-      properties:
-        subject:
-          title: Subject
-          type:
-          - string
-          - 'null'
-          maxLength: 300
-        message:
-          title: Message
-          type:
-          - string
-          - 'null'
-        mail_signature:
-          title: Mail signature
-          type:
-          - string
-          - 'null'
-        include_logo:
-          title: Include logo
-          type:
-          - boolean
-          - 'null'
-        use_designed_image:
-          title: Use designed image
-          type:
-          - boolean
-          - 'null'
-        from_email:
-          title: From email
-          type:
-          - string
-          - 'null'
-          maxLength: 512
-    ParticipantsListResponse:
+            $ref: '#/components/schemas/TrainingProvider'
+    Language:
+      required:
+      - id
+      - name
+      - short_name
+      - localized_name
+      - ltr
+      - enabled
+      - default
       type: object
       properties:
-        all_company:
-          title: All company
-          description: Total count of all company participants
+        id:
+          title: Id
+          description: Locale ID
+          type: integer
+        name:
+          title: Name
+          description: Locale name
+          type: string
+          minLength: 1
+        short_name:
+          title: Short name
+          description: Locale short name
+          type: string
+          minLength: 1
+        localized_name:
+          title: Localized name
+          description: Localized locale name
+          type: string
+          minLength: 1
+        ltr:
+          title: Ltr
+          description: Left-to-right text direction
+          type: boolean
+        enabled:
+          title: Enabled
+          description: Whether this locale is enabled for the company
+          type: boolean
+        default:
+          title: Default
+          description: Whether this is the default locale for the company
+          type: boolean
+    CampaignManagerNotificationSettings:
+      type: object
+      properties:
+        enabled:
+          title: Enabled
+          description: "Get enabled status for manager notifications.\n\n        Args:\n            obj: ManagerNotificationSettings instance.\n\n        Returns:\n            True if send_report_every_x_days is not 0 or None, False otherwise.\n"
+          type: boolean
+          readOnly: true
+        reminders_threshold:
+          title: Reminders threshold
+          type:
+          - integer
+          - 'null'
+          readOnly: true
+          minimum: 1
+        send_report_every_x_days:
+          title: Send report every x days
+          type:
+          - integer
+          - 'null'
+          enum:
+          - 7
+          - 14
+          readOnly: true
+        report_day_of_week:
+          title: Report day of week
+          type:
+          - integer
+          - 'null'
+          enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          readOnly: true
+        banner:
+          $ref: '#/components/schemas/ManagerNotificationBanner'
+        report_email:
+          $ref: '#/components/schemas/ManagerReportEmail'
+    TemplateCategory:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+          minLength: 1
+    CampaignTrainingContentItem:
+      type: object
+      properties:
+        id:
+          title: ID
           type: integer
           readOnly: true
-        names:
-          title: Names
-          description: Dictionary of individual users with email and full name
-          type: object
-          additionalProperties:
-            description: full_name and mail
-            type: object
-            additionalProperties:
-              type: string
-              minLength: 1
+        locale_id:
+          title: Locale id
+          type: string
           readOnly: true
-        departments:
-          title: Departments
-          description: Dictionary of departments with participant counts
-          type: object
-          additionalProperties:
-            type: integer
+        image_preview:
+          title: Image preview
+          type: string
           readOnly: true
-        cities:
-          title: Cities
-          description: Dictionary of cities with participant counts
-          type: object
-          additionalProperties:
-            type: integer
+          minLength: 1
+        content:
+          title: Content
+          type:
+          - string
+          - 'null'
           readOnly: true
-        countries:
-          title: Countries
-          description: Dictionary of countries with participant counts
-          type: object
-          additionalProperties:
-            type: integer
+          minLength: 1
+        embedded_subtitles:
+          title: Embedded subtitles
+          type: boolean
           readOnly: true
-        titles:
-          title: Titles
-          description: Dictionary of job titles with participant counts
-          type: object
-          additionalProperties:
-            type: integer
-          readOnly: true
-        tags:
-          title: Tags
-          description: Dictionary of tags with participant counts
-          type: object
-          additionalProperties:
-            type: integer
-          readOnly: true
-        featured_groups:
-          title: Featured groups
-          description: Dictionary of featured groups with participant counts
-          type: object
-          additionalProperties:
-            type: integer
-          readOnly: true
-        segments:
-          title: Segments
-          description: Dictionary of segments with participant counts
-          type: object
-          additionalProperties:
-            type: integer
-          readOnly: true
-        awareness_levels:
-          title: Awareness levels
-          description: Dictionary of awareness levels with participant counts
-          type: object
-          additionalProperties:
-            type: integer
+        custom_type:
+          title: Custom type
+          type: string
+          enum:
+          - CUSTOM_VIDEO
+          - CUSTOM_URL
           readOnly: true
     CampaignListResponse:
       type: object
@@ -3512,34 +3368,290 @@ components:
           items:
             $ref: '#/components/schemas/CampaignListResponseItem'
           readOnly: true
-    AwarenessLevelsDistribution:
-      description: "Get awareness levels distribution.\n\n        Args:\n            content: Dictionary containing participants queryset.\n\n        Returns:\n            Dictionary with awareness level distribution (beginner, mid, expert).\n"
-      type: object
-      properties:
-        beginner:
-          title: Beginner
-          type: integer
-          readOnly: true
-        mid:
-          title: Mid
-          type: integer
-          readOnly: true
-        expert:
-          title: Expert
-          type: integer
-          readOnly: true
-    ManagerNotificationBanner:
-      description: Manager notification banner settings
-      required:
-      - text
+    ParticipantsCalculateBase:
+      description: Participant exclusion criteria
       type:
       - object
       - 'null'
       properties:
-        text:
-          title: Text
+        emails:
+          type: array
+          items:
+            type: string
+            format: email
+            minLength: 1
+          minItems: 1
+        departments:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+        tags:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+        titles:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+        cities:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+        countries:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+        featured_groups:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+        segments:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+        awareness_levels:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minItems: 1
+    CampaignSetup:
+      type: object
+      properties:
+        languages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Language'
+          readOnly: true
+        timezone:
+          title: Timezone
+          type: string
+          readOnly: true
+          minLength: 1
+        workdays:
+          title: Workdays
+          description: 'Workdays configuration: 1 - Monday-Friday, 2 - Sunday-Thursday, 3 - All Week'
+          type: integer
+          enum:
+          - 1
+          - 2
+          - 3
+          readOnly: true
+        campaigns_limit_for_year:
+          title: Campaigns limit for year
+          type:
+          - integer
+          - 'null'
+          readOnly: true
+        campaign_mails_limit:
+          title: Campaign mails limit
+          type:
+          - integer
+          - 'null'
+          readOnly: true
+        allowed_senders_for_training_campaigns:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          readOnly: true
+        manager_notification_state:
+          title: Manager notification state
+          description: 'Manager notification state: 1 - enabled, 2 - disabled, 3 - hidden'
+          type: integer
+          enum:
+          - 1
+          - 2
+          - 3
+          readOnly: true
+        default_training_reminder_content_simulation:
+          title: Default training reminder content simulation
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/LocaleContent'
+          readOnly: true
+        default_training_reminder_content_training:
+          title: Default training reminder content training
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/LocaleContent'
+          readOnly: true
+        default_campaign_failed_alert_content:
+          title: Default campaign failed alert content
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/LocaleContent'
+          readOnly: true
+        default_manager_notification_banner_content:
+          title: Default manager notification banner content
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/LocaleBannerContent'
+          readOnly: true
+        default_manager_report_email_content:
+          title: Default manager report email content
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/LocaleContent'
+          readOnly: true
+    ManagerReportEmail:
+      description: Manager report email settings
+      required:
+      - body
+      - subject
+      type:
+      - object
+      - 'null'
+      properties:
+        body:
+          title: Body
           type: string
           minLength: 1
+        subject:
+          title: Subject
+          type: string
+          minLength: 1
+    LandingPageContent:
+      type: object
+      properties:
+        content:
+          title: Content
+          type:
+          - string
+          - 'null'
+        page_title:
+          title: Page title
+          type:
+          - string
+          - 'null'
+          maxLength: 100
+        locale_id:
+          title: Locale id
+          type: string
+          readOnly: true
+    CampaignListResponseItem:
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        name:
+          title: Name
+          type: string
+          readOnly: true
+          minLength: 1
+        flow_type:
+          title: Flow type
+          description: 'Campaign Flow Type:
+
+            - `1` = Training Only - Campaign that only includes training content
+
+            - `2` = Simulation and Training - Campaign that includes both phishing simulation and training'
+          type: string
+          enum:
+          - 1
+          - 2
+          readOnly: true
+        status:
+          title: Status
+          description: 'Campaign Status:
+
+            - `0` = Draft - Campaign is in draft state and not yet active
+
+            - `1` = Collecting (Active) - Campaign is actively collecting participant data
+
+            - `2` = Completed - Campaign has finished and is closed
+
+            - `3` = Pending - Campaign is approved but waiting to start
+
+            - `4` = Active - Campaign is currently running and sending emails
+
+            - `5` = Inactive - Campaign is inactive'
+          type: string
+          enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          readOnly: true
+        schedule_time:
+          title: Schedule time
+          type: string
+          format: date-time
+          readOnly: true
+        end_time:
+          title: End time
+          type: string
+          format: date-time
+          readOnly: true
+        close_time:
+          title: Close time
+          type: string
+          format: date-time
+          readOnly: true
+        default_locale_id:
+          title: Default locale id
+          type: integer
+          readOnly: true
+        timezone:
+          title: Timezone
+          type: string
+          readOnly: true
+          minLength: 1
+        participants_count:
+          title: Participants count
+          type: integer
+          readOnly: true
+        statistic:
+          $ref: '#/components/schemas/CampaignStatistic'
+    CampaignLookupResponseItem:
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+          readOnly: true
+        name:
+          title: Name
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          minLength: 1
+    ParticipantsCalculateResponseMeta:
+      description: "Get metadata for the response.\n\n        Args:\n            content: Dictionary containing participants data and queryset.\n\n        Returns:\n            Dictionary containing metadata (count, locale_ids, awareness_levels).\n"
+      required:
+      - count
+      type: object
+      properties:
+        count:
+          title: Count
+          type: integer
+        locale_ids:
+          description: "Get list of distinct locale IDs from participants.\n\n        Args:\n            content: Dictionary containing participants queryset.\n\n        Returns:\n            List of distinct locale IDs from participants.\n"
+          type: array
+          items:
+            type: integer
+          readOnly: true
+        awareness_levels:
+          $ref: '#/components/schemas/AwarenessLevelsDistribution'
     TrainingReminderContent:
       description: List of training reminder content
       required:
@@ -3557,32 +3669,81 @@ components:
           title: Subject
           type: string
           minLength: 1
-    Scenario:
+    ParticipantsSearchRequest:
+      required:
+      - search
+      type: object
+      properties:
+        search:
+          title: Search
+          description: 'Search string to filter participants.
+
+            - Minimum 2 characters required for filtering
+
+            - Case-insensitive substring match on names and emails'
+          type: string
+          minLength: 1
+    CallForActionData:
+      description: List of call for action pages for the current page
+      required:
+      - id
+      - name
+      - page_title
+      - content
+      - is_system
+      - is_public
+      - last_updated
+      - company_id
       type: object
       properties:
         id:
-          title: ID
+          title: Id
+          description: Unique identifier for the call for action page
           type: integer
-          readOnly: true
         name:
           title: Name
+          description: Name of the call for action page
           type: string
-          readOnly: true
           minLength: 1
-        category:
-          $ref: '#/components/schemas/Category'
-        level:
-          title: Level
-          type: integer
-          enum:
-          - 0
-          - 1
-          - 2
-          readOnly: true
+        page_title:
+          title: Page title
+          description: Title of the call for action page
+          type:
+          - string
+          - 'null'
+        content:
+          title: Content
+          description: HTML content of the call for action page
+          type:
+          - string
+          - 'null'
         is_system:
           title: Is system
+          description: Whether the call for action page is a system page
           type: boolean
+        is_public:
+          title: Is public
+          description: Whether the call for action page is public
+          type: boolean
+        last_updated:
+          title: Last updated
+          description: Date and time when the call for action page was last updated
+          type: string
+          format: date-time
+        tags:
+          title: Tags
+          description: Tags indicating the origin of the call for action page (System, Company, or Partner)
+          type:
+          - string
+          - 'null'
           readOnly: true
+          minLength: 1
+        company_id:
+          title: Company id
+          description: ID of the company that owns this call for action page (null for system pages)
+          type:
+          - integer
+          - 'null'
     Template:
       required:
       - is_communityCandidate
@@ -3664,192 +3825,31 @@ components:
           items:
             $ref: '#/components/schemas/TemplateContent'
           readOnly: true
-    ParticipantsCalculateResponseMeta:
-      description: "Get metadata for the response.\n\n        Args:\n            content: Dictionary containing participants data and queryset.\n\n        Returns:\n            Dictionary containing metadata (count, locale_ids, awareness_levels).\n"
+    CallForAction:
       required:
-      - count
+      - page
+      - total_pages
+      - total_count
+      - data
       type: object
       properties:
-        count:
-          title: Count
+        page:
+          title: Page
+          description: Current page number
           type: integer
-        locale_ids:
-          description: "Get list of distinct locale IDs from participants.\n\n        Args:\n            content: Dictionary containing participants queryset.\n\n        Returns:\n            List of distinct locale IDs from participants.\n"
+        total_pages:
+          title: Total pages
+          description: Total number of pages
+          type: integer
+        total_count:
+          title: Total count
+          description: Total number of call for action pages matching the query
+          type: integer
+        data:
+          description: List of call for action pages for the current page
           type: array
           items:
-            type: integer
-          readOnly: true
-        awareness_levels:
-          $ref: '#/components/schemas/AwarenessLevelsDistribution'
-    ManagerReportEmail:
-      description: Manager report email settings
-      required:
-      - body
-      - subject
-      type:
-      - object
-      - 'null'
-      properties:
-        body:
-          title: Body
-          type: string
-          minLength: 1
-        subject:
-          title: Subject
-          type: string
-          minLength: 1
-    ParticipantsSearchRequest:
-      required:
-      - search
-      type: object
-      properties:
-        search:
-          title: Search
-          description: 'Search string to filter participants.
-
-            - Minimum 2 characters required for filtering
-
-            - Case-insensitive substring match on names and emails'
-          type: string
-          minLength: 1
-    LandingPagesData:
-      required:
-      - id
-      - name
-      - is_system
-      - last_updated
-      - training_type
-      - contents
-      type: object
-      properties:
-        id:
-          title: Id
-          type: integer
-        name:
-          title: Name
-          type: string
-          minLength: 1
-        tags:
-          type: array
-          items:
-            type: string
-            minLength: 1
-          readOnly: true
-        is_system:
-          title: Is system
-          type: boolean
-        last_updated:
-          title: Last updated
-          type: string
-          format: date-time
-        training_type:
-          title: Training type
-          type: integer
-        contents:
-          type: array
-          items:
-            $ref: '#/components/schemas/LandingPageContent'
-        company_id:
-          title: Company id
-          type: string
-          readOnly: true
-    TrainingItem:
-      required:
-      - locale_id
-      - embedded_subtitles
-      type: object
-      properties:
-        locale_id:
-          title: Locale id
-          type: integer
-        image_preview:
-          title: Image preview
-          type: string
-          readOnly: true
-          minLength: 1
-        duration:
-          title: Duration
-          type:
-          - string
-          - 'null'
-          readOnly: true
-          minLength: 1
-        content:
-          title: Content
-          type:
-          - string
-          - 'null'
-          readOnly: true
-          minLength: 1
-        embedded_subtitles:
-          title: Embedded subtitles
-          type: boolean
-    ParticipantCandidate:
-      required:
-      - id
-      - first_name
-      - last_name
-      - email
-      type: object
-      properties:
-        id:
-          title: Id
-          type: integer
-        first_name:
-          title: First name
-          type: string
-          minLength: 1
-        last_name:
-          title: Last name
-          type: string
-          minLength: 1
-        email:
-          title: Email
-          type: string
-          format: email
-          minLength: 1
-    CampaignManagerNotificationSettings:
-      type: object
-      properties:
-        enabled:
-          title: Enabled
-          description: "Get enabled status for manager notifications.\n\n        Args:\n            obj: ManagerNotificationSettings instance.\n\n        Returns:\n            True if send_report_every_x_days is not 0 or None, False otherwise.\n"
-          type: boolean
-          readOnly: true
-        reminders_threshold:
-          title: Reminders threshold
-          type:
-          - integer
-          - 'null'
-          readOnly: true
-          minimum: 1
-        send_report_every_x_days:
-          title: Send report every x days
-          type:
-          - integer
-          - 'null'
-          enum:
-          - 7
-          - 14
-          readOnly: true
-        report_day_of_week:
-          title: Report day of week
-          type:
-          - integer
-          - 'null'
-          enum:
-          - 0
-          - 1
-          - 2
-          - 3
-          - 4
-          - 5
-          - 6
-          readOnly: true
-        banner:
-          $ref: '#/components/schemas/ManagerNotificationBanner'
-        report_email:
-          $ref: '#/components/schemas/ManagerReportEmail'
+            $ref: '#/components/schemas/CallForActionData'
   securitySchemes:
     JWT:
       type: apiKey
