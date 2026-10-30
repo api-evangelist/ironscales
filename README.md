@@ -1,4 +1,4 @@
-# IronScales
+# IRONSCALES
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,58 +64,143 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-IRONSCALES is an AI-powered, API-based email security platform protecting organizations against phishing,
-business email compromise (BEC), account takeover (ATO), VIP impersonation, QR-code phishing, malicious
-URLs and attachments, and deepfake-assisted social engineering. Instead of sitting inline as a secure email
-gateway, IRONSCALES connects to Microsoft 365 and Google Workspace through their APIs and works at the
-mailbox level, with no MX record changes.
+IRONSCALES is an AI-powered, API-based email security platform protecting organizations against phishing, business email compromise (BEC), account takeover (ATO), VIP impersonation, QR-code phishing, malicious URLs and attachments, and deepfake-assisted social engineering. Rather than sitting inline as a secure email gateway, IRONSCALES connects to Microsoft 365 and Google Workspace through their APIs and operates at the mailbox level — no MX record changes — combining adaptive AI detection, computer-vision analysis, automated multi-mailbox remediation, a crowdsourced threat-intelligence network, phishing simulation testing, and security awareness training in one platform. The public IRONSCALES Management API (appapi.ironscales.com) exposes incidents, mitigation statistics, escalated emails, mailbox management, deepfake SIEM events, phishing-simulation campaigns, SAT training campaigns, and tenant security settings, and is the surface behind the company's SIEM/SOAR/XDR integrations. IRONSCALES also operates an OAuth-protected remote MCP server for agent-based access.
 
-- Website: https://ironscales.com/
-- API overview: https://ironscales.com/platform/api
-- API reference: https://appapi.ironscales.com/appapi/docs/
-- Status page: https://status.ironscales.com/
-- Trust center: https://trust.ironscales.com/
+**Areas:** Email Security · Cybersecurity · Phishing · Anti-Phishing · Business Email Compromise · Account Takeover · Threat Intelligence · Incident Response · Security Awareness Training · Phishing Simulation · Microsoft 365 · Google Workspace
 
-## APIs profiled here
+## IRONSCALES on APIs.io
 
-| API | Base URL | Contract |
-|---|---|---|
-| IRONSCALES Management API | `https://appapi.ironscales.com/appapi` | Swagger 2.0, 46 paths / 61 operations / 129 definitions |
-| IRONSCALES MCP Server | `https://mcp.ironscales.com/mcp/` | Remote MCP over streamable HTTP, OAuth 2.0 protected |
+Everything profiled for IRONSCALES is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/ironscales/](https://apis.io/providers/ironscales/)** — or go straight to one of the APIs or properties below.
 
-The Management API contract is published by the provider at
-`https://appapi.ironscales.com/appapi/docs/?format=openapi` (a drf-yasg schema view; note it only responds
-to `Accept: */*` or `application/openapi+json`). The verbatim document is kept in
-`openapi/_original/`, and `openapi/*.yml` are one-per-tag splits of it.
+### APIs (10)
 
-## Artifacts
+- [IRONSCALES MCP Server](https://apis.io/apis/ironscales/ironscales-mcp-server/) — Remote Model Context Protocol server operated by IRONSCALES at mcp.ironscales.com, served over streamable HTTP at /mcp/. Access is OAuth 2.0 protected — an…
+- [IRONSCALES Authorization API](https://apis.io/apis/ironscales/ironscales-authorization-api/) — The Authorization API from IRONSCALES — 1 operation(s) for authorization.
+- [IRONSCALES Campaigns API](https://apis.io/apis/ironscales/ironscales-campaigns-api/) — The Campaigns API from IRONSCALES — 3 operation(s) for campaigns.
+- [IRONSCALES Deepfake API](https://apis.io/apis/ironscales/ironscales-deepfake-api/) — The Deepfake API from IRONSCALES — 1 operation(s) for deepfake.
+- [IRONSCALES Emails API](https://apis.io/apis/ironscales/ironscales-emails-api/) — The Emails API from IRONSCALES — 1 operation(s) for emails.
+- [IRONSCALES Incident API](https://apis.io/apis/ironscales/ironscales-incident-api/) — The Incident API from IRONSCALES — 10 operation(s) for incident.
+- [IRONSCALES Mailboxes API](https://apis.io/apis/ironscales/ironscales-mailboxes-api/) — The Mailboxes API from IRONSCALES — 3 operation(s) for mailboxes.
+- [IRONSCALES Mitigation API](https://apis.io/apis/ironscales/ironscales-mitigation-api/) — The Mitigation API from IRONSCALES — 8 operation(s) for mitigation.
+- [IRONSCALES SAT API](https://apis.io/apis/ironscales/ironscales-sat-api/) — The SAT API from IRONSCALES — 15 operation(s) for sat.
+- [IRONSCALES Settings API](https://apis.io/apis/ironscales/ironscales-settings-api/) — The Settings API from IRONSCALES — 4 operation(s) for settings.
 
-| Directory | What it holds |
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [ironscales](https://apis.io/servers/ironscales/ironscales/)
+
+#### Collections (9)
+
+Postman and Open Collection request collections.
+
+- [IRONSCALES Management Authorization API](https://apis.io/collections/ironscales/open-ironscales-authorization-api/)
+- [IRONSCALES Management Campaigns API](https://apis.io/collections/ironscales/open-ironscales-campaigns-api/)
+- [IRONSCALES Management Deepfake API](https://apis.io/collections/ironscales/open-ironscales-deepfake-api/)
+- [IRONSCALES Management Emails API](https://apis.io/collections/ironscales/open-ironscales-emails-api/)
+- [IRONSCALES Management Incident API](https://apis.io/collections/ironscales/open-ironscales-incident-api/)
+- [IRONSCALES Management Mailboxes API](https://apis.io/collections/ironscales/open-ironscales-mailboxes-api/)
+- [IRONSCALES Management Mitigation API](https://apis.io/collections/ironscales/open-ironscales-mitigation-api/)
+- [IRONSCALES Management SAT API](https://apis.io/collections/ironscales/open-ironscales-sat-api/)
+- [IRONSCALES Management Settings API](https://apis.io/collections/ironscales/open-ironscales-settings-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Ironscales Management Api Overlay](https://apis.io/overlays/ironscales/ironscales-management-api-overlay/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Ironscales Authentication](https://apis.io/security/ironscales/ironscales-authentication/)
+- [Ironscales Domain Security](https://apis.io/security/ironscales/ironscales-domain-security/)
+- [Ironscales Trust Center](https://apis.io/security/ironscales/ironscales-trust-center/)
+- [Ironscales Vulnerability Disclosure](https://apis.io/security/ironscales/ironscales-vulnerability-disclosure/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Ironscales Rate Limits](https://apis.io/rate-limits/ironscales/ironscales-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://ironscales.com/)
+- [Documentation](https://ironscales.com/platform/api)
+- [Getting started](https://ironscales.com/platform/api)
+- [API reference](https://appapi.ironscales.com/appapi/docs/)
+- [Pricing](https://ironscales.com/pricing)
+- [Sign up](https://secure.ironscales.com/free-trial)
+- [Support](https://ironscales.com/support/)
+- [Changelog](https://ironscales.com/blog/tag/release-notes)
+- [Blog](https://ironscales.com/blog)
+- [Security](https://trust.ironscales.com/)
+- [Compliance](https://trust.ironscales.com/)
+- [Trust centre](https://trust.ironscales.com/)
+- [Terms of service](https://ironscales.com/hubfs/PDFs/Ironscales%20EULA%20Template%20(January%202025).pdf)
+- [Privacy policy](https://ironscales.com/privacy-policy/)
+- [Status](https://status.ironscales.com/)
+
+## API Evangelist rating
+
+**Kin Score 56.4** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
 |---|---|
-| `openapi/` | The provider's Swagger 2.0 contract, verbatim plus one file per tag |
-| `mcp/` | The live, OAuth-protected MCP server manifest and the REST/MCP tool crosswalk |
-| `well-known/` | RFC 8414 authorization-server and RFC 9728 protected-resource metadata, plus the full probe log |
-| `authentication/` | The JWT (REST) and OAuth 2.0 + PKCE (MCP) credential models |
-| `conventions/` | Pagination, tenancy, versioning, error envelope, and the absence of an idempotency contract |
-| `errors/` | Every 4xx/5xx the contract declares, and the fact that none of them carries a schema |
-| `rate-limits/` | The documented 120 requests / minute / company throttle |
-| `lifecycle/` | Versioning, status page, support, and the missing deprecation policy |
-| `changelog/` | The product release train and seasonal releases |
-| `conformance/` | Standards conformance, plus the published certifications |
-| `security/` | Domain security probe, trust center, and responsible disclosure |
-| `data-model/` | Entity graph derived from the contract's 129 definitions |
-| `skills/` | Six packaged Agent Skills, every operationId verified against the spec |
-| `llms/` | The provider's own `llms.txt`, saved verbatim |
-| `overlays/` | Our annotations over the contract, without mutating the original |
+| Discoverability | 80.0 |
+| Contract quality | 51.7 |
+| Contract governance | 4.5 |
+| Operational transparency | 63.2 |
+| Developer ergonomics | 58.9 |
+| Access clarity | 60.5 |
 
-## Notable gaps
+**Agent readiness 50.5** — agent-ready (gated down from agent-native)
 
-These are recorded honestly in the artifacts, not papered over:
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | distinct |
 
-- No `security.txt` on any host, although a responsible-disclosure route and contact do exist on the trust center.
-- No A2A agent card at either well-known path.
-- No idempotency contract, on an API whose writes act on real employee mailboxes.
-- No schema on any error response — only the HTTP status is contractual.
-- No deprecation or sunset policy, while a V1 and V2 of the mitigation statistics operation both run.
-- No first-party SDK in any public package registry.
-- No AsyncAPI or webhook contract; the deepfake SIEM event feed is pull-only.
+**Regulatory alignment 34.0** — AI & Biometrics
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/ironscales/](https://apis.io/providers/ironscales/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for IRONSCALES: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/ironscales/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
